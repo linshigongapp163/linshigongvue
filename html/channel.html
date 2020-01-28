@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<!--<script src="js/mui.js"></script>-->
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<!--<script src="../js/qrcode.js"></script>-->
+
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-qrcode.min.js"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/new_file.css" rel="stylesheet" />
+
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+
+	<style type="text/css">
+		.yo-scroll {
+			font-size: .8rem;
+			position: absolute;
+			top: 0rem;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			overflow: auto;
+			z-index: 100;
+			height: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+		
+		.yo-scroll .inner {
+			position: absolute;
+			top: -5rem;
+			width: 100%;
+			height: auto;
+			transition-duration: 300ms;
+		}
+		
+		.yo-scroll .inner .refresh-tip:before {
+			background: url(myimg/refresh-logo.gif) no-repeat center;
+		}
+		
+		.yo-scroll .inner .up-tip:before {
+			background: url(myimg/down-logo.png) no-repeat center;
+		}
+		
+		.yo-scroll .inner .up-tip:before,
+		.refresh-tip:before {
+			content: '';
+			display: inline-block;
+			width: 160px;
+			height: 70px;
+			background-size: 70% !important;
+			position: absolute;
+			top: 0;
+			left: 20%;
+		}
+		
+		.yo-scroll .inner .down-tip,
+		.refresh-tip,
+		.up-tip {
+			display: none;
+		}
+		
+		.yo-scroll .inner .pull-refresh {
+			position: relative;
+			left: 0;
+			top: 1rem;
+			width: 100%;
+			height: 5rem;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.yo-scroll .inner .load-more {
+			height: 5rem;
+			line-height: 5rem;
+			display: flex;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			display: none;
+		}
+		
+		.yo-scroll .inner .nullData {
+			font-size: 26px;
+			color: #999999;
+			height: 100px;
+			line-height: 80px;
+			text-align: center;
+		}
+		
+		.yo-scroll.touch .inner {
+			transition-duration: 0;
+		}
+		
+		.yo-scroll.down .down-tip {
+			display: block;
+		}
+		
+		.yo-scroll.up .up-tip {
+			display: block;
+		}
+		
+		.yo-scroll.refresh .refresh-tip {
+			display: block;
+		}
+	</style>		
+	</head>
+
+	<body style="margin: 0;">
+
+		<!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-bottom:10px ;margin-top: 0px;">-->
+			<div id="app">
+					<v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :dataList="scrollData" :listdata="listdata">
+			
+				<div id="" v-show= "1"  >
+					<div class="" style="top:0;background-color: #efeff4;">
+						<a href=""><img style="width: 100%;height: 100px;" src="../myimg/channel.png" /></a>
+
+					</div>
+
+
+				</div>
+					<div id="" style="display: flex;justify-content: center;margin: 1rem 0;">
+						<qrcode style='height: 200px;' :value="msg"></qrcode>
+
+					</div>				
+
+				<div class="content" style="margin: 0 10px 10px 10px;padding:10px 0;border-top:1px solid gainsboro;" v-for="i in lists" style="background-color: black;">
+					<div id="">
+						<div class="mui-row" style="font-weight: bold;">
+							<div class="mui-col-sm-6">
+								{{i.name}}
+							</div>
+							<div class="mui-col-sm-6" style="font-size:11px;float: right;">
+								编号：{{i.userid}}
+							</div>
+						</div>
+						<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+							<div class="mui-col-sm-9">
+								{{i.created_at}}
+							</div>
+							<div class="mui-col-sm-6" style="float: right;">
+
+								<span>{{i.zone}}</span>
+							</div>
+						</div>
+						<div class="mui-row" style="font-size: 11px;font-weight: bold;margin-top: 5px;">
+							<div class="mui-col-sm-10">
+								服务进度：<span v-bind:style="{color:ss[i.serstate]['st']}"> {{ss[i.serstate].s}}</span>
+							</div>
+							<div class="mui-col-sm-10" style="font-size: 20px;">
+								{{i.pay_level}}
+							</div>
+						</div>
+						<div class="mui-row" style="color: #FF6666;">
+						</div>
+					</div>
+				</div>
+				</v-scroll>
+				
+			</div>
+		<!--</div>-->
+		
+		
+		<template id="template">
+			<div class="yo-scroll" :class="{'down':(state===0),'up':(state==1),refresh:(state===2),touch:touching}" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+				<section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }">
+					<header class="pull-refresh">
+						<slot name="pull-refresh">
+							<span class="down-tip">下拉更新</span>
+							<span class="up-tip">松开刷新数据</span>
+							<span class="refresh-tip">加载中……</span>
+						</slot>
+					</header>
+					<slot>
+					</slot>
+					<footer class="load-more">
+						<slot name="load-more">
+							<span v-show="downFlag === false">上拉加载更多</span>
+							<span v-show="downFlag === true">加载中……</span>
+						</slot>
+					</footer>
+					<div class="nullData" v-show="dataList.noFlag">暂无更多数据</div>
+				</section>
+			</div>
+		</template>		
+		<script type="text/javascript">
+			//import tween from '/js/tween'
+			//import Load from '/myimg/Load.gif'	
+
+			Vue.component('v-scroll', {
+				props: {
+					offset: {
+						type: Number,
+						default: 70 //默认高度
+					},
+					enableInfinite: {
+						type: Boolean,
+						default: true
+					},
+					enableRefresh: {
+						type: Boolean,
+						default: true
+					},
+					dataList: {
+						default: false,
+						required: false
+					},
+					onRefresh: {
+						type: Function,
+						default: undefined,
+						required: false
+					},
+					onInfinite: {
+						type: Function,
+						default: undefined,
+						require: false
+					},
+				},
+				data() {
+					return {
+						top: 0,
+						state: 0,
+						startX: 0,
+						startY: 0,
+						touching: false,
+						infiniteLoading: false,
+						downFlag: false, //用来显示是否加载中
+					}
+				},
+				template: "#template",
+				methods: {
+					touchStart(e) {
+						this.startY = e.targetTouches[0].pageY;
+						this.startX = e.targetTouches[0].pageX;
+						this.startScroll = this.$el.scrollTop || 0;
+						this.touching = true; //留着有用，不能删除
+						console.log('L630--touchStart-- this.$el.scrollTop==' + this.$el.scrollTop);
+						this.dataList.noFlag = false;
+						this.$el.querySelector('.load-more').style.display = 'block';
+					},
+					touchMove(e) {
+						if(!this.enableRefresh || this.dataList.noFlag || !this.touching) {
+							return
+						}
+						let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+						if(diff > 0) e.preventDefault()
+						this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
+						if(this.state === 2) { // in refreshing
+							return
+						}
+						if(this.top >= this.offset) {
+							this.state = 1
+						} else {
+							this.state = 0
+						}
+
+						let more = this.$el.querySelector('.load-more');
+						if(!this.top && this.state === 0) {
+							more.style.display = 'block';
+						} else {
+							more.style.display = 'none';
+						}
+					},
+					touchEnd(e) {
+
+						if(!this.enableRefresh) {
+							return
+						}
+						this.touching = false
+						if(this.state === 2) { // in refreshing
+							this.state = 2
+							this.top = this.offset
+							return
+						}
+						if(this.top >= this.offset) { // do refresh
+							this.refresh()
+						} else { // cancel refresh
+							this.state = 0
+							this.top = 0
+						}
+
+						//用于判断滑动是否在原地 ----begin
+						let endX = e.changedTouches[0].pageX,
+							endY = e.changedTouches[0].pageY,
+							dy = this.startY - endY,
+							dx = endX - this.startX;
+
+						//如果滑动距离太短  
+						if(Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+							console.log("滑动距离太短")
+							return;
+						}
+
+						//--------end--------
+
+						if(!this.enableInfinite || this.infiniteLoading) {
+							return
+						}
+
+						let outerHeight = this.$el.clientHeight,
+							innerHeight = this.$el.querySelector('.inner').clientHeight,
+							scrollTop = this.$el.scrollTop,
+							ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0,
+							bottom = innerHeight - outerHeight - scrollTop - ptrHeight;
+
+						console.log(bottom + " __ " + this.offset)
+
+						if(bottom <= this.offset && this.state === 0) {
+							this.downFlag = true;
+							this.infinite();
+						} else {
+							this.$el.querySelector('.load-more').style.display = 'none';
+							this.downFlag = false;
+						}
+
+					},
+					refresh() {
+						this.state = 2;
+						this.top = this.offset;
+						setTimeout(() => {
+							this.onRefresh(this.refreshDone)
+						}, 1000);
+					},
+					refreshDone() {
+						this.state = 0
+						this.top = 0
+					},
+
+					infinite() {
+						this.infiniteLoading = true
+						console.log('L724--infinite');
+						setTimeout(() => {
+							this.onInfinite(this.infiniteDone);
+						}, 2000);
+					},
+
+					infiniteDone() {
+						this.infiniteLoading = false
+					},
+					todetail(s) {
+						this.$emit(s)
+					}
+				}
+				//		        }
+			})
+
+			//			})
+		</script>
+		
+		<script src="js/util.js"></script>
+		<script type="text/javascript">
+			var obj = {
+				ss: [{
+					"s": "未跟进",
+					"st": "red"
+				}, {
+					"s": "沟通中",
+					"st": "green"
+				}, {
+					"s": "挂断",
+					"st": "blue"
+				}, {
+					"s": "关机",
+					"st": "blue"
+				}, {
+					"s": "不通",
+					"st": "red"
+				}, {
+					"s": "非标",
+					"st": "red"
+				}, {
+					"s": "空号",
+					"st": "red"
+				}],
+										postflag:false,
+
+						listdata: [], // 下拉更新数据存放数组
+						scrollData: {
+							noFlag: false //暂无更多数据显示
+						},
+//				lists: [{
+//					"name": "王小帅",
+//					"created_at": "2018-09-19 17:43:39",
+//					"userid": "888",
+//					"sever_level": "2",
+//				}],
+				lists: [],
+				page: '',
+				pp:1,
+				last_page: '',
+				msg: 'https://baidu.com'
+
+			};
+			var VueQrcode = window.VueQrcode;
+			Vue.component('qrcode', VueQrcode);
+			var vm = new Vue({
+				el: '#app',
+				data: obj,
+				mounted: function() {
+					//		            this.getList();
+					this.ajaxdata('', '', '');
+				},
+				methods:{
+				   ajaxdata: function(p, s, c) {
+					console.log('p==s=' + s);
+
+					if(s == undefined) {
+						s = ''
+					};
+					if(c == undefined) {
+						c = ''
+					};
+					console.log('userId==' + localStorage.getItem('userId'));
+					mui.post(APP_DOMAIN + 'api/mychannel', {
+						'page': p,
+						's': s,
+						'userid': localStorage.getItem('userId')
+					}, function(data) {
+						console.log("data==" + JSON.stringify(data));
+//						vm.lists = "";
+if(vm.page==data.last_page){
+	return
+}
+						var l = vm.lists;
+//						if( l != [] & vm.page ==data.current_page){
+							vm.lists = l.concat(data.data);
+							console.log('vm.lists.concat=='+JSON.stringify(vm.lists));						
+//						}
+//													vm.last_page = data.last_page;
+	
+							//					var push = JSON.parse(data.data.push_l);
+							vm.last_page = data.last_page;
+	
+							console.log('current_page==' + data.current_page);
+	
+							vm.page = data.current_page;	
+
+					}, 'json');
+
+				},
+					getList() {
+						console.log('----getList');
+//						var response = []
+//						for(let i = 0; i < 50; i++) {
+//							response.push({
+//								date: "2017-06-1" + i,
+//								portfolio: "1.5195" + i,
+//								drop: i + "+.00 %",
+//								state: 1
+//							})
+//						}
+//						this.listdata = response.slice(0, this.num);
+					},
+					onRefresh(done) {
+						console.log('----onRefresh--vm.num=='+vm.num);
+						if(vm.num==10){
+							this.ajaxdata('', '', '')							
+						}else{
+							this.ajaxdata('', '', vm.num+2)							
+						}
+						//		                this.getList();
+
+						done(); // call done
+
+					},
+					onInfinite(done) {
+						console.log('----onInfinite');
+						    if(vm.page>vm.last_page){
+						    	return
+						    };
+							this.ajaxdata(vm.page+1, '', '')							
+						
+						
+						
+//						this.counter++;
+//						let end = this.pageEnd = this.num * this.counter;
+//						let i = this.pageStart = this.pageEnd - this.num;
+//
+//						let more = this.$el.querySelector('.load-more')
+//						for(i; i < end; i++) {
+//							if(i >= 50) {
+//								more.style.display = 'none'; //隐藏加载条
+//								//走完数据调用方法
+//								this.scrollData.noFlag = true;
+//
+//								break;
+//							} else {
+//								this.listdata.push({
+//									date: "2017-06-1" + i,
+//									portfolio: "1.5195" + i,
+//									drop: i + "+.00 %",
+//									state: 2
+//								})
+//								more.style.display = 'none'; //隐藏加载条
+//							}
+//						}
+						done();
+					}				
+				}
+				//				mounted:function(){
+				//					this.$nextTick(function(){
+				//					console.log('mounted---');
+				//					this._getQart();		
+				//					})
+				//				},
+				//				methods: {
+				//		            _getQart: function() {
+				//						new QRCode(document.getElementById('qrcode'), 'your content');
+				//											console.log('_getQart');
+				//
+				//		            },					
+				//
+				//
+				//				}
+			});
+
+			(function() {
+				//				mui.init({
+				//					swipeBack: true //启用右滑关闭功能
+				//				});
+				mui.init({
+
+				});
+
+				//setTimeout(function(){
+				//	  var qrcode = new QRCode(document.getElementById("qrcode"), {
+				//  text: "i am the first qrcode",
+				//  width: 128, //生成的二维码的宽度
+				//  height: 128, //生成的二维码的高度
+				//  colorDark : "#000000", // 生成的二维码的深色部分
+				//  colorLight : "#ffffff", //生成二维码的浅色部分
+				//  correctLevel : QRCode.CorrectLevel.H
+				//});
+				//},500
+				//	
+				//)
+				vm.msg = "https://app.linshigong.com/h5/" + localStorage.getItem('userId');
+
+				var wgtVer = null;
+
+//				var ajaxdata = function(p, s, c) {
+//					console.log('p==s=' + s);
+//
+//					if(s == undefined) {
+//						s = ''
+//					};
+//					if(c == undefined) {
+//						c = ''
+//					};
+//					console.log('userId==' + localStorage.getItem('userId'));
+//					mui.post(APP_DOMAIN + 'api/mychannel', {
+//						'page': p,
+//						's': s,
+//						'userid': localStorage.getItem('userId')
+//					}, function(data) {
+//						console.log("data==" + JSON.stringify(data));
+////						vm.lists = "";
+//						var l = vm.lists;
+////						if( l != [] & vm.page ==data.current_page){
+//							vm.lists = l.concat(data.data);
+//							console.log('vm.lists.concat=='+JSON.stringify(vm.lists));						
+////						}
+////													vm.last_page = data.last_page;
+//	
+//							//					var push = JSON.parse(data.data.push_l);
+//							vm.last_page = data.last_page;
+//	
+//							console.log('current_page==' + data.current_page);
+//	
+//							vm.page = data.current_page;	
+//
+//					}, 'json');
+//
+//				};
+				//					vm.num = 10;
+
+//				ajaxdata('', '', '');
+
+				/**
+				 * 下拉刷新具体业务实现
+				 */
+//				function pulldownRefresh() {
+//			      		vm.lists= [];
+//						ajaxdata('', '', '');
+//					
+//					
+////					setTimeout(function() {
+////						var p = vm.page;
+////						ajaxdata(p - 1, '', '');
+//						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+////						//					mui.toast('下拉刷新成功');
+//						mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //恢复上拉。
+////						if(p >= 2) {
+////							p = p - 1;
+////						}
+////						vm.pp =p;
+//////						mui.toast('第 ' + p + ' / ' + vm.last_page + ' 页')
+////
+////					}, 1000);
+//				};
+//				var count = 0;
+
+
+
+
+				/**
+				 * 上拉加载具体业务实现
+				 */
+//				function pullupRefresh() {
+//
+//					setTimeout(function() {
+//						console.log('thisis  pullupRefr-------');
+//
+//						if(vm.page < vm.last_page) {
+//							if(vm.page < vm.last_page) {
+//								var p = vm.page + 1;
+//							} else if(vm.page = vm.last_page) {
+//								var p = vm.page;
+//
+//							};
+//							vm.pp = p;
+////							mui.toast('第 ' + p + ' / ' + vm.last_page + ' 页')
+//
+//							ajaxdata(p, '', '');
+//
+//							//                     mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);						
+//							//$(this.element.parentNode).scroll().refresh();
+//
+//							mui('#pullrefresh').pullRefresh().scrollTo(0, 0, 100);
+////							临时停掉
+//
+//							mui('.mui-scroll').scroll().refresh(true);
+//							mui.toast('第 ' + p + ' / ' + vm.last_page + ' 页')
+//
+//							mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+//
+//							this.endPullupToRefresh(false);
+//						} else {
+////							ajaxdata(vm.page);
+//							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+////							ajaxdata(vm.page - 1);
+//							//						var table = document.body.querySelector('.mui-table-view');
+//							//						var cells = document.body.querySelectorAll('.mui-table-view-cell');
+//
+//						};
+//
+//					}, 1000);
+//				};
+
+			})();
+
+			//			mui.init({
+			//				pullRefresh: {
+			//					container: '#pullrefresh',
+			//					down: {
+			//						style: 'circle',
+			////						      auto: true,//可选,默认false.首次加载自动下拉刷新一次
+			//
+			//						callback: pulldownRefresh
+			//						
+			//					},
+			//					up: {
+			//						contentrefresh: '正在加载...',
+			//						callback: pullupRefresh
+			//						
+			//					}
+			//				}
+			//			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>changzhao</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<!--<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">-->
+		<script src="../js/vue.js"></script>
+		<script src="../js/common.js"></script>
+		
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link href="css/new_file.css" rel="stylesheet" />
+
+        	<link rel="stylesheet" href="../css2/oil.css">
+
+		<style>
+			html,body {
+				background-color: #efeff4;
+				margin-top: 0;
+			}
+			
+			body {
+				margin-top: 0;
+				font-size: 17px;
+			}
+			a {
+				/*text-decoration: none;*/
+				color: #ffffff;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			
+			#page {
+				font-size: 18px;
+				position: relative;
+				z-index: 20;
+				padding-top: 15px;
+				padding-bottom: 10px;
+			}
+			
+			ul {
+				background-color: white;
+				margin: 15px 0;
+				padding: 0 15px;
+			}
+			
+			li {
+				list-style-type: none;
+				border-bottom: 1px solid #efeff4;
+				background-color: white;
+				height: 50px;
+				line-height: 50px;
+			}
+			label {
+				margin: auto 10px;
+			}
+			
+			.mui-table-view {
+				background-color: #f7f7f7;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="mui-content">
+			<div class="" style="width:100%;position: fixed;top:-10px;z-index: 9999;background-color: #efeff4;">
+				<div style="padding: 15px; width:100%;background-color:red;text-align: center;color: #FFFFFF;font-size: 20px;">
+					我 的
+				</div>
+			</div>
+			<!--<div class="title">
+				这是subNView模式选项卡中的第2个子页面，该页面展示一个通讯录示例
+			</div>-->
+
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" style="padding: 30px 0;margin-top: 40px;">
+
+				<li id="user_avatar" style="height: 80px;line-height: 80px;">
+					<label style="line-height: 50px;">头象 </label><img v-on:click="to_avatar" id="avatar" style="height: 60px;width: 60px;margin: 10px 10px 10px 0;float: right;" v-bind:src="avatarsrc(userdata.avatar)" alt="" />
+				</li>
+				<li id='user_t_name'>
+					<label>会员名</label>
+					
+					<label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;">
+						<input v-on:change="inputup('userName',userdata.userName)" type="text" style="font-size:16px;text-align:right;border:none;padding-bottom: 0;margin-bottom:0px;width:95%;"   placeholder="" v-model="userdata.userName"/>
+					</input>
+					</label>
+				</li>
+				<li id='user_phone'>
+					<label>手  机</label><label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;">{{userdata.mobile}}</label>
+				</li>				
+				<!--<li id='user_nickname'>
+					<label>昵  称</label><label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;"></label>
+				</li>-->
+				<!--<a herf="#popEditCard" style="color:#666 ;">-->
+				<li id='user_sex'    >
+					<label>性  别</label><label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;">	
+						<div style="display: flex;;margin-bottom: 10px;padding-bottom:10px ;">
+							<div >
+								<div class="mui-input-row mui-radio " v-on:change="inputup('sex',userdata.picked)">
+								<label style="margin: auto 30px;">女</label>
+								<input id="two" name="radio1" type="radio" value="2" v-model="userdata.picked">
+								</div>
+							</div>
+							<div class="mui-input-row mui-radio" >
+							
+								<div id="" style="margin-left: 30px;" v-on:change="inputup('sex',userdata.picked)">
+								<label style="margin-right:30px">男</label>
+								<input id="one" style="margin-left: 10px;" name="radio1" type="radio" value="1" checked v-model="userdata.picked">
+		
+								</div>
+							</div>
+						</div>
+					</label>
+
+				</li>
+				
+				
+				
+				<li v-on:click="choosedShop"  id='user_birthday' style="margin:20px auto;">
+					<label>生  日</label>
+					
+					<label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;" >
+						
+<!-- 						<input  v-on:change="('birthday',userdata.birthday)"   type="text" style="font-size:16px;text-align:right;border:none;padding-bottom: 0;margin-bottom:0px;width:95%;"   placeholder="" v-model="userdata.birthday"/>
+						</input>				 -->
+							
+						<label   type="text" style="font-size:16px;text-align:right;border:none;padding-bottom: 0;margin-bottom:0px;width:95%;"   >{{userdata.birthday}}
+						</label>				
+						
+					</label>
+
+				</li>
+				<!--</ul>-->
+				<!--	<ul>		-->
+				<li v-on:click="tomyqa()"  id='tomyqa' style="margin:20px auto;">
+					<label>我的问答</label>
+
+				</li>
+				<li v-if="roleid" v-on:click="torelease()"  id='torelease' style="margin:20px auto;">
+					<label>企业发单</label>
+
+				</li>		
+				<li v-on:click="tomychannel()"  id='tomychannel' style="margin:20px auto;">
+					<label>我的推广</label>
+
+				</li>
+				<li v-on:click="tomycarmessge()"  id='tomycarmessge' style="margin:20px auto;">
+					<label>我的认证信息</label>
+				</li>				
+				<!--<li id='user_weixin'>
+					<label></label><label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;"></label>
+				</li>-->
+				<li id='user_qq' style="margin-top: 60px;" >
+					<label v-on:click="logout">退出登陆</label><label style="float: right;margin-right: 10px;font-size: 14px;color: #BBBBBB;" ></label>
+                 </li>
+
+
+			</ul>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+	
+	<script>
+		console.log('me')
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		// window.addEventListener('loinged',function(){
+		// 	console.log('tab-webview-subpage-contackt.html;logined==')
+		// });
+		// console.log('localstorage=='+localStorage.length);
+		var obj = {
+			userdata:{
+				'userId':localStorage.getItem('userId'),
+				'avatar':localStorage.getItem('avatar'),
+				'userName':localStorage.getItem('userName'),
+				'mobile':localStorage.getItem('mobile'),
+				'picked':localStorage.getItem('sex'),
+				'birthday':localStorage.getItem('birthday')
+			},
+			role_id:localStorage.getItem('role_id')
+		};
+		var vm = new Vue({
+			el:'#app',
+			data:obj,
+			computed:{
+				roleid: function() {
+					if(this.role_id=1 || this.role_id=10){
+						return true;
+					}
+					var role = JSON.parse(this.role_id);
+					if(role.indexOf('10')){
+						return true;
+					}
+					return false;
+				}
+			},
+			mounted: function(){
+				
+				// this.role_id = localStorage.getItem('role_id');
+				console.log('this.role_id =='+this.role_id )
+			},
+			
+			methods:{
+				tomycarmessge:	function(s) {
+							webview = plus.webview.create('mycarmessge.html', 'mycarmessge.html', {
+								'titleNView': {
+									'backgroundColor': '#D74B28',
+									'titleText': '我的认证信息',
+									autoBackButton: true
+								}
+							}, {
+								preload: JSON.stringify(s)
+							});
+							webview.addEventListener('close', function() {
+								webview = null;
+							});
+							webview.addEventListener('titleUpdate', function() {
+								webview.show();
+							})
+						},					
+				tomyqa:	function(s) {
+	
+							webview = plus.webview.create('qa.html', 'qa.html', {
+								'titleNView': {
+									'backgroundColor': '#D74B28',
+									'titleText': '我的问答',
+									autoBackButton: true
+								}
+							}, {
+								preload: JSON.stringify(s)
+							});
+							webview.addEventListener('close', function() {
+								webview = null;
+							});
+							webview.addEventListener('titleUpdate', function() {
+								webview.show();
+							})
+						},				
+				torelease:	function(s) {
+	
+							webview = plus.webview.create('release.html', 'release.html', {
+								'titleNView': {
+									'backgroundColor': '#D74B28',
+									'titleText': '企业发单',
+									autoBackButton: true
+								}
+							}, {
+								preload: JSON.stringify(s)
+							});
+							webview.addEventListener('close', function() {
+								webview = null;
+							});
+							webview.addEventListener('titleUpdate', function() {
+								webview.show();
+							})
+						},
+				tomychannel:	function(s) {
+	
+							webview = plus.webview.create('channel.html', 'channel.html', {
+								'titleNView': {
+									'backgroundColor': '#D74B28',
+									'titleText': '我的推广',
+									autoBackButton: true
+								}
+							}, {
+								preload: JSON.stringify(s)
+							});
+							webview.addEventListener('close', function() {
+								webview = null;
+							});
+							webview.addEventListener('titleUpdate', function() {
+								webview.show();
+							})
+						},		
+				avatarsrc:function(s){
+					console.log('localStorage.getItem-name==='+localStorage.getItem('userName'));
+					console.log('L278--avatarsrc--s='+s);
+					console.log('APP_DOMAIN+avatar=='+APP_DOMAIN+s);
+					return APP_DOMAIN+s;
+				},
+				to_avatar:function(){
+						
+		            if (mui.os.plus) { 
+		                var a = [{ 
+		                    title: "拍照" 
+		                }, { 
+		                    title: "从手机相册选择" 
+		                }]; 
+		                plus.nativeUI.actionSheet({ 
+		                    title: "修改用户头像", 
+		                    cancel: "取消", 
+		                    buttons: a 
+		                }, function(b) { /*actionSheet 按钮点击事件*/ 
+		                    switch (b.index) { 
+		                        case 0: 
+		                            break; 
+		                        case 1: 
+		                            getImage(); /*拍照*/ 
+		                            break; 
+		                        case 2: 
+		                            galleryImg();/*打开相册*/ 
+		                            break; 
+		                        default: 
+		                            break; 
+		                    } 
+		                }) 
+		            }
+		            
+  //拍照 
+        function getImage() { 
+            var c = plus.camera.getCamera(); 
+            c.captureImage(function(e) { 
+                plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+                    var s = entry.toLocalURL() + "?version=" + new Date().getTime(); 
+                    uploadHead(s); /*上传图片*/ 
+                }, function(e) { 
+                    console.log("读取拍照文件错误：" + e.message); 
+                }); 
+            }, function(s) { 
+                console.log("error" + s); 
+            }, { 
+                filename: "_doc/head.png" 
+            }) 
+        }    
+        
+ //本地相册选择 
+        function galleryImg() { 
+            plus.gallery.pick(function(a) { 
+                plus.io.resolveLocalFileSystemURL(a, function(entry) { 
+                    plus.io.resolveLocalFileSystemURL("_doc/", function(root) { 
+                        root.getFile("head.png", {}, function(file) { 
+                            //文件已存在 
+                            file.remove(function() { 
+                                console.log("file remove success"); 
+                                entry.copyTo(root, 'head.png', function(e) { 
+                                        var e = e.fullPath + "?version=" + new Date().getTime(); 
+                                        uploadHead(e); /*上传图片*/ 
+                                        //变更大图预览的src 
+                                        //目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+                                    }, 
+                                    function(e) { 
+                                        console.log('copy image fail:' + e.message); 
+                                    }); 
+                            }, function() { 
+                                console.log("delete image fail:" + e.message); 
+                            }); 
+                        }, function() { 
+                            //文件不存在 
+                            entry.copyTo(root, 'head.png', function(e) { 
+                                    var path = e.fullPath + "?version=" + new Date().getTime(); 
+                                    uploadHead(path); /*上传图片*/ 
+                                }, 
+                                function(e) { 
+                                    console.log('copy image fail:' + e.message); 
+                                }); 
+                        }); 
+                    }, function(e) { 
+                        console.log("get _www folder fail"); 
+                    }) 
+                }, function(e) { 
+                    console.log("读取拍照文件错误：" + e.message); 
+                }); 
+            }, function(a) {}, { 
+                filter: "image" 
+            }) 
+        };        
+        
+        
+            
+//上传头像图片 
+
+// 		var token = localStorage.getItem('$token') || "{}";
+//		token =  JSON.parse(token);
+ 		var api_token = localStorage.getItem('api_token') || "{}";
+//		token =  JSON.parse(token);		
+        function uploadHead(imgPath) {
+//      	var mainImage={};
+            console.log("imgPath = " + imgPath); 
+//          mainImage.src = imgPath; 
+//          mainImage.style.width = "60px"; 
+//          mainImage.style.height = "60px"; 
+            var image = new Image();
+            image.src = imgPath;
+            image.onload = function() {
+			console.log('upload--api_token=='+api_token);
+           //服务端接口路径
+            var server = APP_DOMAIN+"api/upload/avatar";
+            //获取图片元素
+//          var files = document.getElementById('headimg');
+            var files = image;
+
+            // 上传文件
+                var wt=plus.nativeUI.showWaiting();
+                var task=plus.uploader.createUpload(server,
+                    {method:"POST"},
+                    function(t,status){ //上传完成
+                        if(status==200){
+                        	console.log('上传完成');
+                        	console.log(JSON.stringify(t.responseText));
+                        	    vm.userdata.avatar = t.responseText;
+                            localStorage.setItem('avatar',t.responseText);
+                            wt.close(); //关闭等待提示按钮
+                        }else{
+                        	console.log('上传失败'+JSON.stringify(t));
+                            wt.close();//关闭等待提示按钮
+                        }
+                    }
+                );  
+                //添加其他参数
+                task.addData("api_token",api_token);
+                var filev = task.addFile(files.src,{key:"avatar"});
+                task.start();      
+            } 
+   		 } 
+    
+				 /**
+				 * 旋转图片
+				 * @param image         HTMLImageElement
+				 * @returns newImage    HTMLImageElement
+				 */
+				function rotateImage(image) {
+				    console.log('rotateImage');
+				
+				    var width = image.width;
+				    var height = image.height;
+				
+				    var canvas = document.createElement("canvas")
+				    var ctx = canvas.getContext('2d');
+				
+				    var newImage = new Image();
+				
+				    //旋转图片操作
+				    EXIF.getData(image,function () {
+				            var orientation = EXIF.getTag(this,'Orientation');
+				            // orientation = 6;//测试数据
+				            console.log('orientation:'+orientation);
+				            switch (orientation){
+				                //正常状态
+				                case 1:
+				                    console.log('旋转0°');
+				                    // canvas.height = height;
+				                    // canvas.width = width;
+				                    newImage = image;
+				                    break;
+				                //旋转90度
+				                case 6:
+				                    console.log('旋转90°');
+				                    canvas.height = width;
+				                    canvas.width = height;
+				                    ctx.rotate(Math.PI/2);
+				                    ctx.translate(0,-height);
+				
+				                    ctx.drawImage(image,0,0)
+				                    imageDate = canvas.toDataURL('Image/jpeg',1)
+				                    newImage.src = imageDate;
+				                    break;
+				                //旋转180°
+				                case 3:
+				                    console.log('旋转180°');
+				                    canvas.height = height;
+				                    canvas.width = width;
+				                    ctx.rotate(Math.PI);
+				                    ctx.translate(-width,-height);
+				
+				                    ctx.drawImage(image,0,0)
+				                    imageDate = canvas.toDataURL('Image/jpeg',1)
+				                    newImage.src = imageDate;
+				                    break;
+				                //旋转270°
+				                case 8:
+				                    console.log('旋转270°');
+				                    canvas.height = width;
+				                    canvas.width = height;
+				                    ctx.rotate(-Math.PI/2);
+				                    ctx.translate(-height,0);
+				
+				                    ctx.drawImage(image,0,0)
+				                    imageDate = canvas.toDataURL('Image/jpeg',1)
+				                    newImage.src = imageDate;
+				                    break;
+				                //undefined时不旋转
+				                case undefined:
+				                    console.log('undefined  不旋转');
+				                    newImage = image;
+				                    break;
+						            }
+						        }
+						    );
+						    return newImage;
+						}
+			        //将图片压缩转成base64 
+			        function getBase64Image(img) { 
+			            var canvas = document.createElement("canvas"); 
+			            var width = img.width; 
+			            var height = img.height; 
+			            // calculate the width and height, constraining the proportions 
+			            if (width > height) { 
+			                if (width > 100) { 
+			                    height = Math.round(height *= 100 / width); 
+			                    width = 100; 
+			                } 
+			            } else { 
+			                if (height > 100) { 
+			                    width = Math.round(width *= 100 / height); 
+			                    height = 100; 
+			                } 
+			            } 
+			            canvas.width = width;   /*设置新的图片的宽度*/ 
+			            canvas.height = height; /*设置新的图片的长度*/ 
+			            var ctx = canvas.getContext("2d"); 
+			            ctx.drawImage(img, 0, 0, width, height); /*绘图*/ 
+			            var dataURL = canvas.toDataURL("image/png", 0.8); 
+			                return dataURL; 
+			        }
+				},
+				inputup:function(filedname,s){
+					console.log('L518--filedname==='+filedname+';s==='+s);
+					localStorage.setItem(filedname,s);
+					
+					mui.ajax(APP_DOMAIN+'api/user/'+vm.userdata.userId,{
+						data:{
+							api_token:localStorage.getItem('api_token'),
+							filedname:filedname,
+							s:s
+						},
+						dataType:'json',
+						type:'patch',
+						timeout:10000,
+						headers:{'Content-Type':'application/json'},
+						success:function(data){
+							console.log('data---'+JSON.stringify(data));
+//							localStorage.setItem();
+						},
+						error:function(xhr,type,errorThrown){
+							console.log(xhr.response);
+							console.log(type);
+						}
+					})
+				},
+				choosedShop:function(){
+						var dtpicker = new mui.DtPicker({type:"date",beginDate:new Date(1960,01,01),endDate: new Date(2004,12,12),labels:['年','月','日']});
+					dtpicker.show(function(e) { 
+						vm.userdata.birthday = e.value;
+					    console.log('typeof(e==='+JSON.stringify(e.value)); 
+					})
+					this.$options.methods.inputup('birthday',vm.userdata.birthday);
+					
+				},
+				logout:function(){
+					console.log('logout-token=='+localStorage.getItem('api_token'));
+					
+					mui.post(APP_DOMAIN+'api/logout',{
+						'api_token':localStorage.getItem('api_token')
+					},function(data){
+						console.log('logout==='+JSON.stringify(data));
+						localStorage.clear();
+						console.log('localStorage.length==='+localStorage.length);
+						
+						if(window.plus){
+							plusReady();
+						}else{
+							Document.addEventListener('plusready',plusReady,false);
+						};
+						function plusReady(){
+							// 获取应用首页窗口对象
+							var h=plus.webview.getLaunchWebview();
+							var ws=plus.webview.currentWebview();
+
+							console.log('应用首页Webview窗口：'+h.getURL());
+							console.log('应用当前Webview窗口：'+ws.getURL());
+								mui.fire(h,'toTab');
+								plus.webview.show(h);
+								plus.webview.hide(ws);
+						};
+						if(window.plus){
+							plusReady();
+						}else{
+							document.addEventListener('plusready', plusReady, false);
+						};
+						mui.toast('亲，你已退出帐号');
+					},'json')
+					console.log('跳出AJAX---');
+				}
+			}
+		});
+		window.addEventListener('customEvent',function(event){
+			vm.userdata.userId = localStorage.getItem('userId');
+			vm.userdata.userName = localStorage.getItem('userName');
+			vm.userdata.mobile = localStorage.getItem('mobile');
+			vm.userdata.picked = localStorage.getItem('sex');
+			vm.userdata.birthday = localStorage.getItem('birthday');
+			vm.userdata.avatar = localStorage.getItem('avatar');
+			vm.role_id=localStorage.getItem('role_id')
+		})
+	</script>
+
+</html>

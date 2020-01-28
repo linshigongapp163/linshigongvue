@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+			
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+			
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+			
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+			
+			.bottomtitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				bottom: 0;
+				height: 50px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+			}
+			
+			.leftbutton {
+				left: 5px;
+				float: left;
+				color: red;
+			}
+			
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+			
+			.subbottom {
+				top: 5px;
+				width: 130px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+			
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+			
+			.item {
+				text-align: center;
+			}
+			
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+			
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+			[v-cloak]{
+				/* display: none; */
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+<!-- 			<div id="" class="bottomtitle">
+				<div id="leftbutton" class="leftbutton subbottom">yes</div>
+				<div id="rightbutton" class="rightbutton subbottom" v-on:click="toenlist(detaildata.title)">no</div>
+			</div> -->
+			<div id="allmap" class="mui-content" style="position: absolute ;margin-top: 0px;width: 100%;">
+				<div id="" style="background-color: white;margin:10px">
+test
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					// sliderfirstend:{
+					// 	first:'../myimg/c.png',
+					// 	end:'../myimg/a.png'
+					// },
+					// sliderLists:[{
+     //                        textdata: '',
+     //                        scene: '',
+     //                        photo: '../myimg/a.png'
+     //                    }, {
+     //                        title: '',
+     //                        url: '',
+     //                        photo: '../myimg/b.png'
+     //                    }, {
+     //                        title: '',
+     //                        url: '',
+     //                        photo: '../myimg/c.png'
+     //                    },{
+     //                        title: '',
+     //                        url: '',
+     //                        photo: '../myimg/c.png'
+     //                    }],
+// 					imagesdata:{
+// 						nnn:[{ //图片路径和图片大小
+// 								src: '../myimg/a.png',
+// 								width: '100%'
+// 							}, {
+// 								src: '../myimg/b.png',
+// 								width: '100%'
+// 							}, {
+// 								src: '../myimg/c.png',
+// 								width: '100%'
+// 							}, {
+// 								src: '../myimg/c.png',
+// 								width: '100%'
+// 							}]
+// 					},
+// 					parentmsg: 'display:none',
+// 					factoryphoto: {
+// 
+// 					},
+					detaildata: {
+					}
+				}
+			};
+
+			var vm = new Vue({
+//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+                var sliderMuiObj = mui('.mui-slider');
+                sliderMuiObj.slider({
+                    interval: 3000
+                });
+
+				},
+					
+				created: function() {
+				},
+				mounted: function(){
+					mui.init({
+						swipeBack: false //关闭-右滑关闭功能
+					});
+					mui.plusReady(function() {
+						var self = plus.webview.currentWebview();
+						vm.detaildata = JSON.parse(self.preload);
+						console.log('vm.detaildata=='+vm.detaildata["point"].lng+';lat='+vm.detaildata["point"].lat);
+						// alert('vm.detaildata=='+vm.detaildata["point"].lng+'lat'+vm.detaildata["point"].lat);
+						
+						var map = new BMap.Map("allmap");    // 创建Map实例
+						var point = new BMap.Point(vm.detaildata["point"].lng, vm.detaildata["point"].lat);
+						map.centerAndZoom(point,11);  // 初始化地图,设置中心点坐标和地图级别
+						//添加地图类型控件
+						map.addControl(new BMap.MapTypeControl({
+							mapTypes:[
+								BMAP_NORMAL_MAP,
+								BMAP_HYBRID_MAP
+							]}));	  
+						map.setCurrentCity("苏州");          // 设置地图显示的城市 此项是必须设置的
+						map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+						// map.centerAndZoom()
+						
+						
+						var marker = new BMap.Marker(point); //创建标注
+						map.addOverlay(marker);               //将标注添加到地图中
+						marker.setAnimation(BMAP_ANIMATION_BOUNCE);//跳动的动画
+						
+						var pt = new BMap.Point(vm.detaildata["point"].lng, vm.detaildata["point"].lat);
+						// var myIcon = new BMap.Icon( '../myimg/fox.gif’, new BMap.Size(300,157));
+						var myIcon = new BMap.Icon("../myimg/fox.gif", new BMap.Size(150,157));
+						var marker2 = new BMap.Marker(pt,{icon:myIcon}); //创建标注
+						map.addOverlay(marker2);
+						
+						var label = new BMap.Label("上班地点",{offset:new BMap.Size(20,-10)});
+						marker2.setLabel(label);
+						
+						
+						// alert('mypoint==='+JSON.stringify( vm.detaildata["mypoint"].longitude) );
+						// var mypt = new BMap.Point(vm.detaildata["mypoint"].longitude, vm.detaildata["mypoint"].latitude);
+						
+
+						// var marker3 = new BMap.Marker(mypt,{icon:myIcon}); //创建标注
+						// map.addOverlay(marker3);
+						// marker3.setAnimation(BMAP_ANIMATION_BOUNCE);//跳动的动画
+						
+						// var label = new BMap.Label("我的位置",{offset:new BMap.Size(20,-10)});
+						// marker3.setLabel(label);
+						
+						
+					});					
+
+// var em = null,
+// map = null;
+// document.addEventListener("DOMContentLoaded",function(){
+// 	em = document.getElementById("allmap");
+// 	plusReady();
+// },false);
+// function plusReady() {
+// 	if(!em || !window.plus || map) {
+// 		return;
+// 	}
+// 	map = new plus.maps.Map("allmap");
+// }
+
+				},
+				methods: {
+					tostyle: function(s) {
+						console.log('sliderLists====='+JSON.stringify(vm.sliderLists));
+					},
+					toshowpic: function() {
+						if(localStorage.getItem('api_token')) {
+						if(vm.sliderLists[1]&vm.sliderLists[2]&vm.sliderLists[3]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[2].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[3].photo,
+								width: '100%'
+							}]							
+						}else if(vm.sliderLists[2]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[2].photo,
+								width: '100%'
+							}]								
+							
+						}else if(vm.sliderLists[1]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}]							
+						}else if(vm.sliderLists[0]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}]							
+						};
+
+						var webview = plus.webview.create("slider-native.html", "slider-native", {
+							titleNView: { //配置标题
+								'backgroundColor': '#FF4500', //导航栏背景色
+								'titleText': vm.detaildata.title, //导航栏标题
+								'titleColor': '#000000', //文字颜色
+								autoBackButton: true //自动绘制返回箭头
+							},
+							subNViews: [{ //配置图片轮播
+								id: 'slider-native',
+								type: 'ImageSlider',
+								styles: { //这里的left和top是控制控件的位置；Width和height控制控件大小
+									left: 0,
+									top: 0,
+									width: '100%',
+									height: '200px',
+									position: 'static', //static正常定位随窗口滚动，absolute时不随页面滚动
+									type: 'transparent', //透明渐变样式标题栏，可以使slider通顶，更加美观
+									loop: true, //是否循环播放
+									images:subnviewimgdata
+									
+								}
+							}]
+						}, {
+							obj: JSON.stringify(vm.detaildata)
+						});
+						webview.show("slide-in-right"); //显示webview
+						}else{
+							mui.openWindow('../html/login.html', 'login.html');								
+						}
+					},
+					toenlist: function(s) {
+						if(localStorage.getItem('api_token')) {
+
+							var btnArray = ['按错了', '是的'];
+
+							mui.prompt(s, '留言', '亲，要报名么？', btnArray, function(e) {
+								if(e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data: {
+											api_token: localStorage.getItem('api_token'),
+											title: vm.detaildata.title,
+											name: localStorage.getItem('userName'),
+											sex: localStorage.getItem('sex'),
+											mobile: localStorage.getItem('mobile'),
+											text: e.value,
+											user_id: localStorage.getItem('userId'),
+											recruit_id: vm.detaildata.id,
+											subsidy: vm.detaildata.subsidy
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('enlist---data---' + JSON.stringify(data));
+											mui.toast('报名已提交')
+											localStorage.setItem('enlist', vm.detaildata.title);
+											localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											var newwebview = plus.webview.getElementById('new-webview.html');
+											mui.fire(newwebview, 'enlist', {
+												detaildata: {
+													enlist: vm.detaildata.title,
+													subsidy: vm.detaildata.subsidy
+												}
+											})
+
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					}
+				},
+		});
+		</script>
+
+	</body>
+
+</html>

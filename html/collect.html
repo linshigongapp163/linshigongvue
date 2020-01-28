@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>collect</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script> -->
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+<!-- 		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css"> -->
+		<!-- <link rel="stylesheet" href="../css2/oil.css"> -->
+		<!-- <link href="../css/iconfont.css" rel="stylesheet" /> -->
+		<script src="../js/common.js"></script>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+			<div class="" style="width:100%;position: fixed;top:-10px;z-index: 9999;background-color: #efeff4;">
+				<div style="padding: 15px; width:100%;background-color:red;text-align: center;color: #FFFFFF;font-size: 20px;">
+					收 藏
+				</div>
+			</div>
+
+			<div style="margin-top: 200px;" align="center">
+				<img src="../images/timg.gif" style="width: 30%;">
+			</div>
+			<div style="color: #AAAAAA;text-align: center;margin-top: 30px;font-size: 16px;">
+				你啥也没收藏噢！
+			</div>
+			<!-- <div class="mui-content" style="background: #FFFFFF;"> -->
+
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			console.log('L41-----collect')
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {
+					},
+					mypoint:''
+				}
+			};
+
+			var vm = new Vue({
+//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+                var sliderMuiObj = mui('.mui-slider');
+                sliderMuiObj.slider({
+                    interval: 3000
+                });
+
+				},
+				mounted: function(){
+			(function() {
+				mui.init({
+					swipeBack: false //关闭-右滑关闭功能
+				});
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					// vm.detaildata = JSON.parse(self.preload);
+					// alert(self.preload);
+					mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+
+					}, 'json');
+
+				});
+			})();					
+				},
+				methods: {
+
+				},
+		});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>账号与安全</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!-- <link rel="stylesheet" href="../css/mui.picker.min.css"> -->
+		<!-- <link rel="stylesheet" href="../css/mui.poppicker.css"> -->
+		<!-- <link rel="stylesheet" href="../css2/oil.css"> -->
+
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="mui-popup mui-popup-in" :style="{display:dp}">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title" style="color: #AAAAAA;">注销帐号</div>
+					<div class="mui-popup-text">你真的打算注销帐号？</div>
+				</div>
+				<div class="mui-popup-buttons"><span class="mui-popup-button" style="color: #AAAAAA;" v-on:click="to_y">是</span><span
+					 class="mui-popup-button mui-popup-button-bold" style="color: red;" v-on:click="to_no">否</span></div>
+			</div>
+			<div id="" class="toptitle">
+				<div id="confirmBtn" style="border-radius: 5px;background-color:#AAAAAA;color: white;width: 90%;margin-left: 5%;line-height: 40px;text-align: center;font-size: 16px;margin-top: 55px;margin-bottom: 60px;color: white;"
+				 v-on:click="delet_account">
+					注 &nbsp 销 &nbsp 帐 &nbsp 户
+				</div>
+			</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					dp: 'none',
+				}
+
+			};
+			var vm = new Vue({
+				el: '#app',
+				data: obj,
+				updated: function() {},
+				mounted: function() {},
+				methods: {
+					to_no: function() {
+						vm.dp = 'none'
+					},
+					to_y: function() {
+						console.log('account_security.html--L57;')
+						console.log('account_security.html---api_token==' + localStorage.getItem('api_token'))
+						mui.post(APP_DOMAIN + 'api/delete_user', {
+							'api_token': localStorage.getItem('api_token')
+						}, function(data) {
+							console.log('logout===' + JSON.stringify(data));
+							localStorage.clear();
+							// console.log('localStorage.length===' + localStorage.length);
+
+							// if (window.plus) {
+							// 	plusReady();
+							// } else {
+							// 	Document.addEventListener('plusready', plusReady, false);
+							// };
+
+							// function plusReady() {
+							// 	// 获取应用首页窗口对象
+							// 	var h = plus.webview.getLaunchWebview();
+							// 	var ws = plus.webview.currentWebview();
+
+							// 	console.log('应用首页Webview窗口：' + h.getURL());
+							// 	console.log('应用当前Webview窗口：' + ws.getURL());
+							// 	mui.fire(h, 'toTab');
+							// 	plus.webview.show(h);
+							// 	plus.webview.hide(ws);
+							// };
+							// if (window.plus) {
+							// 	plusReady();
+							// } else {
+							// 	document.addEventListener('plusready', plusReady, false);
+							// };
+							mui.plusReady();
+								mui.toast('你的帐号已注销');
+								var h = plus.webview.getLaunchWebview();
+								var w = plus.webview.getWebviewById('html/tab-webview-subpage-contact.html');
+								mui.fire(h, 'toTab');
+								plus.webview.show(h);
+								plus.webview.hide(w);
+								// var a = plus.webview.getWebviewById('account_security.html');
+								
+								// plus.webview.currentWebview().close();
+								// a.close();
+								// 获取应用首页窗口对象
+								console.log('应用首页Webview窗口：' + h.getURL());
+								// console.log('应用当前Webview窗口：' + ws.getURL());
+							
+
+
+						}, 'json')
+						console.log('跳出AJAX---');
+					},
+					delet_account: function() {
+						console.log('account_security.html--L84')
+						vm.dp = 'block'
+					}
+				},
+			});
+		</script>
+
+	</body>
+
+</html>

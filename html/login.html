@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/common.js"></script>
+		<!-- <script src="../js/privacyagreement.js"></script> -->
+		<script src="../js/util.js"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body,
+			html {
+				height: 100%;
+				background: white;
+			}
+
+			.content {
+				max-widthwidth: 100%;
+				/*height: 100%;*/
+				background: white;
+				color: red;
+				margin-top: 0px;
+				padding-top: 15px;
+			}
+
+			div {
+				color: red;
+				background: white;
+				/*width: 100%;*/
+				/*text-align: center;*/
+				margin: auto 10px;
+				font-size: 14px;
+			}
+
+			.downline {
+				border-bottom: 1px solid red;
+				min-height: 35px;
+				margin-bottom: 10px;
+			}
+
+			.option {
+				margin: auto 0;
+			}
+
+
+			.modal-mask {
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: rgba(55, 55, 55, .6);
+				z-index: 100;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header>
+		</header>
+		<div id="app" class="content">
+
+
+			<i id="xxx" class="mui-icon " style="margin-left:10px;font-size: 26px;color: red;margin-top:20px;margin-bottom: 30px;color: #000000;"
+			 v-on:click="xxx">
+				< </i> <div style="text-align: left;">
+		</div>
+		<div v-if="loginlable!==''">
+			<h2>用户登录</h1>
+		</div>
+		<div style="color: #CCCCCC;margin-top: 15px;">
+			登录即表明同意 <span style="color: skyblue;" v-on:click="user">临时工用户协议</span> 和 <span style="color: skyblue;" v-on:click="privacy">隐私政策</span>
+		</div>
+		<div style="margin-top: 30px; color: #000000;">
+			手机号
+		</div>
+		<div id="" class="downline">
+			<input type="tel" style="border:none;padding-bottom: 0;margin-bottom:0;color: #000000;" @blur.prevent="blurFn"
+			 placeholder="" v-model="formdata.phone" /></input>
+		</div>
+
+		<div v-show="codein" class="option" v-if="loginlable !==''">
+			<div style="color: #000000;">
+				输入收到的验证码
+			</div>
+			<div class="downline" style="padding-bottom: 0px;">
+
+
+				<input type="text" style="color:#000000;border:none;padding-top: 60px;font-size:18px;padding-bottom: 20;margin-bottom:20;width:70%;"
+				 placeholder="" v-model="formdata.code" /></input>
+
+
+
+				<span style="float: right;color:skyblue;padding-top: 45px;" v-on:click="getcode()">获取验证码</span>
+			</div>
+		</div>
+		<div v-show="passwordin" class="option" v-if="loginlable !==''">
+			<div style="color: #000000;">
+				请输入 密 码
+			</div>
+			<div class="downline" style="padding-bottom: 0px;">
+
+
+				<input type="text" style="color:#000000;border:none;padding-top: 60px;font-size:18px;padding-bottom: 20;margin-bottom:20;width:70%;"
+				 placeholder="" v-model="formdata.opassword" /></input>
+
+
+
+				<!-- 				<span style="float: right;color:#000000;padding-top: 45px;" v-on:click="getcode()">获取验证码</span> -->
+			</div>
+		</div>
+		<div v-show="passwordinbutton" id="" style="color: skyblue;">
+			<span v-on:click="usepassword"> 使用密码登录</span>
+		</div>
+		<div v-show="codeinbutton" id="" style="color: skyblue;">
+			<span id="" v-on:click="usecode">
+				使用验证码注册登录
+			</span>
+		</div>
+		<div style="border-radius: 5px;background-color: red;color: white;width: 90%;margin-left: 5%;line-height: 40px;text-align: center;font-size: 22px;margin-top: 55px;margin-bottom: 60px;color: white;"
+		 v-on:click="register_submit()">
+			确 &nbsp&nbsp认
+		</div>
+		<user-acy v-bind:showuser="showuser" @thuser="ouser">
+
+		</user-acy>
+
+
+
+		<div id="" style="min-height: 55px;">
+
+		</div>
+		<pariv-acy v-bind:show="show" @thop="op">
+		</pariv-acy>
+		<script type="text/x-template" id="user-agreement">
+			<div class="modal-mask" v-show="showuser" style="margin: auto 0;">
+        <div class="modal-confirm" style="width: 90%;">
+			<div class="confirm-btns" style="text-align: center; margin: 30px auto;">
+			    <!-- <button class="btn" @click="op(1)">取 消</button> -->
+			    <button style="background-color: red;color: beige;"  @click="userop">我已了解并同意以下内容</button>
+			</div>
+				<h4 class="confirm-header" style="color: #000000;text-align: center;margin: 20px auto;" >
+				    <i class="iconfont icon-questioncircle"></i> 用户协议
+				</h4>
+				<div class="confirm-content">
+				                <p >
+
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>特别提示</strong></span> 
+                  </p>
+
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》 （以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。 您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。 本协议约定LinshiGong.com(临时工App)与用户之间关于“LinshiGong.com(临时工App)”软件服务（以下简称“服务”）的权利义务。 “用户”是指注册、登录、使用本服务的个人。本协议可由LinshiGong.com(临时工App)随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本网站查阅最新版协议条款。在LinshiGong.com(临时工App)修改协议条款后，如果用户不接受修改后的条款，请立即停止使用</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">提供的服务，用户继续使用LinshiGong.com(临时工App)提供的服务将被视为接受修改后的协议。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <strong>
+                    <span style="font-size:16px;">一、账号注册</span></strong> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、用户在使用本服务前需要注册一个“LinshiGong.com(临时工App)”账号。“LinshiGong.com(临时工App)”账号应当使用手机号码绑定注册，请用户使用尚未与“LinshiGong.com(临时工App)”账号绑定的手机号码，以及未被LinshiGong.com(临时工App)根据本协议封禁的手机号码注册“LinshiGong.com(临时工App)”账号。LinshiGong.com(临时工App)可以根据用户需求或产品需要对账号注册和绑定的方式进行变更，而无须事先通知用户。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、鉴于“LinshiGong.com(临时工App)”账号包含手机绑定注册方式，您同意LinshiGong.com(临时工App)在注册时将使用您提供的手机号码及/或自动提取您的手机号码及自动提取您的手机设备识别码等信息用于注册。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、在用户注册及使用本服务时，LinshiGong.com(临时工App)需要搜集能识别用户身份的个人信息以便 </span>
+                    <span style="font-size:14px;">LinshiGong.com(</span>
+                    <span style="font-size:14px;">临时工App)可以在必要时联系用户，或为用户提供更好的使用体验。LinshiGong.com(临时工App)搜集的信息包括但不限于用户的姓名、性别、年龄、出生日期、身份证号、地址、学校情况、公司情况、 所属行业、兴趣爱好、常出没的地方、个人说明；LinshiGong.com(临时工App)同意对这些信息的使用将受限于第三条用户个人隐私信息保护的约束。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>二、服务内容</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">本服务的具体内容由LinshiGong.com(临时工App)根据实际情况提供，包括但不限于授权用户通过其账号进行即时通讯、加入群组、关注他人。LinshiGong.com(临时工App)可以对其提供的服务予以变更，且</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">提供的服务内容可能随时变更；用户将会收到LinshiGong.com(临时工App)关于服务变更的通知。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>三、用户个人隐私信息保护</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、用户在注册账号或使用本服务的过程中，可能需要填写或提交一些必要的信息， 如法律法规、规章规范性文件（以下称“法律法规”）规定的需要填写的身份信息。如用户提交的信息不完整或不符合法律法规的规定，则用户可能无法使用本服务或在使用本服务的过程中受到限制。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、个人隐私信息是指涉及用户个人身份或个人隐私的信息，比如，用户真实姓名、 身份证号、手机号码、手机设备识别码、IP地址、用户聊天记录。非个人隐私信息是指用户对本服务的操作状态以及使用习惯等明确且客观反映在LinshiGong.com(临时工App)服务器端的基本记录信息、个人隐私信息范围外的其它普通信息，以及用户同意公开的上述隐私信息。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、LinshiGong.com(临时工App)未经用户同意不向任何第三方公开、透露用户个人隐私信息。但以下特定情形除外：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）LinshiGong.com(临时工App)根据法律法规规定或有权机关的指示提供用户的个人隐私信息；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）由于用户将其用户密码告知他人或与他人共享注册帐户与密码，由此导致的任何个人信息的泄漏，或其他非因LinshiGong.com(临时工App)原因导致的个人隐私信息的泄露；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）用户自行向第三方公开其个人隐私信息；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）用户与LinshiGong.com(临时工App)及合作单位之间就用户个人隐私信息的使用公开达成约定，</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">因此向合作单位公开用户个人隐私信息；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（5）任何由于黑客攻击、电脑病毒侵入及其他不可抗力事件导致用户个人隐私信息 的泄露。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">4、用户同意LinshiGong.com(临时工App)可在以下事项中使用用户的个人隐私信息：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）LinshiGong.com(临时工App)向用户及时发送重要通知，如软件更新、本协议条款的变更；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）LinshiGong.com(临时工App)内部进行审计、数据分析和研究等，以改进LinshiGong.com(临时工App)的产品、服务和与用户之间的沟通；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）依本协议约定，LinshiGong.com(临时工App)管理、审查用户信息及进行处理措施；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）适用法律法规规定的其他事项。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">除上述事项外，如未取得用户事先同意，LinshiGong.com(临时工App)不会将用户个人隐私信息使用于任何其他用途。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>四、内容规范</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、本条所述内容是指用户使用本服务过程中所制作、上载、复制、发布、传播的任 何内容，包括但不限于账号头像、名称、用户说明等注册信息及认证资料，或文字、语音、 图片、视频、图文等发送、回复或自动回复消息和相关链接页面，以及其他使用账号或本服务所产生的内容。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、用户不得利用“LinshiGong.com(临时工App)”账号或本服务制作、上载、复制、发布、传播如下法律、 法规和政策禁止的内容：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）反对宪法所确定的基本原则的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）损害国家荣誉和利益的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）煽动民族仇恨、民族歧视，破坏民族团结的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（5）破坏国家宗教政策，宣扬邪教和封建迷信的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（6）散布谣言，扰乱社会秩序，破坏社会稳定的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（7）散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（8）侮辱或者诽谤他人，侵害他人合法权益的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（9）含有法律、行政法规禁止的其他内容的信息。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、用户不得利用“LinshiGong.com(临时工App)”账号或本服务制作、上载、复制、发布、传播如下干扰 “LinshiGong.com(临时工App)”正常运营，以及侵犯其他用户或第三方合法权益的内容：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）含有任何性或性暗示的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）含有辱骂、恐吓、威胁内容的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）含有骚扰、垃圾广告、恶意信息、诱骗信息的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）涉及他人隐私、个人信息或资料的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（5）侵害他人名誉权、肖像权、知识产权、商业秘密等合法权利的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（6）含有其他干扰本服务正常运营和侵犯其他用户或第三方合法权益内容的信息。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">一经发现，即刻删除。必要时将对用户账户做封禁处理。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>五、使用规则</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、用户在本服务中或通过本服务所传送、发布的任何内容并不反映或代表，也不得被视为反映或代表LinshiGong.com(临时工App)的观点、立场或政策，LinshiGong.com(临时工App)对此不承担任何责任。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、用户不得利用“LinshiGong.com(临时工App)”账号或本服务进行如下行为：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）提交、发布虚假信息，或盗用他人头像或资料，冒充、利用他人名义的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）强制、诱导其他用户关注、点击链接页面或分享信息的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）虚构事实、隐瞒真相以误导、欺骗他人的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）利用技术手段批量建立虚假账号的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（5）利用“LinshiGong.com(临时工App)”账号或本服务从事任何违法犯罪活动的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（6）制作、发布与以上行为相关的方法、工具，或对此类方法、工具进行运营或传播，无论这些行为是否为商业目的；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（7）其他违反法律法规规定、侵犯其他用户合法权益、干扰“LinshiGong.com(临时工App)”正常运营或 </span>
+                    <span style="font-size:14px;">LinshiGong.com(</span>
+                    <span style="font-size:14px;">临时工App)未明示授权的行为。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、用户须对利用“LinshiGong.com(临时工App)”账号或本服务传送信息的真实性、合法性、无害性、准确性、有效性等全权负责，与用户所传播的信息相关的任何法律责任由用户自行承担，与 </span>
+                    <span style="font-size:14px;">LinshiGong.com(</span>
+                    <span style="font-size:14px;">临时工App)无关。如因此给LinshiGong.com(临时工App)或第三方造成损害的，用户应当依法予以赔偿。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">4、用户可以自主选择软件中的简历模块，用户在填写平台上的简历后，用户理解并同意LinshiGong.com(临时工App)会将简历放入LinshiGong.com(临时工App)的数据库，LinshiGong.com(临时工App)认证及合作的企业可通过LinshiGong.com(临时工App)的简历数据库找到用户的简历。LinshiGong.com(临时工App)会将用户的简历共享给其他合作平台上的招聘企业查看或下载，LinshiGong.com(临时工App)会要求合作招聘网站做好用户的信息安全和保密。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>六、帐户与频道管理</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、“LinshiGong.com(临时工App)”账号的所有权归LinshiGong.com(临时工App)所有，用户完成申请注册手续后，获得“</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">”账号的使用权，该使用权仅属于初始申请注册人，禁止赠与、借用、租用、转让或售卖。LinshiGong.com(临时工App)因经营需要，有权回收用户的“LinshiGong.com(临时工App)”账号。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、用户应遵守本协议的各项条款，正确、适当地使用本服务，如因用户违反本协议中的任何条款，LinshiGong.com(临时工App)在通知用户后有权依据协议中断或终止对违约用户“LinshiGong.com(临时工App)”账号提供服务。同时，LinshiGong.com(临时工App)保留在任何时候收回“LinshiGong.com(临时工App)”账号、用户名的权利。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、用户可以更改、删除“LinshiGong.com(临时工App)”帐户上的个人资料、注册信息及传送内容等，但需注意，删除有关信息的同时也会删除用户储存在系统中的文字和图片。用户需承担该风险。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">4、用户有责任妥善保管注册账号信息及账号密码的安全，因用户保管不善可能导致遭受盗号或密码失窃，责任由用户自行承担。用户需要对注册账号以及密码下的行为承担法律责任。用户同意在任何情况下不使用其他用户的账号或密码。在用户怀疑他人使用其账号或密码时，用户同意立即通知LinshiGong.com(临时工App)。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>七、风险承担</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、用户理解并同意，“LinshiGong.com(临时工App)”仅为用户提供信息分享、传送及获取的平台，用户必须为自己注册账号下的一切行为负责，包括用户所传送的任何内容以及由此产生的任何后果。用户应对“LinshiGong.com(临时工App)”及本服务中的内容自行加以判断，并承担因使用内容而引起的所有风险，包括因对内容的正确性、完整性或实用性的依赖而产生的风险。LinshiGong.com(临时工App)无法 且不会对因用户行为而导致的任何损失或损害承担责任。“LinshiGong.com(临时工App)”所对外签署或承诺的 任何许可协议条款或服务或隐私协议均对用户产生约束，为“LinshiGong.com(临时工App)”不可分割的一部分。 如果用户发现任何人违反本协议约定或以其他不当的方式使用本服务，请立即向LinshiGong.com(临时工App) 举报或投诉，LinshiGong.com(临时工App)将依本协议约定进行处理。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、用户理解并同意，因业务发展需要，LinshiGong.com(临时工App)保留单方面对本服务的全部或部分服务内容变更、暂停、终止或撤销的权利，用户需承担此风险。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>八、知识产权声明</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、除本服务中涉及广告的知识产权由相应广告商享有外，LinshiGong.com(临时工App)在本服务中提供的内容（包括但不限于网页、文字、图片、音频、视频、图表等）的知识产权均归</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">所有，但用户在使用本服务前对自己发布的内容已合法取得知识产权的除外。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、除另有特别声明外，LinshiGong.com(临时工App)提供本服务时所依托软件的著作权、专利权及其他知识产权均归LinshiGong.com(临时工App)所有。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、上述及其他任何LinshiGong.com(临时工App)或相关广告商依法拥有的知识产权均受到法律保护，未经LinshiGong.com(临时工App)或相关广告商书面许可，用户不得以任何形式进行使用或创造相关衍生作品。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>九、法律责任</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、如果LinshiGong.com(临时工App)发现或收到他人举报或投诉用户违反本协议约定的，LinshiGong.com(临时工App)有权不经通知随时对相关内容，包括但不限于用户资料、聊天记录进行审查、删除，并视情节轻重对违规账号处以包括但不限于警告、账号封禁、设备封禁、功能封禁的处罚，且通知用户处理结果。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、因违反用户协议被封禁的用户，可以联系LinshiGong.com(临时工App)客服查询封禁期限，并在封禁 期限届满后自助解封。其中，被实施功能封禁的用户会在封禁期届满后自动恢复被封禁功能。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、用户理解并同意，LinshiGong.com(临时工App)有权依合理判断对违反有关法律法规或本协议规定的 行为进行处罚，对违法违规的任何用户采取适当的法律行动，并依据法律法规保存有关信息向有关部门报告等，用户应承担由此而产生的一切法律责任。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">4、用户理解并同意，因用户违反本协议约定，导致或产生的任何第三方主张的任何索赔、要求或损失，包括合理的律师费，用户应当赔偿LinshiGong.com(临时工App)与合作公司、关联公司， 并使之免受损害。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>十、不可抗力及其他免责事由</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、用户理解并确认，在使用本服务的过程中，可能会遇到不可抗力等风险因素，使本服务发生中断。不可抗力是指不能预见、不能克服并不能避免且对一方或双方造成重大影响的客观事件，包括但不限于自然灾害如洪水、地震、瘟疫流行和风暴等以及社会事件 如战争、动乱、政府行为等。出现上述情况时，LinshiGong.com(临时工App)将努力在第一时间与相关单位配合，及时进行修复，但是由此给用户或第三方造成的损失，LinshiGong.com(临时工App)及合作单位在法律允许的范围内免责。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、本服务同大多数互联网服务一样，受包括但不限于用户原因、网络服务质量、社会环境等因素的差异影响，可能受到各种安全问题的侵扰，如他人利用用户的资料，造成现实生活中的骚扰；用户下载安装的其它软件或访问的其他网站中含有“特洛伊木马”等病 毒，威胁到用户的计算机信息和数据的安全，继而影响本服务的正常使用等等。用户应加 强信息安全及使用者资料的保护意识，要注意加强密码保护，以免遭致损失和骚扰。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、用户理解并确认，本服务存在因不可抗力、计算机病毒或黑客攻击、系统不稳定、 用户所在位置、用户关机以及其他任何技术、互联网络、通信线路原因等造成的服务中断或不能满足用户要求的风险，因此导致的用户或第三方任何损失，LinshiGong.com(临时工App)不承担任何责任。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">4、用户理解并确认，在使用本服务过程中存在来自任何他人的包括误导性的、欺骗性的、威胁性的、诽谤性的、令人反感的或非法的信息，或侵犯他人权利的匿名或冒名的信息，以及伴随该等信息的行为，因此导致的用户或第三方的任何损失，LinshiGong.com(临时工App)不承担 任何责任。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">5、用户理解并确认，LinshiGong.com(临时工App)需要定期或不定期地对“LinshiGong.com(临时工App)”平台或相关的设备进行检修或者维护，如因此类情况而造成服务在合理时间内的中断，LinshiGong.com(临时工App)无需为此承担任何责任，但LinshiGong.com(临时工App)应事先进行通告。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">6、LinshiGong.com(临时工App)依据法律法规、本协议约定获得处理违法违规或违约内容的权利，该权利不构成LinshiGong.com(临时工App)的义务或承诺，LinshiGong.com(临时工App)不能保证及时发现违法违规或违约行为或进行相应处理。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">7、用户理解并确认，对于LinshiGong.com(临时工App)向用户提供的下列产品或者服务的质量缺陷及其引发的任何损失，LinshiGong.com(临时工App)无需承担任何责任：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）LinshiGong.com(临时工App)向用户免费提供的服务；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）LinshiGong.com(临时工App)向用户赠送的任何产品或者服务。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）在任何情况下，LinshiGong.com(临时工App)均不对任何间接性、后果性、惩罚性、偶然性、特殊性或刑罚性的损害，包括因用户使用“LinshiGong.com(临时工App)”或本服务而遭受的利润损失，承担责任 （即使LinshiGong.com(临时工App)已被告知该等损失的可能性亦然）。尽管本协议中可能含有相悖的规定， </span>
+                    <span style="font-size:14px;">LinshiGong.com(</span>
+                    <span style="font-size:14px;">临时工App)对用户承担的全部责任，无论因何原因或何种行为方式，始终不超过用户因使用 </span>
+                    <span style="font-size:14px;">LinshiGong.com(</span>
+                    <span style="font-size:14px;">临时工App)提供的服务而支付给LinshiGong.com(临时工App)的费用(如有)。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>十一、服务的变更、中断、终止</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、鉴于网络服务的特殊性，用户同意LinshiGong.com(临时工App)有权随时变更、中断或终止部分或全部的服务（包括收费服务）。LinshiGong.com(临时工App)变更、中断或终止的服务，LinshiGong.com(临时工App)应当在变更、 中断或终止之前通知用户。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、如发生下列任何一种情形，LinshiGong.com(临时工App)有权变更、中断或终止向用户提供的免费服务或收费服务，而无需对用户或任何第三方承担任何责任：</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（1）根据法律规定用户应提交真实信息，而用户提供的个人资料不真实、或与注册时信息不一致又未能提供合理证明；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（2）用户违反相关法律法规或本协议的约定；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（3）按照法律规定或有权机关的要求；</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">（4）于安全的原因或其他必要的情形。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <br />
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:16px;">
+                    <strong>十二、其他</strong></span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">1、LinshiGong.com(临时工App)郑重提醒用户注意本协议中免除LinshiGong.com(临时工App)责任和限制用户权利的条款， 请用户仔细阅读，自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">2、本协议的效力、解释及纠纷的解决，适用于中华人民共和国法律。若用户和</span>
+                    <span style="font-size:14px;">LinshiGong.com(临时工App)</span>
+                    <span style="font-size:14px;">之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户同意将纠纷或争议提交LinshiGong.com(临时工App)住所地有管辖权的人民法院管辖。</span> 
+                  </p>
+                  <p class="MsoNormal" align="left" style="text-align:left;background:white;">
+                    <span style="font-size:14px;">3、本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。</span> 
+                  </p>
+                  <p class="MsoNormal">
+                    <span></span> 
+                  </p> 
+				</p>
+            </div>
+            <div class="confirm-btns" style="text-align: center; margin: 30px auto;">
+                <!-- <button class="btn" @click="op(1)">取 消</button> -->
+                <button style="background-color: red;color: beige;"  @click="userop">我已了解并同意以上内容</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+		</div>
+		<script src="../js/util.js"></script>
+
+
+
+		<script type="text/x-template" id="privacy-agreement">
+
+			<div class="modal-mask" v-show="show" style="margin: auto 0;">
+        <div class="modal-confirm" style="width: 90%;">
+			<div class="confirm-btns" style="text-align: center; margin: 30px auto;">
+			    <!-- <button class="btn" @click="op(1)">取 消</button> -->
+			    <button style="background-color: red;color: beige;"  @click="privacyop">我已了解并同意以下内容</button>
+			</div>
+            <h4 class="confirm-header" style="color: #000000;text-align: center;margin: 20px auto;" >
+                <i class="iconfont icon-questioncircle"></i> 用户隐私政策
+            </h4>
+            <div class="confirm-content">
+                <p >
+<p style="text-align:center;">
+                    <strong>
+                    <span style="font-size:16px;"><br /></span></strong> 
+                  </p>
+                  <strong>
+                  <span style="font-size:16px;">引言</span></strong><br />
+                  <span style="font-weight:700;">
+                  <span style="font-size:16px;">LinshiGong.com（临时工App）</span></span>一贯高度重视用户隐私的保护。在您使用我们的服务时，我们可能会收集和使用您的相关信息。我们希望通过本《隐私政策》向您说明，我们如何收集、使用、储存和分享这些信息，以及我们为您提供的访问、更新、控制和保护这些信息的方式。<br />
+                  <br />
+                  <p>
+                    <strong>您使用或继续使用我们的服务，即视为同意我们按照本《隐私政策》收集、使用、储存和分享您的相关信息。</strong> 
+                  </p>
+                  <p>
+                    <strong><br /></strong> 
+                  </p>
+                  <p>
+                    <strong></strong> 
+                  </p>
+                  <hr />
+                  <strong><br /></strong> <p>
+                    <br />
+                  </p>
+                  <br />
+                  <strong>
+                  <span style="font-size:16px;">我们可能收集的信息</span></strong><br />
+                  我们提供服务时，可能会收集、储存和使用下列与您有关的信息。如果您不提供相关信息，可能无法注册成为我们的用户或无法享受我们提供的全部或部分服务。<br />
+                  <br />
+                  <strong>您提供的信息</strong><br />
+                  <br />
+                  您在注册账户或使用我们的服务时，向我们提供的相关个人信息，例如您的真实姓名、身份证件号码、手机号码、银行卡号码、任职企业工牌等；<br />
+                  <p>
+                    您通过我们的服务向其他方提供的共享信息，以及您使用我们的服务时所储存的信息。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <strong>我们获取的您的信息</strong><br />
+                  <br />
+                  在您使用服务时我们可能收集如下信息：<br />
+                  <br />
+                  <strong>日志信息</strong>，指系统可能通过 cookies 或其他方式自动采集的技术信息，包括：<br />
+                  <br />
+                  设备或软件信息，例如您的移动设备、网页浏览器或用于接入我们服务的其他程序所提供的配置信息、IP 地址和移动设备所用的版本和设备识别码；<br />
+                  有关您曾使用的移动应用（APP）和其他软件的信息，以及您曾经使用该等移动应用和软件的信息；<br />
+                  通讯信息，包括通讯录，曾通讯的号码、通讯时间和时长等；<br />
+                  <p>
+                    您通过我们的服务分享的内容所包含的信息，例如拍摄或上传的共享照片、视频。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <strong>位置信息</strong>，指您开启设备定位功能并使用我们基于位置提供的相关服务时，收集的有关您位置的信息，包括：<br />
+                  <br />
+                  您通过具有定位功能的移动设备使用我们的服务时，通过 GPS 或 WiFi 等方式收集的您的地理位置信息；<br />
+                  <p>
+                    您可以通过关闭定位功能，停止对您的地理位置信息的收集。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong>我们可能如何使用信息</strong></span> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  我们可能将收集的信息用作下列用途：<br />
+                  <br />
+                  向您提供服务；<br />
+                  在我们提供服务时，用于身份验证、发布通知、代发薪资、用户回访等，确保我们向您提供服务的安全性；<br />
+                  帮助我们设计新服务，改善我们现有服务；<br />
+                  使我们更加了解您如何接入和使用我们的服务，从而针对性地回应您的个性化需求；<br />
+                  <p>
+                    向您提供与您更加相关的广告以替代普遍投放的广告。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong>您如何访问和控制自己的个人信息</strong></span> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    我们将尽一切可能采取适当的技术手段，保证您可以访问、更新和更正自己的注册信息或使用我们的服务时提供的其他个人信息。在访问、更新、更正和删除前述信息时，我们可能会要求您进行身份验证，以保障账户安全。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <br />
+                  <p>
+                    <strong>
+                    <span style="font-size:16px;">我们可能分享的信息</span></strong> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  除以下情形外，
+                  <strong>未经您的同意，我们不会与任何第三方分享您的个人信息：</strong><br />
+                  <br />
+                  我们可能将您的个人信息与我们合作方分享，用作下列用途：<br />
+                  <br />
+                  实现“我们可能如何使用信息”部分所述目的；<br />
+                  履行我们在《服务协议》或本《隐私政策》中的义务和行使我们的权利；<br />
+                  <p>
+                    理解、维护和改善我们的服务。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <strong>如我们与任何上述第三方分享您的个人信息，我们将努力确保该等第三方在使用您的个人信息时遵守本《隐私政策》及我们要求其遵守的其他适当的保密和安全措施。</strong><br />
+                  <br />
+                  <strong>我们可能为以下需要而保留、保存或披露您的个人信息：</strong><br />
+                  <br />
+                  遵守适用的法律法规；<br />
+                  遵守法院命令或其他法律程序的规定；<br />
+                  遵守相关政府机关的要求；<br />
+                  <p>
+                    为维护社会公共利益，或保护他人人身和财产安全或合法权益所合理必需的用途。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong>信息安全</strong></span> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  我们仅在本《隐私政策》所述目的所必需的期间和法律法规要求的时限内保留您的个人信息。<br />
+                  <br />
+                  <p>
+                    我们使用各种安全技术和程序，以防信息的丢失、不当使用、未经授权阅览或披露。例如，在某些服务中（如代发薪资的支付环节），我们将利用加密技术来保护您提供的个人信息。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <br />
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong>您分享的信息</strong></span> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  我们的多项服务，可让您与使用该服务的所有用户公开分享您的相关信息，例如，您在我们的服务中上传或发布的信息（包括您公开的个人基本信息、您的工资单）、您对其他人上传或发布的信息作出的回应，以及包括与这些信息有关的位置数据和日志信息。<br />
+                  <br />
+                  <p>
+                    <strong>因此，请您谨慎考虑通过我们的服务上传、发布和交流的信息内容。</strong> 
+                  </p>
+                  <p>
+                    <strong><br /></strong> 
+                  </p>
+                  <p>
+                    <strong></strong> 
+                  </p>
+                  <hr />
+                  <strong><br /></strong> <p>
+                    <br />
+                  </p>
+                  <br />
+                  <p>
+                    <strong>
+                    <span style="font-size:16px;">您分享的敏感个人信息</span></strong> 
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  某些个人信息因其特殊性可能被认为是敏感个人信息，例如您的种族、宗教、个人健康和医疗信息等。相比其他个人信息，敏感个人信息受到更加严格的保护。<br />
+                  <br />
+                  请注意，您在使用我们的服务时所提供、上传或发布的内容和信息（例如有关您社交活动的照片等信息），可能会泄露您的敏感个人信息。您需要谨慎地考虑，是否在使用我们的服务时披露相关敏感个人信息。<br />
+                  <br />
+                  <p>
+                    <strong>您同意按本《隐私政策》所述的目的和方式来处理您的敏感个人信息。</strong> 
+                  </p>
+                  <p>
+                    <strong><br /></strong> 
+                  </p>
+                  <p>
+                    <strong></strong> 
+                  </p>
+                  <hr />
+                  <strong><br /></strong> <p>
+                    <br />
+                  </p>
+                  <br />
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong>我们可能如何收集信息</strong></span> 
+                  </p>
+                  <p>
+                    <span style="font-size:16px;">
+                    <strong><br /></strong></span> 
+                  </p>
+                  我们或我们的第三方合作伙伴，可能通过 cookies 收集和使用您的信息，并将该等信息储存为日志信息。<br />
+                  <br />
+                  我们使用自己的 cookies，目的是为您提供更个性化的用户体验和服务，并用于以下用途：<br />
+                  <br />
+                  记住您的身份；<br />
+                  分析您使用我们服务的情况；<br />
+                  <p>
+                    广告优化。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <span style="font-size:16px;">
+                  <strong>广告服务</strong></span><br />
+                  <p>
+                    我们可能使用您的相关信息，向您提供与您更加相关的广告。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <br />
+                  <span style="font-size:16px;">
+                  <strong>未成年人使用我们的服务</strong></span><br />
+                  <p>
+                    未满 16 周岁的未成年人不得使用我们提供的服务。已满 16 周岁不满 18 周岁的未成年人应在其父母或监护人的指导下阅读本《隐私政策》，其在提交个人信息之前应寻求父母或监护人的同意和指导。
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                  <hr />
+                  <p>
+                    <br />
+                  </p>
+                  <br />
+                  <span style="font-size:16px;">
+                  <strong>变更</strong></span><br />
+                  我们可能适时修订本《隐私政策》的条款，该等修订构成本《隐私政策》的一部分。未经用户明确同意，我们不会限制、消减用户按照本《隐私政策》所能行使的权利。<br />
+					<!-- {{ content }} -->
+				</p>
+            </div>
+            <div class="confirm-btns" style="text-align: center; margin: 30px auto;">
+                <!-- <button class="btn" @click="op(1)">取 消</button> -->
+                <button style="background-color: red;color: beige;"  @click="privacyop">我已了解并同意以上内容</button>
+            </div>
+        </div>
+    </div>
+
+</script>
+		<script>
+			(function() {
+
+				mui.init();
+				var obj = {
+					picked: '',
+					loginlable: '1',
+					noregister: '',
+					forgotpassword: '',
+					formdata: {
+						name: '',
+						phone: '',
+						code: '',
+						opassword: '',
+						password: Date.parse(new Date()),
+						passcon: ''
+					},
+					codein: true,
+					passwordin: false,
+					passwordinbutton: true,
+					codeinbutton: false,
+					show: false,
+					showuser: false
+
+
+				};
+
+				var vm = new Vue({
+					el: '#app',
+					components: {
+						'pariv-acy': {
+							props: ['show'],
+							template: '#privacy-agreement',
+							data: () => {
+								return {
+									tshow: false
+								}
+							},
+							methods: {
+								privacyop() {
+									this.$emit('thop', this.tshow)
+								}
+							}
+						},
+						'user-acy': {
+							props: ['showuser'],
+							template: '#user-agreement',
+							data: () => {
+								return {
+									tshowuser: false
+								}
+							},
+							methods: {
+								userop() {
+									this.$emit('thuser', this.tshowuser)
+								}
+							}
+						}
+					},
+					data: obj,
+					beforeCreate() {
+						console.log('login.html---L931;beforeCreate--password==')
+					},
+					created() {
+						console.log('login.html---L934;created--password==' + this.formdata.password)
+					},
+					beforeMount() {
+						console.log('login.html---L937;beforeMount--password==' + this.formdata.password)
+					},
+					mounted() {
+						console.log('login.html---L940;mounted--password==' + this.formdata.password)
+					},
+					methods: {
+						op: function(s) {
+							vm.show = s
+						},
+						user: function() {
+							console.log('L929--user,showuser')
+							vm.showuser = true
+						},
+						privacy: function() {
+							vm.show = true
+						},
+						ouser: function(s) {
+							vm.showuser = s
+						},
+						usepassword: function() {
+							vm.codein = false
+							vm.codeinbutton = true
+							vm.passwordin = true
+							vm.passwordinbutton = false
+						},
+						usecode: function() {
+							vm.codein = true
+							vm.codeinbutton = false
+							vm.passwordin = false
+							vm.passwordinbutton = true
+						},
+						getcode: function() {
+							alert('点击了获取验证码,手机号: ' + vm.formdata.phone, '厂招网');
+							var getcodedata = {
+								mobile: vm.formdata.phone,
+							};
+							mui.post(APP_DOMAIN + 'api/VerificationCodes', getcodedata, function(data) {
+								if (data.result == 0) {
+									alert('验证码已发送成功，有效期10分钟，请注意查收', '厂招网')
+								}
+							}, 'json');
+						},
+						register_submit: function() {
+							if (vm.passwordin) {
+								var password = vm.formdata.opassword;
+							} else {
+								var password = Date.parse(new Date())
+							}
+							var rdata = {
+								passwordin: vm.passwordin,
+								mobile: vm.formdata.phone,
+								code: vm.formdata.code,
+								password: password,
+							};
+
+							console.log('rdata===' + JSON.stringify(rdata));
+							mui.post(APP_DOMAIN + 'api/login', rdata, function(data) {
+// alert(JSON.stringify(data))
+								if (data.result == 400) {
+									alert(data.errmsg, '临时工网')
+								}
+								console.log('register_submit----data==' + JSON.stringify(data));
+								localStorage.setItem("userId", data.data.id);
+								localStorage.setItem("avatar", data.data.avatar);
+								localStorage.setItem("userName", data.data.name);
+								localStorage.setItem("mobile", data.data.mobile);
+								localStorage.setItem("sex", data.data.sex);
+								localStorage.setItem("birthday", data.data.birthday);
+								localStorage.setItem("api_token", data.data.api_token);
+								localStorage.setItem("role_id", data.data.role_id);
+								localStorage.setItem("salesroomid", data.data.salesroomid);
+
+
+								function plusReady() {
+									var h = plus.webview.getLaunchWebview();
+									if (data.result == 200) {
+										mui.toast('亲，你已成功登陆！');
+										var h = plus.webview.getLaunchWebview();
+									} else if (data.result == 300) {
+										console.log('注册新帐号')
+										reg();
+									}
+
+									var ws = plus.webview.currentWebview();
+									var id = ws.name; // 当前子页面id
+									var targetPage = ws.children()[id]
+
+									var targetPageId = util.options.subpages[id]
+									var targetPage = plus.webview.getWebviewById(targetPageId);
+
+									targetPage.reload(true)
+									// console.log('login.html--L1008;id==' + id)
+									// if (localStorage.getItem('api_token')) {
+									// 	// var subpages = util.options.subpages,
+									// 	// var aniShow = {};
+									// 	// console.log('index.html---L311;')
+
+									// 	// util.initSubpage(aniShow);
+
+									// 	// var nview = plus.nativeObj.View.getViewById('tabBar'),
+									// 	// 	activePage = plus.webview.currentWebview(),
+									// 	// 	targetPage,
+									// 	// 	subpages = util.options.subpages,
+									// 	// 	pageW = window.innerWidth,
+									// 	// 	currIndex = 0;
+
+									// }
+
+
+
+
+
+									console.log('login.html---L1006; ws==' + JSON.stringify(ws))
+									// console.log('应用首页Webview窗口：' + h.getURL());
+									// console.log('应用首页Webview窗口：' + ws.getURL());
+									mui.fire(h, 'toTab', {
+										'api_token': data.data.api_token
+									});
+
+
+
+									plus.webview.show(h);
+									plus.webview.close(ws);
+								}
+								if (window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener('plusready', plusReady, false);
+								}
+							}, 'json');
+
+							function reg() {
+								mui.post(APP_DOMAIN + 'api/register', {
+									mobile: vm.formdata.phone,
+									password: '111111',
+								}, function(data) {
+									console.log('data==' + JSON.stringify(data));
+									localStorage.setItem("userId", data.data.id);
+									localStorage.setItem("mobile", data.data.mobile);
+									localStorage.setItem("api_token", data.data.api_token);
+									mui.toast('亲，注册成功，请完善个人资料！');
+
+									function plusReady() {
+										// 获取应用首页窗口对象
+										var h = plus.webview.getWebviewById('tab-webview-subpage-contact.html');
+										h.show();
+										mui.back();
+									}
+									if (window.plus) {
+										plusReady();
+									} else {
+										document.addEventListener('plusready', plusReady, false);
+									}
+								}, 'json');
+							}
+						},
+
+						xxx: function() {
+							if (vm.loginlable == '') {
+								vm.loginlable = 1,
+									vm.noregister = '',
+									vm.forgotpassword = ''
+							} else if (vm.loginlable !== '') {
+
+								function plusReady() {
+									// 获取应用首页窗口对象
+									// var h = plus.webview.getLaunchWebview();
+									// h.show();
+									mui.back();
+								}
+								if (window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener('plusready', plusReady, false);
+								}
+							}
+						},
+
+						blurFn: function() {
+							if (vm.formdata.phone == '') {
+								mui.toast('手机号还没填！')
+							};
+
+							var phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/;
+
+							if (!phoneReg.test(vm.formdata.phone)) {
+								mui.toast("请填正确的手机号！", "厂招网", "晓得了", null)
+							}
+						}
+					}
+				});
+			})();
+		</script>
+
+	</body>
+
+</html>

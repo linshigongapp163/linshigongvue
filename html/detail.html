@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+			
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+			
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+			
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+			
+			.bottomtitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				bottom: 0;
+				height: 50px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+			}
+			
+			.leftbutton {
+				left: 5px;
+				float: left;
+				color: red;
+			}
+			
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+			
+			.subbottom {
+				top: 5px;
+				width: 130px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+			
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+			
+			.item {
+				text-align: center;
+			}
+			
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+			
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+
+			<div id="" class="toptitle">
+				<div>奖金高</div>
+				<div>环境好</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包住</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包吃</div>
+				<div style="line-height: 14px;color:darkgrey; background: white;border:1px solid darkgrey; background: white;">可借支生活费</div>
+				<div style="float:right; background: white;color: #AAAAAA;">2万人...</div>
+			</div>
+
+			<div id="" class="bottomtitle">
+
+				<div id="leftbutton" class="leftbutton subbottom">分享给朋友</div>
+				<div id="rightbutton" class="rightbutton subbottom" v-on:click="toenlist(detaildata.title)">现在报名</div>
+
+			</div>
+
+			<div class="mui-content" style="position: absolute ;margin-top: 40px;width: 100%;">
+				<div id="" style="background-color: white;margin:10px">
+					<div class="mui-row">
+						<div id="" class="mui-col-sm-4 mui-col-xs-4">
+							企业名称
+						</div>
+						<div id="" class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.factory_name}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div id="" class="mui-col-sm-4 mui-col-xs-4">
+							薪资水平
+						</div>
+						<div id="" class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.pay_level}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div id="" class="mui-col-sm-4 mui-col-xs-4">
+							工价
+						</div>
+						<div id="" class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.labor_price}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div id="" class="mui-col-sm-4 mui-col-xs-4">
+							补贴
+						</div>
+						<div id="" class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.subsidy}}
+						</div>
+					</div>
+				</div>
+
+				<div id="" style="margin: auto 10px;position: relative;">
+					<!--										<div id="" class="mui-slider" style="background-color: white;position:absolute;" v-on:click="toshowpic()"  v-for="(item,key) in factoryphoto">-->
+					<div id="slider" class="mui-slider" style="background-color: white;position:absolute;" v-on:click="toshowpic()">
+						<div id="" class="mui-slider-group mui-slider-loop">
+							<!-- 额外增加的一=个节点(循环轮播：第一个节点是最后一张轮播) -->
+							<div class="mui-slider-item mui-slider-item-duplicate" v-if="sliderLists.length>0">
+								<!--<a href="#">-->
+									<img style="widht:100%;height: 163px;"  id="picImage" :src="sliderfirstend.first">
+								<!--</a>-->
+								<div style="color:white;font-size:12px;z-index: 99999;position:absolute;bottom:3px;right: 0px;width: 80%;text-align: center;line-height: 25px;background-color: rgba(0,0,0,0.5);margin-bottom:2px">
+									没有填写说明
+								</div>								
+								
+								<!--<p class="mui-slider-title">{{productPic[3].pname}}</p>-->
+							</div>
+							<div v-for="key in sliderLists" class="mui-slider-item">
+								<!--<img style="widht:100%;height: 163px;" v-bind:src="APP_DOMAIN + item.photo">-->
+							<!--<a href="#">-->
+									
+								<img style="widht:100%;height: 163px;" :src=" key.photo" />
+<!--</a>-->
+							<p class="mui-slider-title"></p>
+					<div style="color:white;font-size:12px;z-index: 99999;position:absolute;bottom:3px;right: 0px;width: 80%;text-align: center;line-height: 25px;background-color: rgba(0,0,0,0.5);margin-bottom:2px">
+						没有填写说明
+					</div>
+							</div>
+							<!-- 额外增加的一=个节点(循环轮播：第一个节点是最后一张轮播) -->
+							<div class="mui-slider-item mui-slider-item-duplicate" v-if="sliderLists.length>0">
+								<!--<a href="#">-->
+									<img style="widht:100%;height: 163px;"  id="picImage" :src="sliderfirstend.end">
+								<!--</a>-->
+								<div style="color:white;font-size:12px;z-index: 99999;position:absolute;bottom:3px;right: 0px;width: 80%;text-align: center;line-height: 25px;background-color: rgba(0,0,0,0.5);margin-bottom:2px">
+									没有填写说明
+								</div>								
+								
+							</div>
+						</div>
+					</div>
+
+
+
+					<div id="" class="imgpan" v-on:click="tostyle(1)">
+						厂区
+					</div>
+					<div id="" class="imgpan">
+						宿舍
+					</div>
+					<div id="" class="imgpan">
+						伙食
+					</div>
+					<div id="" class="imgpan">
+						其它
+					</div>
+
+				</div>
+
+				<div id="" class="mui-row" style="margin: 0 10px;background-color: #DDDDDD;line-height: 35px;">
+					<div id="" class="item mui-col-sm-4 mui-col-xs-4">
+						工资福利
+					</div>
+					<div id="" class="item mui-col-sm-4 mui-col-xs-4">
+						工作岗位
+					</div>
+					<div class="item mui-col-sm-4 mui-col-xs-4">
+						企业简介
+					</div>
+				</div>
+				<div style="background-color: white;margin: 0 10px 100px 10px;">
+					<div class="mui-row">
+						<div class="mui-col-sm-8 mui-col-xs-8 titlem" style="border:none">
+							工资内容
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="border: none;">
+							<button style="font-size: 12px;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							薪资水平
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.pay_level}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工资发放
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.payday}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							底薪
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.bottom_salary}}
+						</div>
+					</div>
+					<div class="mui-row item">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							4
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工资构成
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.wage_structure}}
+						</div>
+					</div>
+					<div class="mui-row titlem">
+						<div class="mui-col-sm-8 mui-col-xs-8" style="border: none;">
+							伙食住宿
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="line-height: 20px;border: none;padding-right: 0;">
+							<button style="font-size: 12px;margin-right: 0;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							食
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.food}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							住
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.lodging}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							行
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.traffic}}
+						</div>
+					</div>
+
+					<div class="mui-row titlem">
+						<div class="mui-col-sm-8 mui-col-xs-8" style="border: none;">
+							工作岗位
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="line-height: 20px;border: none;padding-right: 0;">
+							<button style="font-size: 12px;margin-right: 0;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工作内容
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.job_content}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工作时间
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.job_time}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工作环境
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.job_environment}}
+						</div>
+					</div>
+					<div class="mui-row titlem">
+						<div class="mui-col-sm-8 mui-col-xs-8" style="border: none;">
+							杂项信息
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="line-height: 20px;border: none;padding-right: 0;">
+							<button style="font-size: 12px;margin-right: 0;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							合同签订
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.labor_contract}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							工资操作
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.wage_operation}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							保险
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.insurance}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-8 mui-col-xs-8 titlem" style="border:none">
+							工资内容
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="border: none;">
+							<button style="font-size: 12px;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							体检及费用
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.test_expensens}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							身份证复印
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.id_copy}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							毕业证复印
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.diploma_copy}}
+						</div>
+					</div>
+					<div class="mui-row item">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							4
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							照片
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.photo}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-8 mui-col-xs-8 titlem" style="border:none">
+							面试事项
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="border: none;">
+							<button style="font-size: 12px;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							1
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							毕业证
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.diploma}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							2
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							年纪
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.age}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							3
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							纹身
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.tattoo}}
+						</div>
+					</div>
+					<div class="mui-row item">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							4
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							烟疤
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.scars}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							5
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							返厂规定
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.return_factory}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							6
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							英文字母
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.english_word}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							7
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							简单算术
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.simple_arithmetic}}
+						</div>
+					</div>
+					<div class="mui-row item">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							8
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							人脸识别
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.face_recogntition}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							9
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							无尘服
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.dustfree_clothes}}
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							10
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							体检
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+
+						</div>
+					</div>
+					<div class="mui-row item">
+						<div class="mui-col-sm-1 mui-col-xs-1">
+							11
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3">
+							体内异物
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8">
+							{{detaildata.body_foreign}}
+						</div>
+					</div>
+					<div class="mui-row titlem">
+						<div class="mui-col-sm-8 mui-col-xs-8" style="border: none;">
+							企业简介
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="line-height: 20px;border: none;padding-right: 0;">
+							<button style="font-size: 12px;margin-right: 0;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{detaildata.company_profile}}
+						</div>
+						<!--<div class="mui-col-sm-3 mui-col-xs-3">
+						食
+					</div>-->
+
+					</div>
+					<div class="mui-row titlem">
+						<div class="mui-col-sm-8 mui-col-xs-8" style="border: none;">
+							企业地址
+						</div>
+						<div class="mui-col-sm-4 mui-col-xs-4" style="line-height: 20px;border: none;padding-right: 0;">
+							<button style="font-size: 12px;margin-right: 0;">有错误？>></button>
+						</div>
+					</div>
+					<div class="mui-row">
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{detaildata.factory_address}}
+						</div>
+					</div>
+					<div style="height: 100px;">
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					sliderfirstend:{
+						first:'../myimg/c.png',
+						end:'../myimg/a.png'
+					},
+					sliderLists:[{
+                            textdata: '',
+                            scene: '',
+                            photo: '../myimg/a.png'
+                        }, {
+                            title: '',
+                            url: '',
+                            photo: '../myimg/b.png'
+                        }, {
+                            title: '',
+                            url: '',
+                            photo: '../myimg/c.png'
+                        },{
+                            title: '',
+                            url: '',
+                            photo: '../myimg/c.png'
+                        }],
+					
+//					[{
+//						photo:'',
+//						textdata:'',
+//						scene:''
+//					}],
+					imagesdata:{
+						nnn:[{ //图片路径和图片大小
+								src: '../myimg/a.png',
+								width: '100%'
+							}, {
+								src: '../myimg/b.png',
+								width: '100%'
+							}, {
+								src: '../myimg/c.png',
+								width: '100%'
+							}, {
+								src: '../myimg/c.png',
+								width: '100%'
+							}]
+					},
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {
+						'id': '',
+						'slug': '',
+						'title': '',
+						'tag': '',
+						'push_word': '',
+						'factory_name': '等待中',
+						'pay_level': '',
+						'labor_price': '',
+						'subsidy': '',
+						'payday': '',
+						'bottom_salary': '',
+						'wage_structure': '',
+						'food': '',
+						'lodging': '',
+						'traffic': '',
+						'job_content': '',
+						'job_time': '',
+						'job_environment': '',
+						'labor_contract': '',
+						'wage_operation': '',
+						'insurance': '',
+						'test_expensens': '',
+						'id_copy': '',
+						'diploma_copy': '',
+						'photo': '',
+						'diploma': '',
+						'age': '',
+						'tattoo': '',
+						'scars': '',
+						'return_factory': '',
+						'english_word': '',
+						'simple_arithmetic': '',
+						'face_recogntition': '',
+						'dustfree_clothes': '',
+						'physical_examination': '',
+						'body_foreign': '',
+						'company_profile': '',
+						'factory_address': ''
+					}
+				}
+			};
+
+			var vm = new Vue({
+//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+                var sliderMuiObj = mui('.mui-slider');
+                sliderMuiObj.slider({
+                    interval: 3000
+                });
+
+				},
+				mounted: function(){
+			(function() {
+				mui.init({
+					swipeBack: false //关闭-右滑关闭功能
+				});
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					vm.detaildata = JSON.parse(self.preload);
+//					alert(self.preload);
+					mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+							console.log('get---data=='+JSON.stringify(data));
+							
+							if(data.state=='200'){
+								console.log('data.state===200');
+								
+								console.log('data.length=='+data.langth);
+							var sliderLists = [];
+							    sliderLists[0] = {};
+	//						sliderLists[0]['photo'] = '99';
+	//						
+	////						var sliderLists = new Array;
+	//						sliderLists[0][]={'textdata':data[0]['textdata']};
+	//						sliderLists[0].scene=data[0].scene;
+	//						sliderLists[0].photo=data[0].photo;
+								sliderLists[0]={'textdata':data.data[0].textdata,'scene':data.data[0].scene,'photo':APP_DOMAIN+data.data[0].photo};
+							for(var i=0; i<data.data.length;i++){
+								sliderLists[i]={'textdata':data.data[i].textdata,'scene':data.data[i].scene,'photo':APP_DOMAIN+data.data[i].photo};
+	//							sliderLists[i].textdata=data[i].textdata;
+	//							sliderLists[i].scene=data[i].scene;
+	//							sliderLists[i].photo=data[i].photo;							
+							};
+							
+							console.log('data.photo=='+sliderLists[0]['photo']);
+	
+							vm.sliderLists = sliderLists;
+							if( sliderLists[3]){
+								vm.sliderfirstend.first = sliderLists[3].photo;								
+							}
+							vm.sliderfirstend.end = sliderLists[0].photo;
+							
+	//						localStorage.setItem('sliderLists','sliderLists');
+							if(sliderLists[0]&sliderLists[1]&sliderLists[2]&sliderLists[3]){
+		                        vm.imagesdata.nnn =[{ //图片路径和图片大小
+									src: sliderLists[0].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[1].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[2].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[3].photo,
+									width: '100%'
+								}]
+							}else if(sliderLists[0]&sliderLists[1]&sliderLists[2]){
+		                        vm.imagesdata.nnn =[{ //图片路径和图片大小
+									src: sliderLists[0].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[1].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[2].photo,
+									width: '100%'
+								}, {
+									src: sliderLists[0].photo,
+									width: '100%'
+								}]								
+							}
+						};
+
+//						factoryphoto1 = [];
+
+//						data.forEach(function(key) {
+//							if(key['scene'] == 1) {
+//								console.log('key======' + JSON.stringify(key));
+//								key.photo = APP_DOMAIN + key.photo;
+//								console.log('key======' + JSON.stringify(key));
+//
+//								factoryphoto1.push(key);
+//							}
+//						});
+						console.log('key--vm.factoryphoto1==' + JSON.stringify(sliderLists));
+						//						console.log('key--vm.factoryphoto1=.photo='+factoryphoto1[0].photo);
+
+//						vm.factoryphoto1 = factoryphoto1;
+						console.log('data===' + JSON.stringify(data));
+					}, 'json');
+
+				});
+			})();					
+				},
+				methods: {
+					tostyle: function(s) {
+						console.log('sliderLists====='+JSON.stringify(vm.sliderLists));
+					},
+					toshowpic: function() {
+												console.log('vm.parentmsg');
+												
+						if(localStorage.getItem('api_token')) {
+						if(vm.sliderLists[1]&vm.sliderLists[2]&vm.sliderLists[3]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[2].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[3].photo,
+								width: '100%'
+							}]							
+						}else if(vm.sliderLists[2]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[2].photo,
+								width: '100%'
+							}]								
+							
+						}else if(vm.sliderLists[1]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}, {
+								src: vm.sliderLists[1].photo,
+								width: '100%'
+							}]							
+						}else if(vm.sliderLists[0]){
+							var subnviewimgdata =
+							[{ //图片路径和图片大小
+								src: vm.sliderLists[0].photo,
+								width: '100%'
+							}]							
+						};
+
+						var webview = plus.webview.create("slider-native.html", "slider-native", {
+							titleNView: { //配置标题
+								'backgroundColor': '#FF4500', //导航栏背景色
+								'titleText': vm.detaildata.title, //导航栏标题
+								'titleColor': '#000000', //文字颜色
+								autoBackButton: true //自动绘制返回箭头
+							},
+							subNViews: [{ //配置图片轮播
+								id: 'slider-native',
+								type: 'ImageSlider',
+								styles: { //这里的left和top是控制控件的位置；Width和height控制控件大小
+									left: 0,
+									top: 0,
+									width: '100%',
+									height: '200px',
+									position: 'static', //static正常定位随窗口滚动，absolute时不随页面滚动
+									type: 'transparent', //透明渐变样式标题栏，可以使slider通顶，更加美观
+									loop: true, //是否循环播放
+									images:subnviewimgdata
+									
+								}
+							}]
+						}, {
+							obj: JSON.stringify(vm.detaildata)
+						});
+						webview.show("slide-in-right"); //显示webview
+							
+							
+							
+							
+						}else{
+							mui.openWindow('../html/login.html', 'login.html');								
+						}
+												
+												
+						//						vm.parentmsg = '"display:black"'
+
+//						function plusReady() {};
+//						if(window.plus) {
+//							plusReady();
+//						} else {
+//							document.addEventListener("plusready", plusReady, false);
+//						};
+
+					},
+					toenlist: function(s) {
+						if(localStorage.getItem('api_token')) {
+
+							var btnArray = ['按错了', '是的'];
+
+							mui.prompt(s, '留言', '亲，要报名么？', btnArray, function(e) {
+								if(e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data: {
+											api_token: localStorage.getItem('api_token'),
+											title: vm.detaildata.title,
+											name: localStorage.getItem('userName'),
+											sex: localStorage.getItem('sex'),
+											mobile: localStorage.getItem('mobile'),
+											text: e.value,
+											user_id: localStorage.getItem('userId'),
+											recruit_id: vm.detaildata.id,
+											subsidy: vm.detaildata.subsidy
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('enlist---data---' + JSON.stringify(data));
+											mui.toast('报名已提交')
+											localStorage.setItem('enlist', vm.detaildata.title);
+											localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											var newwebview = plus.webview.getElementById('new-webview.html');
+											mui.fire(newwebview, 'enlist', {
+												detaildata: {
+													enlist: vm.detaildata.title,
+													subsidy: vm.detaildata.subsidy
+												}
+											})
+
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					}
+				},
+				//前置操作
+//				mounted:function(){
+//					 /* 赋值轮播图
+//                   * 1.先从本地缓存读取尽快呈现页面
+//                   * 2.如服务器有更新则后台下载更新
+//                   */
+//                  //获取本地存储
+//                  var sliderLists = plus.storage.getItem('sliderLists');
+//                  if(sliderLists){
+//                  		//调试
+//                  		console.log('//调试'+sliderLists);
+//                  		
+//                  }else{
+//                  		console.log('月EEEEEEEE');
+//
+//                      this.sliderLists = [{
+//                          textdata: '',
+//                          scene: '',
+//                          photo: '../myimg/a.png'
+//                      }, {
+//                          title: '',
+//                          url: '',
+//                          photo: '../myimg/b.png'
+//                      }, {
+//                          title: '',
+//                          url: '',
+//                          photo: '../myimg/c.png'
+//                      },{
+//                          title: '',
+//                          url: '',
+//                          photo: '../myimg/c.png'
+//                      }];
+//                  }
+//              }
+//			}
+		});
+//			(function() {
+//				mui.init({
+//					swipeBack: false //关闭-右滑关闭功能
+//				});
+//				mui.plusReady(function() {
+//					var self = plus.webview.currentWebview();
+//					vm.detaildata = JSON.parse(self.preload);
+//					mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+//							console.log('get---data=='+JSON.stringify(data));
+//							
+//							if(data.state=='200'){
+//								console.log('data.state===200');
+//								
+//								console.log('data.length=='+data.langth);
+//							var sliderLists = [];
+//							    sliderLists[0] = {};
+//	//						sliderLists[0]['photo'] = '99';
+//	//						
+//	////						var sliderLists = new Array;
+//	//						sliderLists[0][]={'textdata':data[0]['textdata']};
+//	//						sliderLists[0].scene=data[0].scene;
+//	//						sliderLists[0].photo=data[0].photo;
+//								sliderLists[0]={'textdata':data.data[0].textdata,'scene':data.data[0].scene,'photo':APP_DOMAIN+data.data[0].photo};
+//							for(var i=0; i<data.data.length;i++){
+//								sliderLists[i]={'textdata':data.data[i].textdata,'scene':data.data[i].scene,'photo':APP_DOMAIN+data.data[i].photo};
+//	//							sliderLists[i].textdata=data[i].textdata;
+//	//							sliderLists[i].scene=data[i].scene;
+//	//							sliderLists[i].photo=data[i].photo;							
+//							};
+//							
+//							console.log('data.photo=='+sliderLists[0]['photo']);
+//	
+//							vm.sliderLists = sliderLists;
+//							if( sliderLists[3]){
+//								vm.sliderfirstend.first = sliderLists[3].photo;								
+//							}
+//							vm.sliderfirstend.end = sliderLists[0].photo;
+//							
+//	//						localStorage.setItem('sliderLists','sliderLists');
+//							if(sliderLists[0]&sliderLists[1]&sliderLists[2]&sliderLists[3]){
+//		                        vm.imagesdata.nnn =[{ //图片路径和图片大小
+//									src: sliderLists[0].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[1].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[2].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[3].photo,
+//									width: '100%'
+//								}]
+//							}else if(sliderLists[0]&sliderLists[1]&sliderLists[2]){
+//		                        vm.imagesdata.nnn =[{ //图片路径和图片大小
+//									src: sliderLists[0].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[1].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[2].photo,
+//									width: '100%'
+//								}, {
+//									src: sliderLists[0].photo,
+//									width: '100%'
+//								}]								
+//							}
+//						};
+//
+////						factoryphoto1 = [];
+//
+////						data.forEach(function(key) {
+////							if(key['scene'] == 1) {
+////								console.log('key======' + JSON.stringify(key));
+////								key.photo = APP_DOMAIN + key.photo;
+////								console.log('key======' + JSON.stringify(key));
+////
+////								factoryphoto1.push(key);
+////							}
+////						});
+//						console.log('key--vm.factoryphoto1==' + JSON.stringify(sliderLists));
+//						//						console.log('key--vm.factoryphoto1=.photo='+factoryphoto1[0].photo);
+//
+////						vm.factoryphoto1 = factoryphoto1;
+//						console.log('data===' + JSON.stringify(data));
+//					}, 'json');
+//
+//				});
+//			})();
+		</script>
+
+	</body>
+
+</html>

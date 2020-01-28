@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>changzhaowang</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="../js/vue.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+        	<link rel="stylesheet" href="../css2/oil.css">
+		<!--标准mui.css-->
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+		<style type="text/css">
+			p {
+				text-indent: 22px;
+			}
+			.mui-content{
+				padding-top: 215px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			
+
+			<div class="mui-content">
+				<div id="" style="text-align: center;font-size: 14px;">
+					图片点进去可以放大看...
+				</div>
+				<div class="mui-content-padded">
+					<p>
+						亲，你可以在这里上传你拍的跟这个厂相关的照片，要拍得有水平一点约。
+					</p>
+					<p>照片上传后，要经过后台复核人员的复核后才会播出，所以，不要乱传一些不良的，违法的图片约。</p>
+					<p>照片拍得好，我们会有奖励噢。</p>
+				</div>
+			</div>
+		    <div id="" style="display: flex;font-size:18px;color: black;width: 100%;background-color: #CF2D28;height: 55px;bottom:0;position: fixed;" v-on:click="photograph()">
+		        <span id="" style="margin:auto;">
+		            点这儿拍照
+		        </span>
+		    </div>		
+    		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			
+		    var vm = new Vue({
+		    	    el:'#app',
+		    	    data:{
+		    	    	  	detaildata:''
+		    	    },
+		    	    methods:{
+		    	    		photograph:function(){
+
+
+//						console.log('this.factoryphotosrc:aaa==='+this.factoryphotosrc);
+//						this.factoryphotosrc = 'bbbb';
+						if (mui.os.plus) {
+						    var a = [{
+						        title: "拍照"
+						    }, {
+						        title: "从手机相册选择"
+						    }];
+						    plus.nativeUI.actionSheet({
+						        title: "上传你的大作",
+						        cancel: "取消",
+						        buttons: a
+						    }, function(b) { /*actionSheet 按钮点击事件*/
+						        switch (b.index) {
+						            case 0:
+						                break;
+						            case 1:
+						                getImage(); /*拍照*/
+						                break;
+						            case 2:
+						                galleryImg();/*打开相册*/
+						                break;
+						            default:
+						                break;
+						        }
+						    })
+						}
+						
+						//拍照
+						function getImage() {
+						    var c = plus.camera.getCamera();
+						    c.captureImage(function(e) {
+						        plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						            var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						            uploadHead(s); /*上传图片*/
+
+						        }, function(e) {
+						            console.log("读取拍照文件错误：" + e.message);
+						        });
+						    }, function(s) {
+						        console.log("error" + s);
+						    }, {
+						        filename: "_doc/head.png"
+						    })
+						}
+						
+						//本地相册选择
+						function galleryImg() {
+						    plus.gallery.pick(function(a) {
+						        plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						            plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+						                root.getFile("head.png", {}, function(file) {
+						                    //文件已存在
+						                    file.remove(function() {
+						                        console.log("file remove success");
+						                        entry.copyTo(root, 'head.png', function(e) {
+						                                var e = e.fullPath + "?version=" + new Date().getTime();
+						                                uploadHead(e); /*上传图片*/
+
+						                                //变更大图预览的src
+						                                //目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+						                            },
+						                            function(e) {
+						                                console.log('copy image fail:' + e.message);
+						                            });
+						                    }, function() {
+						                        console.log("delete image fail:" + e.message);
+						                    });
+						                }, function() {
+						                    //文件不存在
+						                    entry.copyTo(root, 'head.png', function(e) {
+						                            var path = e.fullPath + "?version=" + new Date().getTime();
+						                            uploadHead(path); /*上传图片*/
+						                        },
+						                        function(e) {
+						                            console.log('copy image fail:' + e.message);
+						                        });
+						                });
+						            }, function(e) {
+						                console.log("get _www folder fail");
+						            })
+						        }, function(e) {
+						            console.log("读取拍照文件错误：" + e.message);
+						        });
+						    }, function(a) {}, {
+						        filter: "image"
+						    })
+						};
+						
+
+
+
+
+
+						
+						//上传头像图片
+						
+						// 		var token = localStorage.getItem('$token') || "{}";
+						//		token =  JSON.parse(token);
+						
+						var api_token = localStorage.getItem('api_token') || "{}";
+						//		token =  JSON.parse(token);
+						
+						
+						function uploadHead(imgPath) {
+							console.log('slider-native.html---imgPath==='+imgPath);
+
+							
+							
+							
+							vm.detaildata.src = imgPath;
+							vm.detaildata.api_token = api_token;
+							
+							
+							//创建上传页面
+							webview = plus.webview.create('updatepic.html', 'updatepic.html', {
+								'titleNView': {
+									'backgroundColor': '#D74B28',
+									'titleText': vm.detaildata.title,
+									autoBackButton: true
+								}
+							}, {
+								obj: JSON.stringify(vm.detaildata)
+							});							
+							webview.addEventListener('close', function() {
+								webview = null;
+							});
+							webview.addEventListener('titleUpdate', function() {
+								webview.show();
+							});							
+								
+							
+							
+							
+//						    //      	var mainImage={};
+//						    console.log("imgPath = " + imgPath);
+//						    //          mainImage.src = imgPath;
+//						    //          mainImage.style.width = "60px";
+//						    //          mainImage.style.height = "60px";
+//						    var image = new Image();
+//						    image.src = imgPath;
+//						    
+//						    
+						    
+						
+
+						
+						
+						
+						
+//						    image.onload = function() {
+//
+//						        console.log('upload--api_token=='+api_token);
+//						
+//						
+//						
+//						        //服务端接口路径
+//						        var server = APP_DOMAIN+"api/upload/factoryphoto";
+//						        //获取图片元素
+//						        //          var files = document.getElementById('headimg');
+//						        var files = image;
+//						
+//						        // 上传文件
+//						        var wt=plus.nativeUI.showWaiting();
+//
+//						        //添加其他参数
+//						        task.addData("api_token",api_token);
+//						        var filev = task.addFile(files.src,{key:"avatar"});
+//						        task.start();
+//						    }
+						}
+						
+						/**
+						 * 旋转图片
+						 * @param image         HTMLImageElement
+						 * @returns newImage    HTMLImageElement
+						 */
+						function rotateImage(image) {
+						    console.log('rotateImage');
+						
+						    var width = image.width;
+						    var height = image.height;
+						
+						    var canvas = document.createElement("canvas")
+						    var ctx = canvas.getContext('2d');
+						
+						    var newImage = new Image();
+						
+						    //旋转图片操作
+						    EXIF.getData(image,function () {
+						            var orientation = EXIF.getTag(this,'Orientation');
+						            // orientation = 6;//测试数据
+						            console.log('orientation:'+orientation);
+						            switch (orientation){
+						                //正常状态
+						                case 1:
+						                    console.log('旋转0°');
+						                    // canvas.height = height;
+						                    // canvas.width = width;
+						                    newImage = image;
+						                    break;
+						                //旋转90度
+						                case 6:
+						                    console.log('旋转90°');
+						                    canvas.height = width;
+						                    canvas.width = height;
+						                    ctx.rotate(Math.PI/2);
+						                    ctx.translate(0,-height);
+						
+						                    ctx.drawImage(image,0,0)
+						                    imageDate = canvas.toDataURL('Image/jpeg',1)
+						                    newImage.src = imageDate;
+						                    break;
+						                //旋转180°
+						                case 3:
+						                    console.log('旋转180°');
+						                    canvas.height = height;
+						                    canvas.width = width;
+						                    ctx.rotate(Math.PI);
+						                    ctx.translate(-width,-height);
+						
+						                    ctx.drawImage(image,0,0)
+						                    imageDate = canvas.toDataURL('Image/jpeg',1)
+						                    newImage.src = imageDate;
+						                    break;
+						                //旋转270°
+						                case 8:
+						                    console.log('旋转270°');
+						                    canvas.height = width;
+						                    canvas.width = height;
+						                    ctx.rotate(-Math.PI/2);
+						                    ctx.translate(-height,0);
+						
+						                    ctx.drawImage(image,0,0)
+						                    imageDate = canvas.toDataURL('Image/jpeg',1)
+						                    newImage.src = imageDate;
+						                    break;
+						                //undefined时不旋转
+						                case undefined:
+						                    console.log('undefined  不旋转');
+						                    newImage = image;
+						                    break;
+						            }
+						        }
+						    );
+						    return newImage;
+						}
+						
+						
+						
+						
+						
+						
+						//将图片压缩转成base64
+						function getBase64Image(img) {
+						    var canvas = document.createElement("canvas");
+						    var width = img.width;
+						    var height = img.height;
+						    // calculate the width and height, constraining the proportions
+						    if (width > height) {
+						        if (width > 100) {
+						            height = Math.round(height *= 100 / width);
+						            width = 100;
+						        }
+						    } else {
+						        if (height > 100) {
+						            width = Math.round(width *= 100 / height);
+						            height = 100;
+						        }
+						    }
+						    canvas.width = width;   /*设置新的图片的宽度*/
+						    canvas.height = height; /*设置新的图片的长度*/
+						    var ctx = canvas.getContext("2d");
+						    ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+						    var dataURL = canvas.toDataURL("image/png", 0.8);
+						    return dataURL;
+						}
+						
+						
+						
+						}		    	    			
+
+		    	    		}
+		    });
+		    
+		    mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+					vm.detaildata = JSON.parse(self.obj);
+				
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

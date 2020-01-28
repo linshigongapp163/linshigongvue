@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>po</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+
+			.bottomtitle {
+				/* 				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999; */
+				bottom: 0;
+				/* height: 50px; */
+				line-height: 30px;
+				background-color: white;
+				padding: 15px 5px 15px 5px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+				/* border-bottom: 1px solid #ccc; */
+			}
+
+			.leftbutton {
+				left: 5px;
+				/* margin-right:15px ; */
+				float: left;
+				color: red;
+			}
+
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+
+			.subbottom {
+				top: 5px;
+				width: 80px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+
+			.clearfix:after {
+				clear: both
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+
+			/* body{ line-height: 18px; font-size: 12px; color: #666; background: #f5f5f5;} */
+
+			p {
+				font-size: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+
+			<!-- 			<div id="" class="toptitle">
+				<div>奖金高</div>
+				<div>环境好</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包住</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包吃</div>
+				<div style="line-height: 14px;color:darkgrey; background: white;border:1px solid darkgrey; background: white;">可借支生活费</div>
+				<div style="float:right; background: white;color: #AAAAAA;">2万人...</div>
+			</div> -->
+
+
+
+			<div class="mui-content" style="background: #FFFFFF;">
+				<div id="" style="background-color: white;margin:0px">
+					<img v-if="detaildata.photo" v-bind:src="detaildata.photo" alt="">
+					<img v-else src="../images/w.png">
+					<div id="" style="font-size: 22px;text-align: center;margin-top: 40px;">
+						{{detaildata.title}}
+					</div>
+					<div style="margin: 20px 0 20px 20px;">
+						<div v-if="detaildata.push_label ==  'null' ">
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+						</div>
+						<div v-else id="" v-for="ii in detaildata.push_label">
+							<div class="clearfix" style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+						</div>
+						<!-- <div style="float:right;margin-right:5px;margin-top:10px;padding:0 5px;line-height:14px;font-size:10px;">还有...</div> -->
+
+					</div>
+					<div style="clear:both;margin: 60px 0 0 20px; font-size: 16px;">
+						<!-- <a class="mui-icon iconfont  icon-clock" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a> -->
+						<!-- {{detaildata.created_at}} 至 {{detaildata.endtime}}</div> -->
+					<div v-on:click="tobaidumap(detaildata)" style="margin: 10px 0 0 20px;">
+						<a class="mui-icon iconfont  icon-position-fill" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a>
+						<a style="font-size:16px;margin-top: 20px;text-decoration: underline;" href="#">{{detaildata.distance}}
+							{{detaildata.address}}</a>
+					</div>
+					<div style="margin: 10px 0 20px 20px; font-size: 16px;">
+						<a class="mui-icon iconfont  icon-clock" style="margin:20px 5px 10px 0;font-size:16px;color:#C8C7CC;"></a>
+						已报名人数: {{detaildata.qty}}</div>
+					<!-- 					<div class="mui-row">
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{detaildata.address}}
+						</div>
+					</div> -->
+
+				</div>
+				<div id="" class="bottomtitle mui-table-view mui-grid-view mui-grid-9">
+					<div id="" class=" mui-table-view-cell mui-media mui-col-xs-4 " v-on:click="tocollect(detaildata.id)">
+						<div id="" class="subbottom">
+							{{click_shochang}}
+						</div>
+					</div>
+					<div id="" class="mui-table-view-cell mui-media mui-col-xs-4" v-on:click="openShare(detaildata.id)">
+						<div id="" class="subbottom">
+							分 享
+						</div>
+					</div>
+					<div id="rightbutton" class="mui-table-view-cell mui-media mui-col-xs-4" style="padding-right: 25px;" v-on:click="toenlist(detaildata.id,detaildata.title)">
+						<div id="" class="rightbutton subbottom" style="">
+							{{enlistbutt}}
+						</div>
+					</div>
+					<!-- 					<div id="" class="leftbutton subbottom" style="margin-left: 10px;">收 藏</div>
+					<div id="" class="leftbutton subbottom" style="margin-left: 15%;" v-on:click="openShare()">分 享</div>
+					<div id="rightbutton" class="rightbutton subbottom" style="margin-right: 10px;" v-on:click="toenlist(detaildata.name)">现在报名</div> -->
+				</div>
+				<div id="" style="margin-top: 20px;">
+					<!-- 					<div id="">
+						{{ getcontent()}}
+					</div> -->
+					<p v-html="detaildata.content" style="font-size: 16px;line-height: 30px;margin: auto 15px;">
+
+					</p>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {},
+					mypoint: '',
+					shochang: '',
+					enlistbutt: '我要报名',
+					subsidy: '',
+				}
+			};
+
+			var vm = new Vue({
+				//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+					var sliderMuiObj = mui('.mui-slider');
+					sliderMuiObj.slider({
+						interval: 3000
+					});
+
+				},
+				mounted: function() {
+					(function() {
+						mui.init({
+							swipeBack: false //关闭-右滑关闭功能
+						});
+						mui.plusReady(function() {
+							function buttondata() {
+								mui.get(APP_DOMAIN + 'api/order/shochang', {
+									uid: localStorage.getItem('userId'),
+									order_id: vm.detaildata.id
+								}, function(data) {
+									console.log('detail_po.html--L275;data=' + JSON.stringify(data))
+									vm.shochang = data.sho;
+								}, 'json');
+								console.log('detail_po.html--L280;vm.detaildata.id==' + vm.detaildata.id)
+
+								mui.get(APP_DOMAIN + 'api/enlist/enlisted', {
+									user_id: localStorage.getItem('userId'),
+									recruit_id: vm.detaildata.id
+								}, function(data) {
+									console.log('detail_po.html--L286;data=' + JSON.stringify(data))
+									if (data != 0) {
+										vm.enlistbutt = '已报名'
+									}
+									console.log('detail_po.html--L290;vm.enlistbutt===' + vm.enlistbutt)
+									// vm.shochang = data.sho;
+								}, 'json');
+							}
+
+							var self = plus.webview.currentWebview();
+							var preloaddata = JSON.parse(self.preload);
+							// vm.detaildata = JSON.parse(self.preload);
+							if (preloaddata.recruit_id) {
+								console.log('detail_po.html---L274.preloaddata.recruit_id==' + preloaddata.recruit_id)
+								mui.get(APP_DOMAIN + 'api/order', {
+									id: preloaddata.recruit_id
+								}, function(data) {
+									console.log('detail_po.html---L277;data===' + JSON.stringify(data))
+									if (data['push_label'] !== 'null') {
+										data['push_label'] = JSON.parse(data['push_label']);
+									}
+									vm.detaildata = data;
+									buttondata()
+								}, 'json')
+							} else {
+								vm.detaildata = preloaddata;
+								console.log('detail_po.html;L267-vm.detaildate=' + JSON.stringify(vm.detaildata));
+								buttondata()
+							}
+
+
+
+
+
+							// mui.ajax(APP_DOMAIN + 'api/enlist/enlisted', {
+							// 	data: {
+							// 		api_token: localStorage.getItem('api_token'),
+							// 		user_id: localStorage.getItem('userId'),
+							// 		recruit_id: vm.detaildata.id,
+							// 	},
+							// 	dataType: 'json',
+							// 	type: 'post',
+							// 	timeout: 10000,
+							// 	headers: {
+							// 		'Content-Type': 'application/json'
+							// 	},
+							// 	success: function(data) {
+							// 		console.log('detail.html--toenlisted---data---' + JSON.stringify(data));
+							// 	},
+							// 	error: function(xhr, type, errorThrown) {
+							// 		console.log('detail.html---enlisted;'+xhr.response);
+							// 		console.log(type);
+							// 	}
+							// })
+						});
+					})();
+					// this.$options.methods.enlisted;
+				},
+				computed: {
+					click_shochang() {
+						return this.shochang ? '取消收藏' : '收藏'
+					},
+					// click_enlistbutt() {
+					// 	return this.enlistbutt ? '已报名' : '我要报名'
+					// }
+				},
+				methods: {
+					tocollect: function(s) {
+						console.log("L:283---tocollect;s==" + s)
+						var data = {
+							'api_token': localStorage.getItem('api_token'),
+							'order_id': s
+						}
+						console.log('L288---mui.post===' + JSON.stringify(data));
+						mui.ajax(APP_DOMAIN + 'api/order/shochang', {
+							data: {
+								api_token: localStorage.getItem('api_token'),
+								order_id: s,
+								uid: localStorage.getItem('userId')
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							success: function(data) {
+								console.log('data---' + JSON.stringify(data));
+								// var da=JSON.parse(data);
+								console.log("l309--da==" + data.shochang)
+								if (data.shochang == true) {
+									vm.shochang = true
+									mui.toast('收藏成功!')
+								} else {
+									vm.shochang = false
+									mui.toast('收藏已取消!')
+								}
+								//							localStorage.setItem();
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log(xhr.response);
+								console.log(type);
+							}
+						})
+
+
+
+					},
+					getcontent: function() {
+						var s = vm.detaildata.content
+						alert(s)
+						console.log(s)
+						var arrays = eval(s);
+						// alert(arrays.length)
+						for (var i = 0; i < arrays.length; i++) {
+							// if(arrays[i].tag==)
+							// function(){
+							// 	ht=
+							// }
+						}
+						// alert(eval(s)[0].children)
+						// return function(s){
+						// 	var ss = JSON.parse(s)
+						// 	// JSON.parse()
+						// 	return ss
+						// }()
+					},
+					openShare: function() {
+						shareWebbiew();
+						mui.plusReady(function() {
+							ws = plus.webview.currentWebview();
+							plus.navigator.closeSplashscreen();
+						})
+						var sharew;
+						var ws = null;
+
+						function shareWebbiew() {
+							ws = plus.webview.currentWebview();
+							if (sharew) { // 避免快速多次点击创建多个窗口
+								return;
+							}
+							var top = plus.display.resolutionHeight - 134;
+							var href = "share.html";
+							sharew = plus.webview.create(href, "share.html", {
+								width: '100%',
+								height: '134',
+								top: top,
+								scrollIndicator: 'none',
+								scalable: false,
+								popGesture: 'none'
+							}, {
+								shareInfo: {
+									"href": "https://www.linshigong.com",
+									"title": vm.detaildata.title,
+									"content": "欢迎使用临时工APP,点击查看订详情！",
+									"pageSourceId": ws.id
+								}
+							});
+							sharew.addEventListener("loaded", function() {
+								sharew.show('slide-in-bottom', 300);
+							}, false);
+							// 显示遮罩层  
+							ws.setStyle({
+								mask: "rgba(0,0,0,0.5)"
+							});
+							// 点击关闭遮罩层
+							ws.addEventListener("maskClick", closeMask, false);
+						}
+
+						function closeMask() {
+							ws.setStyle({
+								mask: "none"
+							});
+							//避免出现特殊情况，确保分享页面在初始化时关闭 
+							if (!sharew) {
+								sharew = plus.webview.getWebviewById("share.html");
+							}
+							if (sharew) {
+								sharew.close();
+								sharew = null;
+							}
+						}
+					},
+					tobaidumap: function(s) {
+						s.mypoint = vm.detaildata.mypoint;
+						webview = plus.webview.create('../html/baidumap.html', 'baidumap.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '临时工地图',
+								autoBackButton: true
+							}
+						}, {
+							preload: JSON.stringify(s)
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+
+					toenlist: function(id, title) {
+						console.log('detail_po.html;L466.vm.enlistbutt==' + vm.enlistbutt)
+						if (vm.enlistbutt == '已报名') {
+							return mui.toast('请不要重复报名')
+						}
+						console.log('detail.po.html--L434;s==' + title);
+						if (localStorage.getItem('api_token')) {
+							console.log('detail_po.html--L436;')
+
+							var btnArray = ['按错了', '要报名!'];
+
+							mui.prompt(title, '留言', '亲，要报名么？', btnArray, function(e) {
+								console.log('detail_po.html---L441')
+								if (e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									var data = {
+										api_token: localStorage.getItem('api_token'),
+										title: vm.detaildata.title,
+										name: localStorage.getItem('userName'),
+										sex: localStorage.getItem('sex'),
+										mobile: localStorage.getItem('mobile'),
+										text: e.value,
+										user_id: localStorage.getItem('userId'),
+										recruit_id: vm.detaildata.id,
+										subsidy: vm.detaildata.subsidy,
+										salesroomid: localStorage.getItem('salesroomid')
+									}
+									console.log('detail_po.html---L493;data==' + JSON.stringify(data))
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data,
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('detail.html--toenlist---data---' + JSON.stringify(data));
+											if (data == 8) {
+												mui.toast('报名已提交')
+												vm.enlistbutt = '已报名'
+											}
+
+											// localStorage.setItem('enlist', vm.detaildata.title);
+											// localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											// var newwebview = plus.webview.getElementById('new-webview.html');
+											// mui.fire(newwebview, 'enlist', {
+											// 	detaildata: {
+											// 		enlist: vm.detaildata.title,
+											// 		subsidy: vm.detaildata.subsidy
+											// 	}
+											// })
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					}
+				},
+			});
+		</script>
+	</body>
+</html>

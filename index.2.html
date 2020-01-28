@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<!--<script src="js/mui.js"></script>-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/tween.js"></script>
+		<script src="js/vue.js"></script>
+		<!-- <script src="js/vue-methods-promise.js"></script> -->
+
+		<!-- <script src="js/pubsub.js"></script> -->
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!-- <link href="css/new_file.css" rel="stylesheet" /> -->
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+
+			.title {
+				margin: 20px 14px 10px;
+				/*color: #6d6d72;*/
+				color: #00CCCC;
+				font-size: 13px;
+			}
+
+			.daocang {
+				float: left;
+				margin-right: 5px;
+				margin-top: 10px;
+				padding: 0 5px;
+				line-height: 14px;
+				font-size: 8px;
+				color: darkgrey;
+				border: 1px solid darkgrey;
+				background: white;
+				border-radius: 3px;
+			}
+
+			.tabletop {
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				justify-content: space-between;
+				margin: 8px 40px;
+			}
+
+			.button {
+				background: #df3030;
+				-webkit-border-radius: 50;
+				-moz-border-radius: 50;
+				border-radius: 50px;
+				font-family: 黑体;
+				color: #EEEEEE;
+				font-size: 14px;
+				padding: 5px 30px;
+				margin: 5px auto;
+				text-decoration: none;
+			}
+
+			.active {
+				background: #F09102;
+				-webkit-border-radius: 50;
+				-moz-border-radius: 50;
+				border-radius: 50px;
+				color: red;
+			}
+
+			.button2 {
+				background: #2980b9;
+				background-image: -webkit-linear-gradient(top, #2980b9, #3498db);
+				background-image: -moz-linear-gradient(top, #2980b9, #3498db);
+				background-image: -ms-linear-gradient(top, #2980b9, #3498db);
+				background-image: -o-linear-gradient(top, #2980b9, #3498db);
+				background-image: linear-gradient(to bottom, #2980b9, #3498db);
+				color: #ffffff;
+				text-decoration: none;
+			}
+
+			input::-webkit-input-placeholder {
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input::-moz-placeholder {
+				/* Mozilla Firefox 19+ */
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input:-moz-placeholder {
+				/* Mozilla Firefox 4 to 18 */
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input:-ms-input-placeholder {
+				/* Internet Explorer 10-11 */
+				color: rgba(255, 255, 255, 0.4);
+			}
+		</style>
+		<style type="text/css">
+			.refresh-moudle {
+				width: 100%;
+				margin-top: -100px;
+				-webkit-overflow-scrolling: touch;
+				/* ios5+ */
+			}
+
+			.pull-refresh {
+				width: 100%;
+				color: #999;
+				transition-duration: 200ms;
+				font-size: 24px;
+			}
+
+			.refresh-moudle .down-tip,
+			.up-tip,
+			.refresh-tip {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 0px;
+			}
+
+			.down-img {
+				width: 35px;
+				height: 35px;
+				margin-right: 15px;
+				transform: rotate(0deg);
+				animation: anticlockwise 0.8s ease;
+			}
+
+			@keyframes anticlockwise {
+				0% {
+					transform: rotate(-180deg);
+				}
+
+				100% {
+					transform: rotate(0deg);
+				}
+			}
+
+			.up-img {
+				width: 35px;
+				height: 35px;
+				margin-right: 15px;
+				transform: rotate(180deg);
+				animation: clockwise 0.8s ease;
+			}
+
+			@keyframes clockwise {
+				0% {
+					transform: rotate(0deg);
+				}
+
+				100% {
+					transform: rotate(-180deg);
+				}
+			}
+
+			.refresh-img {
+				width: 35px;
+				height: 35px;
+				margin-right: 15px;
+				animation: rotating 1.5s linear infinite;
+			}
+
+			@keyframes rotating {
+				0% {
+					transform: rotate(0deg);
+				}
+
+				100% {
+					transform: rotate(1turn);
+				}
+			}
+		</style>
+		<style type="text/css">
+			.load-more {
+				width: 100%;
+				color: #c0c0c0;
+				background: #fafafa;
+				font-size: 14px;
+			}
+
+			.more-tip,
+			.loading-tip,
+			.no-more-tip {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 50px;
+			}
+
+			.load-moudle .loading-icon {
+				display: inline-flex;
+				width: 35px;
+				height: 35px;
+				background: url(../myimg/loading.png) no-repeat;
+				background-size: cover;
+				margin-right: 5px;
+				animation: rotating 2s linear infinite;
+			}
+
+			@keyframes rotating {
+				0% {
+					transform: rotate(0deg);
+				}
+
+				100% {
+					transform: rotate(1turn);
+				}
+			}
+
+			.connecting-line {
+				display: inline-flex;
+				width: 100px;
+				height: 2px;
+				background: #ddd;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<template id="template">
+			<div class="refresh-moudle" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)"
+			 :style="{transform: 'translate3d(0,' + top + 'px, 0)'}">
+				<header class="pull-refresh">
+					<slot name="pull-refresh">
+						<div class="down-tip" v-if="dropDownState==1">
+							<!-- <img v-if="dropDownInfo.downImg" class="down-img" :src="require('../../assets/images/refreshAndReload/'+dropDownInfo.downImg)"> -->
+							<span class="up-tip" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%">
+							</span>
+
+							<!-- <span class="down-text">{{dropDownInfo.downText}}</span> -->
+						</div>
+						<div class="up-tip" v-if="dropDownState==2">
+							<!-- <img v-if="dropDownInfo.upImg" class="up-img" :src="require('../../assets/images/refreshAndReload/'+dropDownInfo.upImg)"> -->
+							<img v-if="dropDownInfo.upImg" class="up-img" src="myimg/newlogo.png">
+							<span class="up-text" style="font-size: 16px;">{{dropDownInfo.upText}}</span>
+						</div>
+						<div class="refresh-tip" v-if="dropDownState==3">
+							<!-- <img v-if="dropDownInfo.refreshImg" class="refresh-img" :src="require('../../assets/images/loading/'+dropDownInfo.refreshImg)"> -->
+							<!-- 							<img v-if="dropDownInfo.refreshImg" class="refresh-img" src="require('../myimg/newlogo.png">
+
+							<span class="refresh-text">{{dropDownInfo.refreshText}}</span> -->
+							<img v-if="dropDownInfo.refreshImg" class="refresh-img" src="myimg/newlogo.png">
+							<span class="refresh-text" style="font-size: 16px;">{{dropDownInfo.refreshText}}</span>
+						</div>
+					</slot>
+				</header>
+				<slot></slot>
+			</div>
+		</template>
+		<script type="text/javascript">
+			Vue.component('v-refresh', {
+				props: {
+					onRefresh: {
+						type: Function,
+						required: false
+					}
+				},
+				data() {
+					return {
+						defaultOffset: 50, // 默认高度, 相应的修改.releshMoudle的margin-top和.down-tip, .up-tip, .refresh-tip的height
+						top: 0,
+						scrollIsToTop: 0,
+						startY: 0,
+						isDropDown: false, // 是否下拉
+						isRefreshing: false, // 是否正在刷新
+						dropDownState: 1, // 显示1:下拉可以刷新, 2:松开立即刷新, 3:正在刷新数据中...
+						dropDownInfo: {
+							downText: '下拉可以刷新',
+							downImg: 'arrow.png',
+							upText: '松开立即刷新',
+							upImg: 'arrow.png',
+							refreshText: '正在刷新数据...',
+							refreshImg: 'loading.png'
+						}
+					}
+				},
+				template: "#template",
+				created() {
+					if (document.querySelector('.down-tip')) {
+						// 获取不同手机的物理像素（dpr）,以便适配rem
+						this.defaultOffset = document.querySelector('.down-tip').clientHeight || this.defaultOffset
+					}
+				},
+				mounted() {
+					// location.reload()
+				},
+				methods: {
+					/**
+					 * 触摸开始，手指点击屏幕时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchStart(e) {
+						// console.log('myindex.html---L671;  this.isRefreshing==' + this.isRefreshing)
+						// console.log('myindex.html---L672;  this.isDropDown==' + this.isDropDown)
+						// console.log('myindex.html---L673;  this.dropDownState==' + this.dropDownState)
+						this.startY = e.targetTouches[0].pageY
+						// console.log('myindex.html---L672;  startY==' + this.startY)
+					},
+
+					/**
+					 * 接触点改变，滑动时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchMove(e) {
+						this.scrollIsToTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop // safari 获取scrollTop用window.pageYOffset
+						// console.log('index.html--L681;scrollIsToTop==' + this.scrollIsToTop)
+						if (e.targetTouches[0].pageY > this.startY) {
+							// console.log('myindex.html---L687;  this.dropDownState==' + this.dropDownState) // 下拉
+							this.isDropDown = true
+							if (this.scrollIsToTop === 0 && !this.isRefreshing) {
+								// 拉动的距离
+								let diff = e.targetTouches[0].pageY - this.startY - this.scrollIsToTop
+								this.top = Math.pow(diff, 0.8) + (this.dropDownState === 3 ? this.defaultOffset : 0)
+								// console.log('myindex.html---L693;  top==' + this.top)
+								if (this.top >= this.defaultOffset) {
+									this.dropDownState = 2
+									e.preventDefault()
+								} else {
+									this.dropDownState = 1
+									// 去掉会导致ios无法刷新
+									e.preventDefault()
+								}
+							}
+						} else {
+							this.isDropDown = false
+							this.dropDownState = 1
+						}
+					},
+
+					/**
+					 * 触摸结束，手指离开屏幕时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchEnd(e) {
+						// console.log('index.html---L308;  this.dropDownState==' + this.dropDownState)
+						if (this.isDropDown && !this.isRefreshing) {
+							if (this.top >= this.defaultOffset) {
+								// do refresh
+								this.isRefreshing = true
+								this.refresh()
+
+							} else {
+								// cancel refresh
+								this.isRefreshing = false
+								this.isDropDown = false
+								this.dropDownState = 1
+								this.top = 0
+							}
+						}
+					},
+
+					/**
+					 * 刷新
+					 */
+					refresh() {
+						// console.log('mycollection.htm--L663;isRefreshing ='+this.isRefreshing+';isDropDown='+this.isDropDown+';dropDownState='+this.dropDownState+';top='this.top')
+						this.dropDownState = 3
+						this.top = this.defaultOffset
+						// console.log('myindex.html---L742;  top==' + this.top)
+
+						// 这是全是静态数据,延时1200毫秒，给用户一个刷新的感觉，如果是接口数据的话，直接调接口即可
+						// this.onRefresh(this.refreshDone)
+						// setTimeout(() => {
+						// 	this.onRefresh(this.refreshDone)
+						// }, 1200)
+						setTimeout(() => {
+							// this.$options.methods.g(1)
+							// this.$parent.g(1)
+							// this.$parent.ajaxdata('', '', '', that.distance, 'api/order');
+
+							this.onRefresh(this.refreshDone)
+						}, 1200)
+					},
+
+					/**
+					 * 刷新完成
+					 */
+					refreshDone() {
+						this.isRefreshing = false
+						this.isDropDown = false
+						this.dropDownState = 1
+						this.top = 0
+						// console.log('myindex.html---L753;  isRefreshing==' + this.isRefreshing)
+
+					}
+				}
+			})
+		</script>
+		<!----------------------------------------->
+
+		<template id="pullUp-reload-tp">
+			<div class="load-moudle" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchend($event)" >
+				<slot></slot>
+				<footer class="load-more">
+					<slot name="load-more">
+						<div class="more-tip" v-if="pullUpState==1">
+							<span class="more-text">{{pullUpInfo.moreText}}</span>
+						</div>
+						<div class="loading-tip" v-if="pullUpState==2">
+							<span class="loading-icon"></span>
+							<span class="loading-text">{{pullUpInfo.loadingText}}</span>
+						</div>
+						<div class="no-more-tip" v-if="pullUpState==3">
+							<span class="connecting-line"></span>
+							<span class="no-more-text">{{pullUpInfo.noMoreText}}</span>
+							<span class="connecting-line"></span>
+						</div>
+					</slot>
+				</footer>
+			</div>
+		</template>
+
+
+		<script type="text/javascript">
+			Vue.component('v-reload', {
+
+				props: {
+					parentPullUpState: {
+						default: 1
+					},
+					onInfiniteLoad: {
+						type: Function,
+						require: false
+					},
+					lastPage: {
+						default: 8
+					}
+				},
+				data() {
+					return {
+						top: 0,
+						pullUpState: 1, // 1:上拉加载更多, 2:加载中……, 3:我是有底线的
+						isLoading: false, // 是否正在加载
+						pullUpInfo: {
+							moreText: '上拉加载更多',
+							loadingText: '加载中...',
+							noMoreText: '到底啦!'
+						},
+						startX: 0,
+						startY: 0,
+						endX: 0,
+						endY: 0
+					}
+				},
+				template: '#pullUp-reload-tp',
+				methods: {
+					/**
+					 * 触摸开始，手指点击屏幕时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchStart(e) {
+						console.log('index.html---L422;v-reload--touchStart')
+						this.startX = e.touches[0].pageX
+						this.startY = e.touches[0].pageY
+					},
+
+					/**
+					 * 接触点改变，滑动时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchMove(e) {
+
+						this.endX = e.changedTouches[0].pageX
+						this.endY = e.changedTouches[0].pageY
+						let direction = this.getSlideDirection(this.startX, this.startY, this.endX, this.endY)
+						switch (direction) {
+							case 0:
+								// console.log('没滑动')
+								break
+							case 1:
+								// console.log('向上')
+								this.scrollToTheEnd()
+								break
+							case 2:
+								// console.log('向下')
+								break
+							case 3:
+								// console.log('向左')
+								break
+							case 4:
+								// console.log('向右')
+								break
+							default:
+						}
+					},
+
+					/**
+					 * 触摸结束，手指离开屏幕时
+					 * @param {object} e Touch 对象包含的属性
+					 */
+					touchend(e) {
+						this.isLoading = false
+					},
+
+					/**
+					 * 判断滚动条是否到底
+					 */
+					scrollToTheEnd() {
+						let innerHeight = document.querySelector('.load-moudle').clientHeight
+						// 变量scrollTop是滚动条滚动时，距离顶部的距离
+						let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+						// 变量scrollHeight是滚动条的总高度
+						let scrollHeight = document.documentElement.clientHeight || document.body.scrollHeight
+						// 滚动条到底部的条件
+						if (scrollTop + scrollHeight >= innerHeight) {
+							console.log('index.html---L476;this.pullUpState==' + this.pullUpState + ';this.isLoading' + this.isLoading)
+							if (this.pullUpState !== 3 && !this.isLoading) {
+								this.infiniteLoad()
+							}
+							console.log('距顶部' + scrollTop + '滚动条总高度' + scrollHeight + '内容高度' + innerHeight)
+						}
+					},
+
+					/**
+					 * 上拉加载数据
+					 */
+					infiniteLoad() {
+						console.log('index.html---L486;v-reload---infinitLoad')
+						console.log('index.html---L487;v-reload---this.pullUpState==' + this.pullUpState)
+						if (this.pullUpState == 1) {
+
+							this.pullUpState = 2
+							this.isLoading = true
+							console.log('index.html---L491;v-reload---this.pullUpState==' + this.pullUpState)
+							this.onInfiniteLoad(this.infiniteLoadDone)
+						}
+					},
+
+					/**
+					 * 加载数据完成
+					 */
+					infiniteLoadDone() {
+						console.log('index.html---L498---v-reload--infinitedLoadDone;vm.last_page==='+this.lastPage)
+						
+						this.pullUpState = 1
+					},
+
+					/**
+					 * 返回角度
+					 */
+					getSlideAngle(dx, dy) {
+						return Math.atan2(dy, dx) * 180 / Math.PI
+					},
+
+					/**
+					 * 根据起点和终点返回方向 1：向上，2：向下，3：向左，4：向右,0：未滑动
+					 * @param {number} startX X轴开始位置
+					 * @param {number} startY X轴结束位置
+					 * @param {number} endX Y轴开始位置
+					 * @param {number} endY Y轴结束位置
+					 */
+					getSlideDirection(startX, startY, endX, endY) {
+						let dy = startY - endY
+						let dx = endX - startX
+						let result = 0
+						// 如果滑动距离太短
+						if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+							return result
+						}
+						let angle = this.getSlideAngle(dx, dy)
+						if (angle >= -45 && angle < 45) {
+							result = 4
+						} else if (angle >= 45 && angle < 135) {
+							result = 1
+						} else if (angle >= -135 && angle < -45) {
+							result = 2
+						} else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+							result = 3
+						}
+						return result
+					}
+				},
+				watch: {
+					parentPullUpState(curVal, oldVal) {
+						this.pullUpState = curVal
+					}
+				}
+			})
+		</script>
+		<!-----------------------DropDownRefresh------------------>
+
+		<script src="js/util.js"></script>
+		<script type="text/javascript">
+			(function() {
+				mui.init({
+
+					keyEventBind: {
+						backbutton: true
+					}
+				});
+				var clickNum = 0;
+				mui.back = function(event) {
+					clickNum++;
+					if (clickNum > 1) {
+						localStorage = null;
+						plus.runtime.quit();
+					} else {
+						mui.toast("再按一次退出应用");
+					}
+					setTimeout(function() {
+						clickNum = 0
+					}, 2000);
+					return false;
+				}
+				mui.plusReady(function() {
+					// console.log('idex.html-L231')
+					//获取当前网络类型
+					var nt = plus.networkinfo.getCurrentType();
+					// console.log('index.html--L234; nt==' + nt)
+					if (nt == plus.networkinfo.CONNECTION_NONE) {
+						if (localStorage.getItem('netStatus') == null || localStorage.getItem('netStatus') == 1) {
+							var btnArray = ['取消', '打开网络'];
+							localStorage.setItem('netStatus', '2');
+							mui.confirm('您需要打开网络，才可以使用。请到设置->无线局域网(或蜂窝移动网络)中开启。', '网络已关闭', btnArray, function(e) {
+								if (e.index == 1) {
+									if (mui.os.ios) {
+										var UIApplication = plus.ios.import("UIApplication");
+										var NSURL = plus.ios.import("NSURL");
+										var setting = NSURL.URLWithString("app-settings:");
+										var application = UIApplication.sharedApplication();
+										application.openURL(setting);
+										plus.ios.deleteObject(setting);
+										plus.ios.deleteObject(application);
+										localStorage.setItem('netStatus', 0);
+									} else {
+										var main = plus.android.runtimeMainActivity();
+										var Intent = plus.android.importClass("android.content.Intent");
+										var mIntent = new Intent('android.settings.WIFI_SETTINGS');
+										main.startActivity(mIntent);
+										localStorage.setItem('netStatus', 0);
+									}
+								} else {
+									localStorage.setItem('netStatus', '1');
+									owner.doExitApp();
+								}
+							})
+						}
+					} else {
+						localStorage.setItem('netStatus', '0');
+					}
+				});
+			})();
+			// alert('plus.webview.currentWebview().id=='+plus.webview.currentWebview().getURL())
+			// mui.getJSON("manifest.json", null, function(data) {
+			// 	svn(data.version.name);
+			// });
+		</script>
+		<div id="app">
+			<div id="allmap">
+			</div>
+			<div class="" style="width:100%;position: fixed;top:0;z-index: 9999;background-color: #efeff4;border-bottom: 1px solid #CCCCCC;">
+				<div style="display:inline-flex; width:100%;  padding: 8px 0 5px 0;background-color:red">
+					<div class="" style="margin:auto 5px;width: 8%;text-align:center;" onclick="location">
+						<span class="mui-icon mui-icon-location" style="margin-top: 10px;font-size: 18px;color:rgba(255,255,255,1);text-align:center;"></span>
+						<div class="mui-media-body" style="font-size: 9px;color:rgba(255,255,255,1);">
+							<marquee behavior="" direction="" scrollamount=1>{{city}}</marquee>
+						</div>
+					</div>
+					<div class="mui-input-row" style="height:40px; flex-grow:4;margin: auto 5px">
+						<i class="mui-icon mui-icon-search" style="color:rgba(255,255,255,0.4);z-index: 2;position:absolute;display: inline-block;left: 0;top:25%;margin-left: 5px;padding: 0 5px;"></i>
+						<i class="mui-icon iconfont  icon-scan" style="color:rgba(255,255,255,0.4);z-index: 2;position:absolute;display: inline-block;right: 0;top:25%;margin-right: 5px;"></i>
+						<input id='seachvar' v-model="s" type="text" style="width: 100%;height:100%; padding-right:32px;background-color: #FF5858;"
+						 class="mui-input-clear s_font-size2" placeholder="      查企业/门店" maxlength="100" />
+
+					</div>
+					<div class="" style="margin:auto 5px; width: 8%;">
+						<span class="mui-icon iconfont  icon-qrcode" style="width: 100%;margin-top:6px;font-size: 14px;text-align: center;color:rgba(255,255,255,1);"></span>
+						<div class="mui-media-body" style="font-size: 9px;color:rgba(255,255,255,1);text-align: center;">签到</div>
+					</div>
+				</div>
+				<div>
+					<div class="tabletop">
+						<div class="button" v-bind:ref="index" v-bind:id="index" v-for="(item,index) in tabs" v-bind:ref="index" :class="{active:index == num}"
+						 v-on:click="tabsSwitch(index)">{{item}}</div>
+					</div>
+					<div v-if="num==0" class="tabletop">
+						<!-- <div>测试一行</div> -->
+						<div></div>
+					</div>
+				</div>
+			</div>
+			<div class="contSingleList" style="margin-top: 180px;margin-bottom: 50px;">
+				<section class="container">
+					<v-refresh :on-refresh="onRefresh">
+						<v-reload :on-infinite-load="onInfiniteLoad" :parent-pull-up-state="infiniteLoadData.pullUpState" :last-page="last_page">
+							<div class="tabCon">
+								<div v-if="num ==0" style="margin-top: 45px;">
+									<div class="content mui-row" style="margin: 0px 10px 0px 10px;padding:15px 0;border-top:1px solid gainsboro;"
+									 v-for="i in sortlistdata0" style="background-color: black;">
+										<div v-on:click="todetail_po(i)" class="" style="float: left;overflow: hidden;width: 30%;">
+											<img v-if="i.photo" v-bind:src="i.photo" alt="" style="width: 90px;height:90px">
+											<img v-else src="images/w1.png" style="width: 90px;height:90px">
+										</div>
+										<div class="" id="" style="background-color: '';float: right;width: 70%;">
+											<div v-on:click="todetail_po(i)">
+												<div>
+													<div class="mui-row" style="font-weight: bold;">
+														<div class="mui-col-sm-9">
+															{{i.title}}
+														</div>
+														<div class="mui-col-sm-3" style="font-size:11px;float: right;">
+															已报名{{i.qty}}
+														</div>
+													</div>
+													<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+														<div class="mui-col-sm-9">
+															下单人：<span>{{person(i.person)}}</span>
+														</div>
+													</div>
+													<div>
+														<div v-if="i.push_label ==  'null' ">
+															<div class="daocang">等待填</div>
+															<div class="daocang">等待填</div>
+															<div class="daocang">等待填</div>
+															<div class="daocang">等待填</div>
+															<div class="daocang">等待填</div>
+														</div>
+														<div v-else id="" v-for="ii in i.push_label">
+															<div style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+														</div>
+														<div style="font-size:11px;float: right;">
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<div v-on:click="tobaidumap(i)" style="padding: 5px 0 0 0; clear: both;">
+												<a class="mui-icon iconfont  icon-position-fill" style="margin:5px 5px 0 0;font-size:10px;color:#C8C7CC;text-align:center;"></a><a
+												 style="font-size:10px;color: #C0C0C0;text-decoration: underline;width:30%" href="#">{{i.distance}}
+													{{i.address}}</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div v-if="num==2" style="text-align: center;font-size: 18px;color: #AAAAAA;margin-top: 200px;">
+									敬请期待！
+								</div>
+								<div v-if="num==3" style="text-align: center;font-size: 18px;color: #AAAAAA;margin-top: 200px;">
+									开发中...
+								</div>
+								<div v-if="num == 1" style="margin-top: 46px;">
+									<div class="content mui-row" style="margin: 0px 10px 0px 10px;padding:15px 0;border-top:1px solid gainsboro;"
+									 v-for="i in sortlistdata1" style="background-color: black;">
+										<div v-on:click="todetail_franchiser(i)" class="" style="float: left;overflow: hidden;">
+											<img v-if="i.photo" v-bind:src="i.photo" alt="" style="width: 90px;height:90px">
+											<img v-else src="images/w1.png" alt="" style="width: 90px;height:90px">
+
+										</div>
+										<div class="" id="" style="background-color: '';float: right;width: 70%;">
+											<div v-on:click="todetail_franchiser(i)">
+												<div>
+													<div class="mui-row" style="font-weight: bold;font-size: 16px;">
+														<div class="mui-col-sm-9">
+															{{i.name}}
+														</div>
+														<div class="mui-col-sm-3" style="font-size:11px;float: right;">
+														</div>
+													</div>
+													<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+														<div class="mui-col-sm-9">
+														</div>
+														<div class="mui-col-sm-3" style="float: right;">
+														</div>
+													</div>
+													<div>
+														<div v-if="i.push_label ==  'null' ">
+														</div>
+														<div v-else id="" v-for="ii in i.push_label">
+														</div>
+														<div style="font-size:11px;float: right;">
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<div v-on:click="tobaidumap(i)" style="padding: 5px 0 0 0; clear: both;margin-top: 45px;">
+												<a class="mui-icon iconfont  icon-position-fill" style="margin:5px 5px 0 0;font-size:10px;color:#C8C7CC;text-align:center;"></a><a
+												 style="font-size:10px;color: #C0C0C0;text-decoration: underline;width:30%" href="#">{{i.distance}}
+													{{i.address}}</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</v-reload>
+					</v-refresh>
+				</section>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#app',
+				data() {
+					return {
+						city: {},
+						mypoint: {},
+						bakpoint: {},
+						postflag: false,
+						s: '',
+						tabs: ["订单", "门店", ],
+						tabContents: ["white", "", "#99CCCC", "#FFCCCC"],
+						num: 0,
+
+						counter: 1, //当前页
+						//						num: 50, // 一页显示多少条
+						pageStart: 0, // 开始页数
+						pageEnd: 0, // 结束页数
+						listdata0: [], // 下拉更新数据存放数组
+						listdata1: [], // 下拉更新数据存放数组
+
+						scrollData: {
+							noFlag: false //暂无更多数据显示
+						},
+
+						current_page: 1,
+						last_page: 1, //最后一页页码
+						total: '', //oder 总页数
+						"details": [],
+						// 上拉加载的设置
+						infiniteLoadData: {
+							initialShowNum: 3, // 初始显示多少条
+							everyLoadingNum: 3, // 每次加载的个数
+							pullUpState: 2, // 子组件的pullUpState状态
+							pullUpList: [], // 上拉加载更多数据的数组
+							showPullUpListLength: this.initialShowNum // 上拉加载后所展示的个数
+						}
+					}
+				},
+				components: {},
+				computed: {
+					person: function() {
+						return function(s) {
+							if (s) {
+								var reg = /(\d{3})\d{4}(\d{4})/;
+								return s.replace(reg, "$1****$2")
+							}
+						}
+					},
+					sortlistdata0: function() {
+						return this.sortByKey(this.listdata0, 'distance')
+					},
+					sortlistdata1: function() {
+						return this.sortByKey(this.listdata1, 'distance')
+					},
+				},
+				beforeMount: function() {},
+				created() {},
+				updated: function() {},
+				mounted: function() {
+					var that = this
+					mui.plusReady(function() {
+						//使用百度地图地位模块获取位置信息
+						plus.geolocation.getCurrentPosition(function(p) {
+							if (!p || !p.address) {
+								return;
+							}
+							that.city = p.addresses;
+							that.mypoint = p.coords;
+							localStorage.setItem('city', p.addresses);
+							localStorage.setItem('mypoint', JSON.stringify(p.coords));
+							that.$options.methods.ajaxdata('', '', '', that.distance, 'api/order');
+
+							//经纬度
+							//JSON对象，地址信息
+							plus.screen.lockOrientation("portrait-primary");
+							// 创建子webview窗口 并初始化
+							var aniShow = {};
+							util.initSubpage(aniShow);
+							var nview = plus.nativeObj.View.getViewById('tabBar'),
+								activePage = plus.webview.currentWebview(),
+								targetPage,
+								subpages = util.options.subpages,
+								pageW = window.innerWidth,
+								currIndex = 0;
+							// console.log('index.html---L916;pageW==' + pageW)
+							/**
+							 * 根据判断view控件点击位置判断切换的tab
+							 */
+							nview.addEventListener('click', function(e) {
+								var clientX = e.clientX;
+
+								console.log('index.html--L922;clienx==' + clientX + ';e==' + JSON.stringify(e))
+								if (clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
+									console.log('index.html---L924;clientX==' + clientX + 'pageW==' + parseInt(pageW * 0.25))
+									currIndex = 0;
+								} else if (clientX > 0.25 && clientX <= parseInt(pageW * 0.5)) {
+									console.log('index.html---L927;clientX==' + clientX + 'pageW==' + parseInt(pageW * 0.5))
+									if (!localStorage.getItem('api_token')) {
+										mui.openWindow({
+											url: 'html/login.html',
+											id: 'login.html',
+											extras: {
+												name: 1
+											}
+										});
+									} else {
+										currIndex = 1;
+									}
+								} else if (clientX > 0.5 && clientX <= parseInt(pageW * 0.75)) {
+									if (!localStorage.getItem('api_token')) {
+										mui.openWindow({
+											url: 'html/login.html',
+											id: 'login.html',
+											extras: {
+												name: 2
+											}
+										});
+									} else {
+										currIndex = 2;
+									}
+								} else if (clientX > 0.75 && clientX <= parseInt(pageW)) {
+									if (!localStorage.getItem('api_token')) {
+										mui.openWindow({
+											url: 'html/login.html',
+											id: 'login.html',
+											extras: {
+												name: 3
+											}
+										});
+									} else {
+										currIndex = 3;
+									}
+								};
+
+								targetPageFun(currIndex);
+							});
+							var targetPageFun = function(currIndex) {
+								// 匹配对应tab窗口	
+								targetPage = plus.webview.currentWebview();
+								if (currIndex > 0) {
+									targetPage = plus.webview.getWebviewById(subpages[currIndex]);
+								} else {
+									targetPage = plus.webview.currentWebview();
+								};
+								if (targetPage == activePage) {
+									return;
+								};
+								//底部选项卡切换
+								util.toggleNview(currIndex);
+								// 子页面切换
+
+								util.changeSubpage(targetPage, activePage, aniShow);
+								//更新当前活跃的页面
+								if (localStorage.getItem('api_token')) {
+									mui.fire(targetPage, 'customEvent', {});
+								}
+								activePage = targetPage;
+
+							};
+							//自定义事件，模拟点击“首页选项卡”
+							document.addEventListener('goTab', function(event) {
+								var defaultTab = document.getElementById(triggerTab);
+								//模拟点击
+								mui.trigger(defaultTab, 'touchstart');
+								mui.trigger(defaultTab, 'tap');
+								//切换选项卡高亮
+							});
+						}, function(e) {
+							// console.log('Geolocation error: ' + e.message);
+							if (isShowToast) {
+								mui.toast("定位出错：" + e.message);
+							}
+						}, {
+							provider: 'baidu'
+						});
+					})
+					if (localStorage.getItem('mypoint')) {
+						let myp = localStorage.getItem('mypoint')
+						this.mypoint = JSON.parse(myp);
+						this.city = localStorage.getItem('city')
+					}
+					// console.log('--------this.city==' + this.city)
+					// console.log('--------this.mypoint==' + JSON.stringify(this.mypoint))
+				},
+				beforeUpdate() {},
+				methods: {
+					sortByKey: function(array, key) { //(数组、排序的列)
+						// console.log('L834--array='+JSON.stringify(array)+';key='+key)
+						return array.sort(function(a, b) {
+							var x = parseInt(a[key]);
+							var y = parseInt(b[key]);
+							// console.log('L839--x='+x+';y='+y)
+							return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+						})
+					},
+					geocoder: function(add) {},
+					// getDistance: function(longitude1, latitude1, longitude2, latitude2) {
+					// 	// 维度
+					// 	var lat1 = (Math.PI / 180) * latitude1;
+					// 	var lat2 = (Math.PI / 180) * latitude2;
+					// 	// 经度
+					// 	var lon1 = (Math.PI / 180) * longitude1;
+					// 	var lon2 = (Math.PI / 180) * longitude2;
+					// 	// 地球半径
+					// 	var R = 6371;
+					// 	// 两点间距离 km，如果想要米的话，结果*1000就可以了
+					// 	var d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) *
+					// 		R;
+					// 	d = d.toFixed(1);
+					// 	return d;
+					// },
+					distance: function(s, p, i, ajaxcallback) {
+						var that = this;
+						// 创建地址解析器实例     
+						function search(callback, ajaxcallback) {
+							var myGeo = new BMap.Geocoder();
+							// 将地址解析结果显示在地图上，并调整地图视野    
+							myGeo.getPoint(s, function(point) {
+								if (point == null) {
+									point = {}
+								}
+								callback(point, i, ajaxcallback)
+							}, "");
+						}
+						search(function(ss, i, searchcallback) {
+							if (ss) {
+								function getDistance(longitude1, latitude1, longitude2, latitude2) {
+									// 维度
+									var lat1 = (Math.PI / 180) * latitude1;
+									var lat2 = (Math.PI / 180) * latitude2;
+									// 经度
+									var lon1 = (Math.PI / 180) * longitude1;
+									var lon2 = (Math.PI / 180) * longitude2;
+									// 地球半径
+									var R = 6371;
+									// 两点间距离 km，如果想要米的话，结果*1000就可以了
+									var d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 -
+											lon1)) *
+										R;
+									d = d.toFixed(1);
+									return d;
+								}
+								var d = getDistance(ss.lng, ss.lat, p.longitude, p.latitude);
+								if (d) {
+									var dist_data = {};
+									dist_data["d"] = d + "km";
+									dist_data["point"] = ss;
+									dist_data["i"] = i;
+									searchcallback(dist_data)
+									return dist_data;
+								}
+							}
+						}, ajaxcallback)
+					},
+					ajaxdata: function(p, s, c, distance, url) {
+						if (s == undefined) {
+							s = ''
+						};
+						if (c == undefined) {
+							c = ''
+						};
+						mui.get(APP_DOMAIN + url, {
+							'page': p,
+							's': s,
+							'c': c
+						}, function(data) {
+							// console.log('L796;ajaxdata-data==' + JSON.stringify(data))
+							let dat_ = data.data;
+							// console.log('L782;dat_=='+JSON.stringify(dat_)+';url=='+url)
+							function ppp(ajacallbak) {
+								var ajaxi = '';
+								dist(0, '');
+
+								function dist(ii, ajaxi) {
+									for (var i = ii; i < dat_.length && ajaxi == ''; i++) {
+										ajaxi = 1;
+										distance(dat_[i]['address'], vm.mypoint, i, ajaxcallback);
+										// console.log('L790;dista...url=='+url)
+										function ajaxcallback(ss) {
+											// console.log('L792;ajaxcallbak-ss=='+JSON.stringify(ss))
+											dat_[ss.i]["distance"] = ss.d;
+											dat_[ss.i]["point"] = ss.point;
+											ajaxi = ''
+											// console.log('L796;ss.i=='+ss.i)
+											return dist(ss.i + 1, '')
+										}
+									};
+									// alert('dat_.length=='+dat_.length+';ii=='+ii)
+									if (ii == dat_.length) {
+										// console.log('L799;url=='+url)
+										ajacallbak()
+									}
+								}
+							};
+							// console.log('L803;url=='+url)
+							ppp(function() {
+								// console.log('L805;url =='+url)
+								if (url == 'api/order') {
+									// console.log('L806; usr--order')
+									for (var i = 0; i < dat_.length; i++) {
+										if (dat_[i]['push_label'] !== 'null') {
+											dat_[i]['push_label'] = JSON.parse(dat_[i]['push_label']);
+										}
+									}
+
+
+									if (vm.listdata0) {
+										if (vm.current_page == data.current_page || p == '') {
+											vm.listdata0 = dat_
+										} else {
+											vm.listdata0 = (vm.listdata0).concat(dat_);
+										}
+									} else {
+										vm.listdata0 = ""
+										vm.listdata0 = dat_
+									}
+									// vm.listdata0 = "";
+									// vm.listdata0 = (vm.listdata0).concat(dat_);
+									// for (var i = 0; i < vm.listdata0.length; i++) {
+									// 	if (vm.listdata0[i]['push_label'] !== 'null') {
+									// 		vm.listdata0[i]['push_label'] = JSON.parse(vm.listdata0[i]['push_label']);
+									// 	}
+									// }
+
+
+
+									vm.last_page = data.last_page;
+									vm.current_page = data.current_page;
+									vm.postflag = false;
+									vm.s = ''
+
+
+
+								} else if (url == 'api/franchiser') {
+									vm.listdata1 = "";
+									vm.listdata1 = dat_;
+									// console.log('L817=='+JSON.stringify(vm.listdata1))
+									for (var i = 0; i < vm.listdata1.length; i++) {
+										if (vm.listdata1[i]['push_label'] !== 'null') {
+											// vm.listdata1[i]['push_label'] = JSON.parse(vm.listdata0[i]['push_label']);
+											vm.listdata1[i]['push_label'] = JSON.parse(vm.listdata1[i]['push_label']);
+										}
+									}
+								}
+							})
+
+						}, 'json');
+					},
+					search: function(s) {
+						if (vm.postflag == true) {
+							return
+						};
+						vm.postflag = true;
+						vm.num = 10;
+						this.ajaxdata('', s, '');
+					},
+					tabsSwitch: function(index) {
+						vm.num = index;
+						if (vm.num == 0) {
+							this.ajaxdata('', '', '', this.distance, 'api/order');
+						} else if (vm.num == 1) {
+							// console.log('L848;tabsSwitch:vm.num=1')
+							this.ajaxdata('', '', '', this.distance, 'api/franchiser');
+						}
+					},
+					todetail_po: function(s) {
+						if (!localStorage.getItem('api_token')) {
+							mui.openWindow('html/login.html', 'login.html');
+						} else {
+
+							mui.get(APP_DOMAIN + 'api/order/shochang', {
+								'uid': localStorage.getItem('userId'),
+								'order_id': s.id
+							}, function(data) {
+								// console.log("L1011-data"+JSON.stringify(data))
+								webview = plus.webview.create('html/detail_po.html', 'detail_po.html', {
+									'titleNView': {
+										'backgroundColor': '#D74B28',
+										'titleText': s.title,
+										autoBackButton: true
+									}
+								}, {
+									preload: JSON.stringify(s)
+								});
+								webview.addEventListener('close', function() {
+									webview = null;
+								});
+								webview.addEventListener('titleUpdate', function() {
+									webview.show();
+								})
+							})
+						};
+					},
+					todetail_franchiser: function(s) {
+
+						// console.log('i===' + JSON.stringify(s))
+						webview = plus.webview.create('html/detail_franchiser.html', 'detail_franchiser.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': s.name,
+								autoBackButton: true
+							}
+						}, {
+							preload: JSON.stringify(s)
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+					tobaidumap: function(s) {
+						s.mypoint = vm.mypoint;
+						webview = plus.webview.create('html/baidumap.html', 'baidumap.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '临时工地图',
+								autoBackButton: true
+							}
+						}, {
+							preload: JSON.stringify(s)
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+					getList() {},
+					/**
+					 * 获取上拉加载的初始数据
+					 */
+					// getPullUpDefData() {
+					// 	console.log('index.html---L1164;getPullUpDefData--------')
+					// 	this.infiniteLoadData.pullUpList = []
+					// 	// if (this.cardList.length < this.infiniteLoadData.initialShowNum) {
+					// 	// 	for (let i = 0; i < this.cardList.length; i++) {
+					// 	// 		this.infiniteLoadData.pullUpList.push(this.cardList[i])
+					// 	// 	}
+					// 	// } else {
+					// 	// 	for (let i = 0; i < this.infiniteLoadData.initialShowNum; i++) {
+					// 	// 		this.infiniteLoadData.pullUpList.push(this.cardList[i])
+					// 	// 	}
+					// 	// }
+					// 	this.getStartPullUpState()
+					// },
+
+					/**
+					 * 获取上拉加载的pullUpState状态
+					 */
+					// getStartPullUpState() {
+					// 	if (this.infiniteLoadData.pullUpList.length) {
+					// 		if (this.cardList.length <= this.infiniteLoadData.initialShowNum) {
+					// 			// 修改子组件的pullUpState状态
+					// 			this.infiniteLoadData.pullUpState = 3
+					// 		} else {
+					// 			this.infiniteLoadData.pullUpState = 1
+					// 		}
+					// 	} else {
+					// 		this.infiniteLoadData.pullUpState = 0
+					// 	}
+					// },
+
+					/**
+					 * 上拉一次加载更多的数据
+					 */
+					getPullUpMoreData() {
+						console.log('index.html---L1202;--vm--getPullUpMoreData上拉一次加载更多的数据')
+						if (vm.last_page == vm.current_page) {
+							this.infiniteLoadData.pullUpState = 3
+							console.log('index.html---L1275;getPullUpMOreData;--=3')
+						} else {
+							console.log('index.html---L1277;to ajax,page==' + (vm.current_page + 1))
+							this.infiniteLoadData.pullUpState = 2
+							// setTimeout(() => {
+								this.$options.methods.ajaxdata(vm.current_page + 1, '', '', this.$options.methods.distance, 'api/order');
+							// }, 1200)
+							this.infiniteLoadData.pullUpState = 1
+						}
+
+
+
+
+						// this.showPullUpListLength = this.infiniteLoadData.pullUpList.length
+						// if (this.infiniteLoadData.pullUpList.length + this.infiniteLoadData.everyLoadingNum > this.cardList.length) {
+						// 	for (let i = 0; i < this.cardList.length - this.showPullUpListLength; i++) {
+						// 		this.infiniteLoadData.pullUpList.push(this.cardList[i + this.showPullUpListLength])
+						// 	}
+						// } else {
+						// 	for (let i = 0; i < this.infiniteLoadData.everyLoadingNum; i++) {
+						// 		this.infiniteLoadData.pullUpList.push(this.cardList[i + this.showPullUpListLength])
+						// 	}
+						// }
+						// if (this.cardList.length === this.infiniteLoadData.pullUpList.length) {
+						// 	this.infiniteLoadData.pullUpState = 3
+						// } else {
+						// 	this.infiniteLoadData.pullUpState = 1
+						// }
+					},
+
+					/**
+					 * 下拉刷新
+					 */
+					onRefresh(done) {
+						// 如果下拉刷新和上拉加载同时使用，下拉时初始化上拉的数据
+						console.log("index.html---L1219==")
+						// this.$options.methods.g(1)
+						this.$options.methods.ajaxdata('', '', '', this.$options.methods.distance, 'api/order');
+
+
+						console.log('index.html---L1224;vm.listdata0==')
+						// this.getStartPullUpState()
+						// this.getPullUpDefData()
+						done() // call done
+						this.infiniteLoadData.pullUpState = 1
+						console.log("index.html---L1037;done")
+					},
+
+					/**
+					 * 上拉加载
+					 */
+					onInfiniteLoad(done) {
+
+						console.log('index.html---L1239---vm.--v-reload--onInfinitedLoad')
+
+						if (vm.last_page != vm.current_page) {
+
+							// if (this.infiniteLoadData.pullUpState === 1) {
+							console.log('index.html---L1242---vm.--onInfiniteLoad')
+							this.getPullUpMoreData()
+							done()
+
+						} else {
+							this.infiniteLoadData.pullUpState = 3
+						}
+					}
+				},
+
+				// onRefresh(done) {
+				// 	that.$options.methods.ajaxdata('', '', '', that.distance, 'api/order')
+
+				// 	// console.log('----onRefresh--vm.num==' + vm.num);
+				// 	// if (vm.num == 10) {
+				// 	// 	this.ajaxdata('', '', '')
+				// 	// } else {
+				// 	// 	this.ajaxdata('', '', vm.num + 2)
+				// 	// }
+				// 	done(); // call done
+				// },
+				// onInfinite(done) {
+				// 	// console.log('----onInfinite');
+				// }
+			})
+
+			//检查自动更新   
+			function svn(t) {
+				console.log('t= ' + t);
+				var xhr_svn = new plus.net.XMLHttpRequest();
+				xhr_svn.onreadystatechange = function() {
+					if (xhr_svn.readyState == 4) {
+						if (xhr_svn.status == 200) {
+							var res = JSON.parse(xhr_svn.responseText);
+							if (res.state == 'yes') {
+								if (res.mark != t) {
+									console.log('res.mark==' + res.mark);
+									var upr;
+									plus.nativeUI.confirm("有新版本发布了，是否件更新？", function(e) {
+										upr = (e.index == 0) ? "Y" : "N";
+										console.log(upr);
+										if (upr == "Y") {
+											var wt = plus.nativeUI.showWaiting('下载更新中，请勿关闭');
+											var url = res.url; // 下载文件地址   
+											var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+												if (status == 200) { // 下载成功   
+													var path = d.filename;
+													console.log(d.filename);
+													plus.runtime.install(path);
+												} else { //下载失败   
+													alert("Download failed: " + status);
+												}
+											});
+											dtask.start();
+										} else {
+
+										}
+									}, "你的厂招网", ["确认", "取消"]);
+
+
+								} else {
+									console.log('最新');
+								}
+							}
+						} else {
+							plus.nativeUI.toast("网络连接错误！");
+						}
+					}
+				}
+				xhr_svn.open("GET", "http://admin.changzhao.com/appupdate/updatenew.json"); //这里的地址是上面json文件的地址   
+				xhr_svn.send();
+
+			}
+		</script>
+
+		<!-- 		<style lang="scss" scoped>
+			.index {}
+		</style> -->
+
+	</body>
+
+</html>

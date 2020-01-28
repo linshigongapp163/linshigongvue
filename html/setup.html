@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>设置</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!-- <link rel="stylesheet" href="../css/mui.picker.min.css"> -->
+		<!-- <link rel="stylesheet" href="../css/mui.poppicker.css"> -->
+		<!-- <link rel="stylesheet" href="../css2/oil.css"> -->
+
+		<!-- <script src="../js/common.js"></script> -->
+
+		<style type="text/css">
+			html,
+			body {
+				background-color: #efeff4;
+				margin-top: 0;
+			}
+
+			ul {
+				background-color: white;
+				margin: 15px 0;
+				padding: 0 15px;
+			}
+
+			li {
+				list-style-type: none;
+				border-bottom: 1px solid #efeff4;
+				background-color: white;
+				height: 50px;
+				line-height: 50px;
+			}
+
+			label {
+				margin: auto 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+
+			<div id="" class="toptitle">
+
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" style="padding: 30px 0;">
+
+					<li id="user_avatar" style="height: 80px;line-height: 80px;">
+						<label v-on:click="account_security">账号与安全</label>
+
+
+
+					<li style="margin:20px auto;">
+						<label v-on:click="user">用户协议</label>
+					</li>
+					<li style="margin:20px auto;">
+
+						<label v-on:click="privacy">隐私政策</label>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {}
+
+			};
+			var vm = new Vue({
+				el: '#app',
+				data: obj,
+				updated: function() {},
+				mounted: function() {},
+				methods: {
+					user: function() {
+						console.log('L929--user,showuser')
+						mui.openWindow({
+							url: 'welcome.html',
+							id: 'welcome.html',
+							extras: {
+								name: 2
+							}
+						});
+						// vm.showuser = true
+					},
+					privacy: function() {
+						// vm.show = true
+						mui.openWindow({
+							url: 'welcome.html',
+							id: 'welcome.html',
+							extras: {
+								name: 1
+							}
+						});
+					},
+					// ouser: function(s) {
+					// 	vm.showuser = s
+					// },
+					setup: function() {
+						webview = plus.webview.create('setup.html', 'setup.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '设置',
+								autoBackButton: true
+							}
+						}, {
+							// preload: JSON.stringify(s)
+
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+					account_security: function() {
+						webview = plus.webview.create('account_security.html', 'account_security.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '帐号与安全',
+								autoBackButton: true
+							}
+						}, {
+							// preload: JSON.stringify(s)
+					
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+
+				},
+			});
+		</script>
+
+	</body>
+
+</html>

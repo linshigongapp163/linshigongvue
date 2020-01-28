@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>po</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script> -->
+		<script src="../js/wangEditor.min.js"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/common.js"></script>
+<script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
+<!-- <script>
+  // init vConsole
+  var vConsole = new VConsole();
+  console.log('Hello world');
+</script> -->
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+
+			.bottomtitle {
+				/* 				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999; */
+				bottom: 0;
+				/* height: 50px; */
+				line-height: 30px;
+				background-color: white;
+				padding: 15px 5px 15px 5px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+				/* border-bottom: 1px solid #ccc; */
+			}
+
+			.leftbutton {
+				left: 5px;
+				/* margin-right:15px ; */
+				float: left;
+				color: red;
+			}
+
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+
+			.subbottom {
+				top: 5px;
+				width: 80px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+
+			.clearfix:after {
+				clear: both
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+
+			/* body{ line-height: 18px; font-size: 12px; color: #666; background: #f5f5f5;} */
+
+			p {
+				font-size: 18px;
+			}
+
+			.button {
+				background: #df3030;
+				-webkit-border-radius: 10;
+				-moz-border-radius: 10;
+				border-radius: 10px;
+				font-family: 黑体;
+				color: #EEEEEE;
+				font-size: 14px;
+				padding: 10px 10px;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+
+			<!-- 			<div id="" class="toptitle">
+				<div>奖金高</div>
+				<div>环境好</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包住</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包吃</div>
+				<div style="line-height: 14px;color:darkgrey; background: white;border:1px solid darkgrey; background: white;">可借支生活费</div>
+				<div style="float:right; background: white;color: #AAAAAA;">2万人...</div>
+			</div> -->
+
+			<div class="" style="width:100%;position: fixed;bottom:0;z-index: 9999;background-color: #efeff4;">
+				<div>
+					<div v-on:click="yesok" class="button" style="margin: 25px 60px;text-align: center;"> 点 这 儿 发 布</div>
+					<!-- 					<div class="tabletop">
+						<div class="button" v-bind:ref="index" v-bind:id="index" v-for="(item,index) in tabs" v-bind:ref="index" :class="{active:index == num}"
+						 v-on:click="tabsSwitch(index)">{{item}}</div>
+					</div>
+					<div v-if="num==0" class="tabletop">
+					</div> -->
+				</div>
+			</div>
+
+			<div class="mui-content" style="background: #FFFFFF;margin-bottom: 50px;">
+				<div id="" style="background-color: white;margin:0px auto 30px auto">
+					<div v-on:click="updatepagerimg">
+						<img v-if="photo" v-bind:src="photo" alt="">
+						<img v-else src="../images/w.png">
+					</div>
+					<div id="" style="font-size: 16px;margin-left:20px;margin-top: 40px;">
+						订单标题 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="title" />
+					</div>
+					<div id="" style="font-size: 16px;margin-left:20px;margin-top: 40px;">
+						发布手机 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="person" disabled="disabled"/>
+					</div>
+					<div id="" style="font-size: 16px;margin-left:20px;margin-top: 40px;">
+						&nbsp推 荐 词 &nbsp
+						<input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="getpushv" />
+						<div id="" style="margin: 5px auto auto 80px;">
+							用空格 隔开，最多五个；
+						</div>
+					</div>
+					<!-- 					<div style="margin: 20px 0 20px 20px;">
+						<div v-if=".push_label ==  'null' ">
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+						</div>
+						<div v-else id="" v-for="ii in .push_label">
+							<div class="clearfix" style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+						</div>
+
+					</div> -->
+					<div style="clear:both;margin: 30px 0 0 20px; font-size: 16px;">
+						<!-- <a  class="mui-icon iconfont  icon-clock" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a> -->
+					</div>
+					<div v-on:click="" style="margin: 40px 0 20px 20px; font-size: 16px;">
+						上班地址 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="address" />
+						<!-- <a  class="mui-icon iconfont  icon-position-fill" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a> -->
+						<!-- 						<a style="font-size:16px;margin-top: 50px;text-decoration: underline;" href="#">
+							{{.address}}</a> -->
+					</div>
+					<div style="margin: 40px 0 20px 20px; font-size: 16px;padding: auto auto 30px auto;">
+						已报人数 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="qty" />
+						<!-- <a  class="mui-icon iconfont  icon-clock" style="margin:20px 5px 100px 0;font-size:16px;color:#C8C7CC;"></a> -->
+					</div>
+					<!-- 					<div class="mui-row">
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{.address}}
+						</div>
+					</div> -->
+					<div id="" style="margin: 50px auto 10px 20px;font-size: 16px;">
+						详 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp情 :
+					</div>
+					<div id="editor" style="margin: 0 1px 10px 1px;font-size: 18px;padding: 10px;border-style: solid;border-width: 1px;background-color: #CCCCCC;">
+						<!-- 					<div id="">
+							{{ getcontent()}}
+						</div> -->
+
+						<!-- 					<p v-html=".content" style="font-size: 24px;">
+							
+						</p> -->
+					</div>
+
+					<div id="editor_body" style="margin: 3px 1px auto 1px;padding-bottom: 250px;border-style: solid;border-width: 1px;">
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			
+			// mui.init({
+			// 	beforeback:function(){
+			// 		var list = plus.webview.currentWebview().opener();
+			// 		mui.fire(list,'refresh');
+			// 		return true;
+			// 	}
+			// })
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					pushnew: [],
+					
+							api_token: localStorage.getItem('api_token'),
+							photo:'',
+							person: localStorage.getItem('mobile'),
+							title: '',
+							endtime: '',
+							address: '',
+							qty: '',
+							contentbak: '',
+							content:'',
+							submit:false,
+				}
+			};
+
+			var vm = new Vue({
+				//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+					var sliderMuiObj = mui('.mui-slider');
+					sliderMuiObj.slider({
+						interval: 3000
+					});
+
+				},
+				mounted: function() {
+					(function() {
+						mui.init({
+							swipeBack: false //关闭-右滑关闭功能
+						});
+						console.log('detail_po_new_localStorage.getItem=='+localStorage.getItem('phone'))
+						// var api_token = localStorage.getItem('api_token') || "{}";
+						// mui.plusReady(function() {
+						// 	var self = plus.webview.currentWebview();
+						// 	vm.detaildata = JSON.parse(self.preload);
+						// 	// alert(self.preload);
+						// 	console.log('L216-vm.detaildate=' + JSON.stringify(vm.detaildata));
+						// 	vm.editor.txt.html(vm.content);
+						// 	vm.formData.api_token = api_token;
+						// 	// alert('L216-vm.detaildate='+JSON.stringify(vm.detaildata))
+						// 	mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.id, {}, function(data) {
+
+						// 	}, 'json');
+
+						// });
+					})();
+				},
+				computed: {
+					getpushv: {
+						get: function() {
+							// console.log('L303--.push_label==' + JSON.stringify(this.detaildata))
+							if (this.push_label) {
+								var vv = JSON.parse(JSON.stringify(this.push_label))
+								console.log('vv==' + vv[1])
+								if (vv) {
+									var v = "";
+									for (var i = 0; i < vv.length; i++) {
+										if (v == "") {
+											v = vv[i]
+										} else {
+											v = v + " " + vv[i]
+										}
+									}
+								}
+							}
+							return v
+						},
+						set: function(value) {
+							console.log('computed;getpushv==' + value)
+							var k = value.trim().split(/\s+/);
+							console.log('k==' + k)
+							var newk = [];
+							// k = k.trim().split(/\s+/);
+							// k = k.split(" ");
+
+							// var newk =[];
+							Object.keys(k).forEach(function(key) {
+								// newk.push(k[key].replace(/(^\s*)|(\s*$)/g,""));
+								newk.push(k[key].replace(/\s+/g, ""));
+
+							});
+							// alert('newk222=' + JSON.stringify(newk))
+							console.log('newk==' + JSON.stringify(newk))
+							vm.pushnew = JSON.stringify(newk)
+							console.log('L307--submit')
+							var url = APP_DOMAIN + "api/order/update";
+							if (vm.pushnew) {
+								var pushnew = vm.pushnew;
+								vm.push_label = JSON.stringify(newk);
+							} else {
+								var pushnew = '';
+							}
+
+
+						},
+					},
+				},
+				methods: {
+					yesok: function() {
+						if(vm.submit){
+							console.log('please dont submit!');
+							return
+						}else{
+							vm.submit = true
+						}
+						console.log('L307--submit');
+						var url = APP_DOMAIN + "api/order/new";
+						var contentbak = vm.editor.txt.html()
+						var formData = {
+							api_token: localStorage.getItem('api_token'),
+							photo: vm.photo,
+							person: vm.person,
+							title: vm.title,
+							endtime: vm.endtime,
+							address: vm.address,
+							qty: vm.qty,
+							content: contentbak,
+							push_label: '',
+							// id: vm.id
+						}
+						// alert('L480--formData=='+formData.contentbak)
+						console.log('L315--formData=' + JSON.stringify(formData))
+						mui.ajax(url, {
+							data: formData,
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							success: function(data) {
+								console.log('L325--data==' + JSON.stringify(data))
+								var detail_po_re = plus.webview.getWebviewById(('release.html'));
+								console.log('detail_po_new=='+detail_po_re)
+								mui.fire(detail_po_re,'load',{});
+								plus.webview.currentWebview().close();
+
+								// alert('L325--data==' + JSON.stringify(data))
+								// if (data.code == 0) {
+								// 	vm.contentImgUrl = data.rul;
+								// 	vm.contentImgUuid = data.uuid;
+								// 	insert(vm.contentImgUrl);
+								// 	alert('re-L490;data=='+JSON.stringify(data))
+								// }
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log('errorThrown==' + errorThrown);
+								alert('上传失败')
+								// layer.msg("上传失败")
+							}
+						});
+					},
+					updatepagerimg: function() {
+
+						if (mui.os.plus) {
+							var a = [{
+								title: "拍照"
+							}, {
+								title: "从手机相册选择"
+							}];
+							plus.nativeUI.actionSheet({
+								title: "修改封面图片",
+								cancel: "取消",
+								buttons: a
+							}, function(b) { /*actionSheet 按钮点击事件*/
+								switch (b.index) {
+									case 0:
+										break;
+									case 1:
+										getImage(); /*拍照*/
+										break;
+									case 2:
+										galleryImg(); /*打开相册*/
+										break;
+									default:
+										break;
+								}
+							})
+						}
+
+						//拍照 
+						function getImage() {
+							var c = plus.camera.getCamera();
+							c.captureImage(function(e) {
+								plus.io.resolveLocalFileSystemURL(e, function(entry) {
+									var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+									uploadHead(s); /*上传图片*/
+								}, function(e) {
+									console.log("读取拍照文件错误：" + e.message);
+								});
+							}, function(s) {
+								console.log("error" + s);
+							}, {
+								filename: "_doc/head.png"
+							})
+						}
+
+						//本地相册选择 
+						function galleryImg() {
+							plus.gallery.pick(function(a) {
+								plus.io.resolveLocalFileSystemURL(a, function(entry) {
+									plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+										root.getFile("head.png", {}, function(file) {
+											//文件已存在 
+											file.remove(function() {
+												console.log("file remove success");
+												entry.copyTo(root, 'head.png', function(e) {
+														var e = e.fullPath + "?version=" + new Date().getTime();
+														uploadHead(e); /*上传图片*/
+														//变更大图预览的src 
+														//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+													},
+													function(e) {
+														console.log('copy image fail:' + e.message);
+													});
+											}, function() {
+												console.log("delete image fail:" + e.message);
+											});
+										}, function() {
+											//文件不存在 
+											entry.copyTo(root, 'head.png', function(e) {
+													var path = e.fullPath + "?version=" + new Date().getTime();
+													uploadHead(path); /*上传图片*/
+												},
+												function(e) {
+													console.log('copy image fail:' + e.message);
+												});
+										});
+									}, function(e) {
+										console.log("get _www folder fail");
+									})
+								}, function(e) {
+									console.log("读取拍照文件错误：" + e.message);
+								});
+							}, function(a) {}, {
+								filter: "image"
+							})
+						};
+						//上传头像图片 
+
+						// 		var token = localStorage.getItem('$token') || "{}";
+						//		token =  JSON.parse(token);
+						var api_token = localStorage.getItem('api_token') || "{}";
+						//		token =  JSON.parse(token);		
+						function uploadHead(imgPath) {
+							//      	var mainImage={};
+							console.log("imgPath = " + imgPath);
+							//          mainImage.src = imgPath; 
+							//          mainImage.style.width = "60px"; 
+							//          mainImage.style.height = "60px"; 
+							var image = new Image();
+							image.src = imgPath;
+							image.onload = function() {
+								console.log('upload--api_token==' + api_token);
+								//服务端接口路径
+								var server = APP_DOMAIN + "api/upload/newpoimg";
+								//获取图片元素
+								//          var files = document.getElementById('headimg');
+								var files = image;
+								if (imgPath.length <= 200 * 1024) {
+									upload()
+									return
+								}
+								// 图片加载完毕之后进行压缩，然后上传
+								if (image.complete) {
+									callback();
+								} else {
+									image.onload = callback;
+								}
+
+								function callback() {
+									var data = compress(image); // 使用canvas对大图片进行压缩
+									// alert('data=='+data)
+									// $(li).children('div.img').append('![](' + data + ')'); //预览
+									// upload(data, file.type, $(li)); // 上传
+									files = data;
+									upload();
+									image = null;
+								}
+//    使用canvas对大图片进行压缩
+function compress(img) {
+	console.log('compress');
+    //    用于压缩图片的canvas
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext('2d');
+    //    瓦片canvas
+    var tCanvas = document.createElement("canvas");
+    var tctx = tCanvas.getContext("2d");
+
+    var initSize = img.src.length;
+    var width = img.width;
+    var height = img.height;
+	console.log('compress-img.width=='+width)
+    //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+    var ratio;
+    if ((ratio = width * height / 4000000) > 1) {
+		console.log('ratio=0=='+ratio)
+        ratio = Math.sqrt(ratio);  // 平方根
+        width /= ratio;
+        height /= ratio;
+    } else {
+		console.log('ratio==1')
+        ratio = 1;
+    }
+    canvas.width = width;
+    canvas.height = height;
+    //   铺底色（防止png透明背景转成JPG变黑色）
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //  如果图片像素大于100万则使用瓦片绘制
+    var count;
+    if ((count = width * height / 1000000) > 1) {
+		console.log('count=0=='+count)
+        count = ~~(Math.sqrt(count) + 1); // 计算要分成多少块瓦片  
+           //   计算每块瓦片的宽和高
+        var nw = ~~(width / count);    // ~~取整
+        var nh = ~~(height / count);
+        tCanvas.width = nw;
+        tCanvas.height = nh;
+		console.log('nw=='+nw)
+        for (var i = 0; i < count; i++) {
+            for (var j = 0; j < count; j++) {
+           //  drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight,destX, destY, destWidth, destHeight)
+                tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);  
+                ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+            }
+        }
+    } else {
+		console.log('count=1')
+        ctx.drawImage(img, 0, 0, width, height);
+    }
+	console.log('conted')
+	console.log('canvas=='+canvas)
+    //进行最小压缩（将原来图片的质量压缩到原先的0.1倍）
+    var ndata = canvas.toDataURL('image/jpeg', 0.1);
+	console.log('ndata=='+ndata);
+    console.log('压缩前：' + initSize);
+    console.log('压缩后：' + ndata.length);
+    console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
+    tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+	alert('ndata=='+ndata)
+    console.log(ndata);
+    return ndata;
+}
+
+								function upload() {
+									
+									// 上传文件
+									var wt = plus.nativeUI.showWaiting();
+									var task = plus.uploader.createUpload(server, {
+											method: "POST"
+										},
+										function(t, status) { //上传完成
+											console.log(JSON.stringify(status));
+
+											if (status == 200) {
+												wt.close(); //关闭等待提示按钮
+												console.log('上传完成');
+												console.log(t.responseText);
+												vm.photo = t.responseText;
+												// alert('reponseText=='+t.responseText)
+												// localStorage.setItem('avatar',t.responseText);
+
+											} else {
+												console.log('上传失败' + JSON.stringify(t));
+												wt.close(); //关闭等待提示按钮
+											}
+										}
+									);
+									//添加其他参数
+									task.addData("api_token", api_token);
+									task.addData("id", String(vm.id));
+									// alert('vm.id=='+vm.id)
+									var filev = task.addFile(files.src, {
+										key: "newimg"
+									});
+									task.start();
+								}
+							}
+						}
+
+						/**
+						 * 旋转图片
+						 * @param image         HTMLImageElement
+						 * @returns newImage    HTMLImageElement
+						 */
+						function rotateImage(image) {
+							console.log('rotateImage');
+
+							var width = image.width;
+							var height = image.height;
+
+							var canvas = document.createElement("canvas")
+							var ctx = canvas.getContext('2d');
+
+							var newImage = new Image();
+
+							//旋转图片操作
+							EXIF.getData(image, function() {
+								var orientation = EXIF.getTag(this, 'Orientation');
+								// orientation = 6;//测试数据
+								console.log('orientation:' + orientation);
+								switch (orientation) {
+									//正常状态
+									case 1:
+										console.log('旋转0°');
+										// canvas.height = height;
+										// canvas.width = width;
+										newImage = image;
+										break;
+										//旋转90度
+									case 6:
+										console.log('旋转90°');
+										canvas.height = width;
+										canvas.width = height;
+										ctx.rotate(Math.PI / 2);
+										ctx.translate(0, -height);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//旋转180°
+									case 3:
+										console.log('旋转180°');
+										canvas.height = height;
+										canvas.width = width;
+										ctx.rotate(Math.PI);
+										ctx.translate(-width, -height);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//旋转270°
+									case 8:
+										console.log('旋转270°');
+										canvas.height = width;
+										canvas.width = height;
+										ctx.rotate(-Math.PI / 2);
+										ctx.translate(-height, 0);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//undefined时不旋转
+									case undefined:
+										console.log('undefined  不旋转');
+										newImage = image;
+										break;
+								}
+							});
+							return newImage;
+						}
+						//将图片压缩转成base64 
+						function getBase64Image(img) {
+							var canvas = document.createElement("canvas");
+							var width = img.width;
+							var height = img.height;
+							// calculate the width and height, constraining the proportions 
+							if (width > height) {
+								if (width > 100) {
+									height = Math.round(height *= 100 / width);
+									width = 100;
+								}
+							} else {
+								if (height > 100) {
+									width = Math.round(width *= 100 / height);
+									height = 100;
+								}
+							}
+							canvas.width = width; /*设置新的图片的宽度*/
+							canvas.height = height; /*设置新的图片的长度*/
+							var ctx = canvas.getContext("2d");
+							ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+							var dataURL = canvas.toDataURL("image/png", 0.8);
+							return dataURL;
+						}
+					},
+				},
+			});
+			var E = window.wangEditor;
+			vm.editor = new E('#editor', '#editor_body');
+			vm.editor.customConfig.uploadImgShowBase64 = true;
+			vm.editor.customConfig.menus = [
+				'bold',
+				'underline',
+				'quote',
+				'emoticon',
+				'undo',
+				'redo'
+			];
+			vm.editor.customConfig.showLinkImg = false
+			vm.editor.customConfig.zIndex = 0;
+			// vm.editor.customConfig.pasteFilterStyle = false;
+			// vm.editor.customConfig.pasteIgnoreImg = true;
+			// vm.editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+			// vm.editor.customConfig.upoadImgMaxLength = 6;
+			// vm.editor.customConfig.uploadFileName = 'mypic[]';
+			// vm.editor.customConfig.uploadImgServer = 'https://app.linshigong.com/api/order/img'
+			vm.editor.customConfig.debug = true;
+			// vm.editor.customConfig.
+			// vm.editor.customConfig.UploadImgServer = url;
+			var api_token = localStorage.getItem('api_token') || "{}";
+
+			vm.editor.customConfig.onblur = function(html) {
+				// alert('re-L473;data,html=='+html)
+				vm.content = html
+			}
+			vm.editor.customConfig.showLinkImg = false;
+			vm.editor.create();
+			// alert(JSON.stringify(vm.detaildata))
+			// vm.editor.txt.html(vm.content)
+
+			// (function () { var script = document.createElement('script'); script.src="http://eruda.liriliri.io/eruda.min.js"; document.body.appendChild(script); script.onload = function () { eruda.init() } })();
+		</script>
+	</body>
+</html>

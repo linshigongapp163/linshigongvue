@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/vue.js"></script>
+ 
+		<style type="text/css">
+			.mui-grid-9 {
+				background: white !important;
+			}
+			li {
+				border-left: none !important;
+			}
+			img {
+				width: 50px !important;
+			}
+			body {
+				background: transparent !important;
+			}
+			.mui-content {
+				background: white;
+				text-align: center;
+			}
+		</style>
+	</head>
+ 
+	<body οnclick="closeShare();">
+		<div id="app">
+			<div class="mui-content">
+				<img id="pic" src="img/add.png" style="display: none;" />
+			</div>
+			<footer style="position: absolute;bottom: 0px; width:100%;background: white;">
+				<div style="height: 30px; line-height: 30px ;font-family: '黑体'; margin-left:40%; ;margin-top: 50%;">分享到</div>
+				<ul id="share"  class="mui-table-view mui-grid-view mui-grid-9">
+					<li  class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_wx.png">
+						<div class="mui-media-body">微信</div>
+					</li>
+					<li  class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_wxq.png">
+						<div class="mui-media-body">朋友圈</div>
+					</li>
+					<li  class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_qq.png">
+						<div class="mui-media-body">QQ</div>
+					</li>
+<!-- 					<li onclick="shareHref(1);" class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_wx.png">
+						<div class="mui-media-body">微信</div>
+					</li>
+					<li οnclick="shareHref(0);" class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_wxq.png">
+						<div class="mui-media-body">朋友圈</div>
+					</li>
+					<li οnclick="shareHref(2);" class="mui-table-view-cell mui-media mui-col-xs-4">
+						<img class="mui-media-object" src="../myimg/share_to_icon_qq.png">
+						<div class="mui-media-body">QQ</div>
+					</li> -->
+				</ul>
+			</footer>
+			<input id="sharehref" style="display: none;" class="sharehref" type="url" value="www.linshigong.com" placeholder="请输入要分享的链接地址" />
+			<input id="sharehrefTitle" style="display: none;" class="sharehref" type="text" value="订单详情" placeholder="请输入要分享的链接标题" />
+			<input id="sharehrefDes" style="display: none;" class="sharehref" type="text" value="我正在使用临时工APP，太好了！" placeholder="请输入要分享的链接描述" />
+		</div>
+
+	</body>
+ 
+	<script type="text/javascript" charset="utf-8">
+		// function aaa(s){
+		// 	alert('bbbbdd==='+s)
+		// 	
+		// }
+      mui.init();
+	  // mui.plusReady(function () {
+	  //     plus.share.getServices(function(ss) {  
+	  //     shares = ss;  
+		 //  console.log('L67;--share;s='+JSON.stringify(ss));
+		 //  // console.log('L68;share--ss=='+ss;)
+	  //     for (var i in ss ) {  
+	  //         var s = ss[i];  
+	  //         var item = document.createElement("li");  
+	  //         item.setAttribute("class", "ditem");  
+	  //         item.setAttribute("onclick", (s.id == "weixin") ? "shareWeiXin(this.plusShare)" : "shareAction(this.plusShare)");  
+	  //         item.innerText = s.description;  
+	  //         item.plusShare = s;  
+	  //         list.appendChild(item);  
+	  //     }  
+	  //     }, function(e) {  
+	  //     alert("获取分享服务列表失败：" + e.message);  
+	  //     });
+	  // })
+
+//          //分享操作 
+//         var shares = {};
+//         // 初始化服务列表
+//         mui.plusReady(function() {
+//             plus.share.getServices(function(s) {
+//                 if (s && s.length > 0) {
+//                     for (var i = 0; i < s.length; i++) {
+//                         var t = s[i];
+//                         shares[t.id] = t;
+//                     }
+//                 }
+// 				console.log("L94;shares=="+JSON.stringify(shares))
+//             }, function() {
+//                 console.log("获取分享服务列表失败");
+//             });
+//         });
+//          //分享链接点击事件
+//         document.getElementById("share").addEventListener('tap', function() {
+//             var ids = [{
+//                     id: "weixin",
+//                     ex: "WXSceneSession"
+//                 }, {
+//                     id: "weixin",
+//                     ex: "WXSceneTimeline"
+//                 }, {
+//                     id: "sinaweibo"
+//                 }, {
+//                     id: "tencentweibo"
+//                 }, {
+//                     id: "qq"
+//                 }],
+//                 bts = [{
+//                     title: "发送给微信好友"
+//                 }, {
+//                     title: "分享到微信朋友圈"
+//                 }, {
+//                     title: "分享到新浪微博"
+//                 }, {
+//                     title: "分享到腾讯微博"
+//                 }, {
+//                     title: "分享到QQ"
+//                 }];
+//             plus.nativeUI.actionSheet({
+//                 cancel: "取消",
+//                 buttons: bts
+//             }, function(e) {
+//                 var i = e.index;
+//                 if (i > 0) {
+//                     var s_id = ids[i - 1].id;
+//                     var share = shares[s_id];
+//                     if (share.authenticated) {
+//                         shareMessage(share, ids[i - 1].ex);
+//                     } else {
+//                         share.authorize(function() {
+//                             shareMessage(share, ids[i - 1].ex);
+//                         }, function(e) {
+//                             console.log("认证授权失败：" + e.code + " - " + e.message);
+//                         });
+//                     }
+//                 }
+//             });
+//         });
+//         
+//         // 分享执行动作
+//         function shareMessage(share, ex) {
+//                 var msg = {
+//                     extra: {
+//                         scene: ex
+//                     }
+//                 };
+//                 msg.href = "http://www.dcloud.io/hellomui/";
+//                 msg.title = "最接近原生APP体验的高性能前端框架";
+//                 msg.content = "我正在体验HelloMUI，果然很流畅，基本看不出和原生App的差距";
+//                 if (~share.id.indexOf('weibo')) {
+//                     msg.content += "；体验地址：http://www.dcloud.io/hellomui/";
+//                 }
+//                 msg.thumbs = ["_www/images/logo.png"];
+//                 share.send(msg, function() {
+//                     console.log("分享到\"" + share.description + "\"成功！ ");
+//                 }, function(e) {
+//                     console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+//                 });
+//             }
+// 
+
+
+		var li = document.getElementsByTagName('li');
+		
+		// li[0].onclick = function(){
+		// 	alert('li[000]==')
+		// };
+		// li[1].onclick = function(){
+		// 	alert('li[111]==')
+		// };
+		// li[2].onclick = function(){
+		// 	alert('li[2222]==')
+		// }
+		    for (var i=0,len=li.length;i<len;i++){
+				console.log('L197;li.length==len=='+len);
+					(function(i){
+						li[i].onclick=function(){
+							// alert('li.onclick;i=='+i)
+							if(i==0){
+								ii=1
+							}else if(i==1){
+								ii=0
+							}else{
+								ii=i
+							}
+							shareHref(ii)
+						}
+					})(i)
+			}
+
+
+	  
+        var shares=null;
+        var Intent=null,File=null,Uri=null,main=null;
+        // H5 plus事件处理
+        function plusReady(){
+            updateSerivces(function(shares){
+				// alert('L178;shares=='+JSON.stringify(shares))
+				
+				if(plus.os.name=="Android"){
+					main = plus.android.runtimeMainActivity();
+					Intent = plus.android.importClass("android.content.Intent");
+					File = plus.android.importClass("java.io.File");
+					Uri = plus.android.importClass("android.net.Uri");
+					main = plus.android.runtimeMainActivity();
+				}
+				var shareInfo = plus.webview.currentWebview().shareInfo;
+				// alert('L230;shareinfo=='+JSON.stringify(shareInfo))
+				sharehref.value = shareInfo.href;
+				sharehrefTitle.value = shareInfo.title;
+				sharehrefDes.value = shareInfo.content;
+				pageSourceId = shareInfo.pageSourceId;
+				console.log("pageSource:" + pageSourceId);
+			});
+			
+			
+
+        }
+        if(window.plus){
+            plusReady();
+        }else{
+            document.addEventListener("plusready",plusReady,false);
+        }
+        
+        /**
+         * 
+         * 更新分享服务
+         */
+        function updateSerivces(updacallback){
+			function plusset(pluscallback){
+				plus.share.getServices( function(s){
+					shares={};
+					for(var i in s){
+						var t=s[i];
+						shares[t.id]=t;
+					}
+					pluscallback(shares)
+				// 	alert('L211;getServices;shares=='+JSON.stringify(shares))
+				}, function(e){
+					outSet("获取分享服务列表失败："+e.message );
+				} );
+
+				// alert('L219;getServices;shares=='+JSON.stringify(shares))
+				
+			}
+			plusset(function(shares){
+				// alert('nnnnn')
+				updacallback(shares);
+			})
+        }
+        
+        
+        
+        /**
+           * 分享操作
+           * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+           * @param {Boolean} bh 是否分享链接
+           */
+        function shareAction(sb,bh) {
+			// alert('L281;sb=='+JSON.stringify(bh))
+            if(!sb||!sb.s){
+                console.log("无效的分享服务！");
+                return;
+            }
+   //          if (plus.os.name !== "Android") {
+			// 		plus.nativeUI.alert("此平台暂不支持系统分享功能!");
+			// 		return;
+			// }
+            
+            var msg={content:sharehrefDes.value,extra:{scene:sb.x}};
+            if(bh){
+                msg.href=sharehref.value;
+                if(sharehrefTitle&&sharehrefTitle.value!=""){
+                    msg.title=sharehrefTitle.value;
+                }
+                if(sharehrefDes&&sharehrefDes.value!=""){
+                    msg.content=sharehrefDes.value;
+                }
+                msg.thumbs=["_www/logo.png"];
+                msg.pictures=["_www/logo.png"];
+            }else{
+                if(pic&&pic.realUrl){
+                    msg.pictures=[pic.realUrl];
+                }
+            }
+            // 发送分享
+            if ( sb.s.authenticated ) {
+                console.log("---已授权---");
+                shareMessage(msg,sb.s);
+            } else {
+                console.log("---未授权---");
+                sb.s.authorize( function(){
+                        shareMessage(msg,sb.s);
+                    },function(e){
+                        console.log("认证授权失败："+e.code+" - "+e.message );
+                    
+                });
+            }
+        }
+        /**
+           * 发送分享消息
+           * @param {JSON} msg
+           * @param {plus.share.ShareService} s
+           */
+        function shareMessage(msg,s){
+            
+            console.log(JSON.stringify(msg));
+            s.send( msg, function(){
+                console.log("分享到\""+s.description+"\"成功！ " );
+                mui.back();
+            }, function(e){
+                console.log( "分享到\""+s.description+"\"失败: "+JSON.stringify(e) );
+            mui.back();
+            } );
+        }
+        // 分析链接
+        function shareHref(index){
+			// alert('vvvvvv')
+			// 
+			// console.log('L166;shareHref--index=='+index);
+            var shareBts=[];
+            // 更新分享列表
+            var ss=shares['weixin'];
+            ss&&ss.nativeClient&&(shareBts.push({title:'微信朋友圈',s:ss,x:'WXSceneTimeline'}),
+            shareBts.push({title:'微信好友',s:ss,x:'WXSceneSession'}));
+            ss=shares['qq'];
+            ss&&ss.nativeClient&&shareBts.push({title:'QQ',s:ss});
+         
+          	 shareAction(shareBts[index],true);
+        }
+        mui.back = function() {
+			var sourcePage = plus.webview.getWebviewById(pageSourceId);
+			if (sourcePage) {
+				sourcePage.evalJS("closeMask()");
+			}
+		}
+ 
+		function closeShare() {
+			console.log("e:" + event.target.name);
+		}
+        
+        </script>
+ 
+</html>

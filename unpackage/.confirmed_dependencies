@@ -1,0 +1,158 @@
+{
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "html/tab-webview-subpage-about.html",
+      "fonts/mui.ttf",
+      "fonts/iconfont.ttf",
+      "js/util.js",
+      "html/tab-webview-subpage-chat.html",
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.css",
+      "css/new_file.css",
+      "manifest.json",
+      "myimg/buwenliyou.png"
+    ],
+    "refer": [
+      "html/tab-webview-subpage-setting.html",
+      "html/tab-webview-subpage-chat.html",
+      "html/tab-webview-subpage-contact.html",
+      "html/tab-webview-subpage-about.html",
+      "html/new-webview.html",
+      "html/login.html",
+      "html/detail.html"
+    ]
+  },
+  "launch.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "html/tab-webview-subpage-about.html"
+    ],
+    "refer": [
+      "html/tab-webview-subpage-setting.html",
+      "html/tab-webview-subpage-chat.html",
+      "html/tab-webview-subpage-contact.html",
+      "html/tab-webview-subpage-about.html"
+    ]
+  },
+  "html/tab-webview-subpage-setting.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.min.js"
+    ],
+    "refer": []
+  },
+  "html/tab-webview-subpage-about.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "js/util.js"
+    ],
+    "refer": []
+  },
+  "html/tab-webview-subpage-chat.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "html/tab-webview-subpage-contact.html": {
+    "resources": [
+      "images/60x60.gif",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/mui.picker.min.js",
+      "js/vue.js",
+      "js/common.js",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css"
+    ],
+    "refer": []
+  },
+  "html/new-webview.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/vue.js",
+      "js/util.js"
+    ],
+    "refer": []
+  },
+  "html/login.html": {
+    "href": "html/login.html",
+    "resources": [
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.css",
+      "js/util.js"
+    ],
+    "refer": [
+      "html/tab-webview-subpage-contact.html"
+    ],
+    "priority": 0
+  },
+  "html/updatepic.html": {
+    "href": "html/updatepic.html",
+    "resources": [
+      "js/vue.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "html/updatepic.html",
+      "html/slider-native.html",
+      "html/detail.html"
+    ],
+    "priority": 0
+  },
+  "html/slider-native.html": {
+    "href": "html/slider-native.html",
+    "resources": [
+      "js/vue.js",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "html/slider-native.html",
+      "html/updatepic.html"
+    ],
+    "priority": 0
+  },
+  "html/detail.html": {
+    "href": "html/detail.html",
+    "resources": [
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/common.js",
+      "js/util.js",
+      "myimg/c.png",
+      "myimg/b.png",
+      "myimg/a.png"
+    ],
+    "refer": [
+      "html/login.html",
+      "html/new-webview.html",
+      "html/slider-native.html"
+    ],
+    "priority": 0
+  }
+}

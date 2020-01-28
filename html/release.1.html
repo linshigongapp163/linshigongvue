@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>push</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+
+			.bottomtitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				bottom: 0;
+				height: 50px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+			}
+
+			.leftbutton {
+				left: 5px;
+				float: left;
+				color: red;
+			}
+
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+
+			.subbottom {
+				top: 5px;
+				width: 130px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+	<style type="text/css">
+		.yo-scroll {
+			font-size: .8rem;
+			position: absolute;
+			top: 5rem;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			overflow: auto;
+			z-index: 100;
+			height: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.yo-scroll .inner {
+			position: absolute;
+			top: -5rem;
+			width: 100%;
+			height: auto;
+			transition-duration: 300ms;
+		}
+
+		.yo-scroll .inner .refresh-tip:before {
+			background: url(myimg/refresh-logo.gif) no-repeat center;
+		}
+
+		.yo-scroll .inner .up-tip:before {
+			background: url(myimg/down-logo.png) no-repeat center;
+		}
+
+		.yo-scroll .inner .up-tip:before,
+		.refresh-tip:before {
+			content: '';
+			display: inline-block;
+			width: 160px;
+			height: 70px;
+			background-size: 70% !important;
+			position: absolute;
+			top: 0;
+			left: 20%;
+		}
+
+		.yo-scroll .inner .down-tip,
+		.refresh-tip,
+		.up-tip {
+			display: none;
+		}
+
+		.yo-scroll .inner .pull-refresh {
+			position: relative;
+			left: 0;
+			top: 1rem;
+			width: 100%;
+			height: 5rem;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.yo-scroll .inner .load-more {
+			height: 5rem;
+			line-height: 5rem;
+			display: flex;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			display: none;
+		}
+
+		.yo-scroll .inner .nullData {
+			font-size: 26px;
+			color: #999999;
+			height: 100px;
+			line-height: 80px;
+			text-align: center;
+		}
+
+		.yo-scroll.touch .inner {
+			transition-duration: 0;
+		}
+
+		.yo-scroll.down .down-tip {
+			display: block;
+		}
+
+		.yo-scroll.up .up-tip {
+			display: block;
+		}
+
+		.yo-scroll.refresh .refresh-tip {
+			display: block;
+		}
+	</style>
+	<body>
+		<template id="template">
+			<div class="yo-scroll" :class="{'down':(state===0),'up':(state==1),refresh:(state===2),touch:touching}" @touchstart="touchStart($event)"
+			 @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+				<section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }">
+					<header class="pull-refresh">
+						<slot name="pull-refresh">
+							<span class="down-tip">下拉更新</span>
+							<span class="up-tip">松开刷新数据</span>
+							<span class="refresh-tip">加载中……</span>
+						</slot>
+					</header>
+					<slot>
+					</slot>
+					<footer class="load-more">
+						<slot name="load-more">
+							<span v-show="downFlag === false">上拉加载更多</span>
+							<span v-show="downFlag === true">加载中……</span>
+						</slot>
+					</footer>
+					<div class="nullData" v-show="dataList.noFlag">暂无更多数据</div>
+				</section>
+			</div>
+		</template>
+		<script type="text/javascript">
+			//import tween from '/js/tween'
+			//import Load from '/myimg/Load.gif'	
+
+			Vue.component('v-scroll', {
+				props: {
+					offset: {
+						type: Number,
+						default: 70 //默认高度
+					},
+					enableInfinite: {
+						type: Boolean,
+						default: true
+					},
+					enableRefresh: {
+						type: Boolean,
+						default: true
+					},
+					dataList: {
+						default: false,
+						required: false
+					},
+					onRefresh: {
+						type: Function,
+						default: undefined,
+						required: false
+					},
+					onInfinite: {
+						type: Function,
+						default: undefined,
+						require: false
+					},
+				},
+				data() {
+					return {
+						top: 0,
+						state: 0,
+						startX: 0,
+						startY: 0,
+						touching: false,
+						infiniteLoading: false,
+						downFlag: false, //用来显示是否加载中
+					}
+				},
+				template: "#template",
+				methods: {
+					touchStart(e) {
+						this.startY = e.targetTouches[0].pageY;
+						this.startX = e.targetTouches[0].pageX;
+						this.startScroll = this.$el.scrollTop || 0;
+						this.touching = true; //留着有用，不能删除
+						console.log('L630--touchStart-- this.$el.scrollTop==' + this.$el.scrollTop);
+						this.dataList.noFlag = false;
+						this.$el.querySelector('.load-more').style.display = 'block';
+					},
+					touchMove(e) {
+						if (!this.enableRefresh || this.dataList.noFlag || !this.touching) {
+							return
+						}
+						let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+						if (diff > 0) e.preventDefault()
+						this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
+						if (this.state === 2) { // in refreshing
+							return
+						}
+						if (this.top >= this.offset) {
+							this.state = 1
+						} else {
+							this.state = 0
+						}
+
+						let more = this.$el.querySelector('.load-more');
+						if (!this.top && this.state === 0) {
+							more.style.display = 'block';
+						} else {
+							more.style.display = 'none';
+						}
+					},
+					touchEnd(e) {
+
+						if (!this.enableRefresh) {
+							return
+						}
+						this.touching = false
+						if (this.state === 2) { // in refreshing
+							this.state = 2
+							this.top = this.offset
+							return
+						}
+						if (this.top >= this.offset) { // do refresh
+							this.refresh()
+						} else { // cancel refresh
+							this.state = 0
+							this.top = 0
+						}
+
+						//用于判断滑动是否在原地 ----begin
+						let endX = e.changedTouches[0].pageX,
+							endY = e.changedTouches[0].pageY,
+							dy = this.startY - endY,
+							dx = endX - this.startX;
+
+						//如果滑动距离太短  
+						if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+							console.log("滑动距离太短")
+							return;
+						}
+
+						//--------end--------
+
+						if (!this.enableInfinite || this.infiniteLoading) {
+							return
+						}
+
+						let outerHeight = this.$el.clientHeight,
+							innerHeight = this.$el.querySelector('.inner').clientHeight,
+							scrollTop = this.$el.scrollTop,
+							ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0,
+							bottom = innerHeight - outerHeight - scrollTop - ptrHeight;
+
+						console.log(bottom + " __ " + this.offset)
+
+						if (bottom <= this.offset && this.state === 0) {
+							this.downFlag = true;
+							this.infinite();
+						} else {
+							this.$el.querySelector('.load-more').style.display = 'none';
+							this.downFlag = false;
+						}
+
+					},
+					refresh() {
+						this.state = 2;
+						this.top = this.offset;
+						setTimeout(() => {
+							this.onRefresh(this.refreshDone)
+						}, 1000);
+					},
+					refreshDone() {
+						this.state = 0
+						this.top = 0
+					},
+
+					infinite() {
+						this.infiniteLoading = true
+						console.log('L724--infinite');
+						setTimeout(() => {
+							this.onInfinite(this.infiniteDone);
+						}, 2000);
+					},
+
+					infiniteDone() {
+						this.infiniteLoading = false
+					},
+					todetail(s) {
+						this.$emit(s)
+					}
+				}
+				//		        }
+			})
+
+			//			})
+		</script>
+		<div v-cloak id="app">
+			<!-- 			<div class="" style="width:100%;position: fixed;top:0;z-index: 9999;background-color: #efeff4;">
+				<div style="padding: 15px; width:100%;background-color:red;text-align: center;color: #FFFFFF;font-size: 20px;">
+					企业发单
+				</div>
+			</div> -->
+
+			<div class="contSingleList">
+				<v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :dataList="scrollData" :listdata="listdata0">
+					<div class="tabCon">
+						<div style="margin-top: 55px;">
+							<div class="content mui-row" style="margin: 0px 10px 0px 10px;padding:15px 0;border-top:1px solid gainsboro;"
+							 v-for="i in listdata0" style="background-color: black;">
+								<div v-on:click="todetail_po(i)" class="" style="float: left;overflow: hidden;width: 30%;">
+									<!-- <div class="mui-col-sm-1" style="float: left;overflow: hidden;"> -->
+
+									<!-- <img src="images/min2.jpg" alt="" style="width: 90%;height:90%"> -->
+									<!-- <img :src="i.photo" alt="" style="width: 90px;height:90px"> -->
+									<img v-if="i.photo" v-bind:src="i.photo" alt="" style="width: 90px;height:90px">
+									<img v-else src="images/w.png" style="width: 90px;height:90px">
+								</div>
+								<!-- <div class="mui-col-sm-11" id="" v-on:click="todetail(i)" style="background-color: '';float: right;width: 70%;"> -->
+								<div class="" id="" style="background-color: '';float: right;width: 70%;">
+									<div v-on:click="todetail_po(i)">
+										<div>
+											<div class="mui-row" style="font-weight: bold;">
+												<div class="mui-col-sm-9">
+													{{i.title}}
+												</div>
+												<div class="mui-col-sm-3" style="font-size:11px;float: right;">
+													已报名{{i.qty}}
+												</div>
+											</div>
+											<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+												<div class="mui-col-sm-9">
+													下单人：<span>{{person(i.person)}}</span>
+												</div>
+												<div class="mui-col-sm-3" style="float: right;">
+													<span>{{i.created_at}}</span>
+												</div>
+											</div>
+											<div>
+												<div v-if="i.push_label ==  'null' ">
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+												</div>
+												<div v-else id="" v-for="ii in i.push_label">
+													<div style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+												</div>
+												<!-- <div style="float:right;margin-right:5px;margin-top:10px;padding:0 5px;line-height:14px;font-size:10px;">还有...</div> -->
+												<div style="font-size:11px;float: right;">
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div v-on:click="tobaidumap(i)" style="padding: 5px 0 0 0; clear: both;">
+										<a class="mui-icon iconfont  icon-position-fill" style="margin:5px 5px 0 0;font-size:10px;color:#C8C7CC;text-align:center;"></a><a
+										 style="font-size:10px;color: #C0C0C0;text-decoration: underline;width:30%" href="#">
+											{{i.address}}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</v-scroll>
+			</div>
+			<!-- 			<div style="margin-top: 200px;" align="center">
+				<img src="../images/timg.gif" style="width: 30%;">
+			</div>
+			<div style="color: #AAAAAA;text-align: center;margin-top: 30px;font-size: 16px;">
+				此模块开发中！
+			</div>
+			<div class="mui-content" style="background: #FFFFFF;">
+
+			</div> -->
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					listdata0: [],
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {},
+					mypoint: ''
+				}
+			};
+
+			var vm = new Vue({
+				//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+					var sliderMuiObj = mui('.mui-slider');
+					sliderMuiObj.slider({
+						interval: 3000
+					});
+				},
+				mounted: function() {
+					(function() {
+						mui.init({
+							swipeBack: false //关闭-右滑关闭功能
+						});
+						console.log('release-L251,getLocalstrage--mobile==' + localStorage.getItem('mobile'))
+						// alert('localStorage.getItem--mobile==' + localStorage.getItem('mobile'))
+						this.ajaxdata('', '', localStorage.getItem('mobile'), 'api/order')
+						// 						mui.plusReady(function() {
+						// 							var self = plus.webview.currentWebview();
+						// 							// vm.detaildata = JSON.parse(self.preload);
+						// 							// alert(self.preload);
+						// 							mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+						// 
+						// 							}, 'json');
+						// 						});
+					})();
+				},
+				methods: {
+					ajaxdata: function(p, s, u, url) {
+						if (s == undefined) {
+							s = ''
+						};
+						if (u == undefined) {
+							u = ''
+						};
+						mui.get(APP_DOMAIN + url, {
+							'page': p,
+							's': s,
+							'u': u
+						}, function(data) {
+							let dat_ = data.data;
+							console.log('L782;dat_==' + JSON.stringify(dat_) + ';url==' + url);
+
+							vm.listdata0 = "";
+							vm.listdata0 = dat_;
+							for (var i = 0; i < vm.listdata0.length; i++) {
+								if (vm.listdata0[i]['push_label'] !== 'null') {
+									vm.listdata0[i]['push_label'] = JSON.parse(vm.listdata0[i]['push_label']);
+								}
+							}
+							vm.last_page = data.last_page;
+							vm.page = data.current_page;
+							vm.postflag = false;
+							vm.s = ''
+						}, 'json');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

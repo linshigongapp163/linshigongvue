@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+
+			.bottomtitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				bottom: 0;
+				height: 50px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+			}
+
+			.leftbutton {
+				left: 5px;
+				float: left;
+				color: red;
+			}
+
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+
+			.subbottom {
+				top: 5px;
+				width: 130px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+
+			<!-- 			<div id="" class="toptitle">
+				<div>奖金高</div>
+				<div>环境好</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包住</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包吃</div>
+				<div style="line-height: 14px;color:darkgrey; background: white;border:1px solid darkgrey; background: white;">可借支生活费</div>
+				<div style="float:right; background: white;color: #AAAAAA;">2万人...</div>
+			</div> -->
+
+			<div id="" class="bottomtitle">
+
+				<div id="leftbutton" class="leftbutton subbottom" v-on:click="openShare(detaildata.id)">分享给朋友</div>
+				<div id="rightbutton" class="rightbutton subbottom" v-on:click="toenlist(detaildata.name)">现在报名</div>
+
+			</div>
+
+			<div class="mui-content" style="background: #FFFFFF;">
+				<div id="" style="background-color: white;margin:0px">
+					<img v-if="detaildata.photo" v-bind:src="detaildata.photo" alt="">
+					<img v-else src="../images/w2.png">
+					<div id="" style="font-size: 22px;text-align: center;margin-top: 15px;">
+						{{detaildata.name}}
+					</div>
+					<div v-on:click="tobaidumap(detaildata)" align="center" style="margin-top: 20px;">
+						<a class="mui-icon iconfont  icon-position-fill" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;text-align:center;"></a>
+						<a style="font-size:16px;margin-top: 20px;color: #C0C0C0;text-decoration: underline;" href="#">{{detaildata.distance}}
+							{{detaildata.address}}</a>
+					</div>
+					<!-- 					<div class="mui-row">
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{detaildata.address}}
+						</div>
+					</div> -->
+					<div style="height: 100px;">
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {},
+					mypoint: ''
+				}
+			};
+
+			var vm = new Vue({
+				//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+					var sliderMuiObj = mui('.mui-slider');
+					sliderMuiObj.slider({
+						interval: 3000
+					});
+
+				},
+				mounted: function() {
+					(function() {
+						mui.init({
+							swipeBack: false //关闭-右滑关闭功能
+						});
+						mui.plusReady(function() {
+							var self = plus.webview.currentWebview();
+							vm.detaildata = JSON.parse(self.preload);
+							// alert(self.preload);
+							mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+
+							}, 'json');
+
+						});
+					})();
+				},
+				methods: {
+					tobaidumap: function(s) {
+						s.mypoint = vm.detaildata.mypoint;
+						webview = plus.webview.create('../html/baidumap.html', 'baidumap.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '临时工地图',
+								autoBackButton: true
+							}
+						}, {
+							preload: JSON.stringify(s)
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+					toenlist: function(s) {
+						if (localStorage.getItem('api_token')) {
+
+							var btnArray = ['按错了', '是的'];
+
+							mui.prompt(s, '留言', '亲，要报名么？', btnArray, function(e) {
+								if (e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data: {
+											api_token: localStorage.getItem('api_token'),
+											title: vm.detaildata.title,
+											name: localStorage.getItem('userName'),
+											sex: localStorage.getItem('sex'),
+											mobile: localStorage.getItem('mobile'),
+											text: e.value,
+											user_id: localStorage.getItem('userId'),
+											recruit_id: vm.detaildata.id,
+											subsidy: vm.detaildata.subsidy
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('enlist---data---' + JSON.stringify(data));
+											mui.toast('报名已提交')
+											localStorage.setItem('enlist', vm.detaildata.title);
+											localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											var newwebview = plus.webview.getElementById('new-webview.html');
+											mui.fire(newwebview, 'enlist', {
+												detaildata: {
+													enlist: vm.detaildata.title,
+													subsidy: vm.detaildata.subsidy
+												}
+											})
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					},
+					openShare: function() {
+						shareWebbiew();
+						mui.plusReady(function() {
+							ws = plus.webview.currentWebview();
+							plus.navigator.closeSplashscreen();
+						})
+						var sharew;
+						var ws = null;
+
+						function shareWebbiew() {
+							ws = plus.webview.currentWebview();
+							if (sharew) { // 避免快速多次点击创建多个窗口
+								return;
+							}
+							var top = plus.display.resolutionHeight - 134;
+							var href = "share.html";
+							sharew = plus.webview.create(href, "share.html", {
+								width: '100%',
+								height: '134',
+								top: top,
+								scrollIndicator: 'none',
+								scalable: false,
+								popGesture: 'none'
+							}, {
+								shareInfo: {
+									"href": "https://www.linshigong.com",
+									"title": vm.detaildata.title,
+									"content": "欢迎使用临时工APP,点击查看订详情！",
+									"pageSourceId": ws.id
+								}
+							});
+							sharew.addEventListener("loaded", function() {
+								sharew.show('slide-in-bottom', 300);
+							}, false);
+							// 显示遮罩层  
+							ws.setStyle({
+								mask: "rgba(0,0,0,0.5)"
+							});
+							// 点击关闭遮罩层
+							ws.addEventListener("maskClick", closeMask, false);
+						}
+
+						function closeMask() {
+							ws.setStyle({
+								mask: "none"
+							});
+							//避免出现特殊情况，确保分享页面在初始化时关闭 
+							if (!sharew) {
+								sharew = plus.webview.getWebviewById("share.html");
+							}
+							if (sharew) {
+								sharew.close();
+								sharew = null;
+							}
+						}
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

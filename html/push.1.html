@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>push</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+<!-- 		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" /> -->
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+			<div class="" style="width:100%;position: fixed;top:-10px;z-index: 9999;background-color: #efeff4;">
+				<div style="padding: 15px; width:100%;background-color:red;text-align: center;color: #FFFFFF;font-size: 20px;">
+					消 息
+				</div>
+			</div>
+<!-- 			<div id="" class="bottomtitle">
+				<div id="leftbutton" class="leftbutton subbottom">分享给朋友</div>
+				<div id="rightbutton" class="rightbutton subbottom" v-on:click="toenlist(detaildata.name)">现在报名</div>
+			</div> -->
+			<div style="margin-top: 200px;" align="center">
+				<img src="../images/timg.gif" style="width: 30%;">
+			</div>
+			<div style="color: #AAAAAA;text-align: center;margin-top: 30px;font-size: 16px;">
+				啥推送消息都没有的！
+			</div>
+			<!-- <div class="mui-content" style="background: #FFFFFF;"> -->
+
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {
+					},
+					mypoint:''
+				}
+			};
+
+			var vm = new Vue({
+//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+                var sliderMuiObj = mui('.mui-slider');
+                sliderMuiObj.slider({
+                    interval: 3000
+                });
+
+				},
+				mounted: function(){
+			(function() {
+				mui.init({
+					swipeBack: false //关闭-右滑关闭功能
+				});
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					// vm.detaildata = JSON.parse(self.preload);
+					// alert(self.preload);
+					mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+
+					}, 'json');
+
+				});
+			})();					
+				},
+				methods: {
+					toenlist: function(s) {
+						if(localStorage.getItem('api_token')) {
+
+							var btnArray = ['按错了', '是的'];
+
+							mui.prompt(s, '留言', '亲，要报名么？', btnArray, function(e) {
+								if(e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data: {
+											api_token: localStorage.getItem('api_token'),
+											title: vm.detaildata.title,
+											name: localStorage.getItem('userName'),
+											sex: localStorage.getItem('sex'),
+											mobile: localStorage.getItem('mobile'),
+											text: e.value,
+											user_id: localStorage.getItem('userId'),
+											recruit_id: vm.detaildata.id,
+											subsidy: vm.detaildata.subsidy
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('enlist---data---' + JSON.stringify(data));
+											mui.toast('报名已提交')
+											localStorage.setItem('enlist', vm.detaildata.title);
+											localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											var newwebview = plus.webview.getElementById('new-webview.html');
+											mui.fire(newwebview, 'enlist', {
+												detaildata: {
+													enlist: vm.detaildata.title,
+													subsidy: vm.detaildata.subsidy
+												}
+											})
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					}
+				},
+		});
+		</script>
+	</body>
+</html>

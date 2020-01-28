@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<!--<script src="js/mui.js"></script>-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/tween.js"></script>
+		<script src="js/vue.js"></script>
+		<!-- <script src="js/vue-methods-promise.js"></script> -->
+
+		<!-- <script src="js/pubsub.js"></script> -->
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script>
+		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!-- <link href="css/new_file.css" rel="stylesheet" /> -->
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+
+			.title {
+				margin: 20px 14px 10px;
+				/*color: #6d6d72;*/
+				color: #00CCCC;
+				font-size: 13px;
+			}
+
+			.daocang {
+				float: left;
+				margin-right: 5px;
+				margin-top: 10px;
+				padding: 0 5px;
+				line-height: 14px;
+				font-size: 8px;
+				color: darkgrey;
+				border: 1px solid darkgrey;
+				background: white;
+				border-radius: 3px;
+			}
+
+			.tabletop {
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				justify-content: space-between;
+				margin: 8px 30px;
+			}
+
+			.button {
+				background: #df3030;
+				-webkit-border-radius: 50;
+				-moz-border-radius: 50;
+				border-radius: 50px;
+				font-family: 黑体;
+				color: #EEEEEE;
+				font-size: 14px;
+				padding: 10px 10px;
+				text-decoration: none;
+			}
+
+			.active {
+				background: #F09102;
+				-webkit-border-radius: 50;
+				-moz-border-radius: 50;
+				border-radius: 50px;
+				color: red;
+			}
+
+			.button2 {
+				background: #2980b9;
+				background-image: -webkit-linear-gradient(top, #2980b9, #3498db);
+				background-image: -moz-linear-gradient(top, #2980b9, #3498db);
+				background-image: -ms-linear-gradient(top, #2980b9, #3498db);
+				background-image: -o-linear-gradient(top, #2980b9, #3498db);
+				background-image: linear-gradient(to bottom, #2980b9, #3498db);
+				color: #ffffff;
+				text-decoration: none;
+			}
+
+			input::-webkit-input-placeholder {
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input::-moz-placeholder {
+				/* Mozilla Firefox 19+ */
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input:-moz-placeholder {
+				/* Mozilla Firefox 4 to 18 */
+				color: rgba(255, 255, 255, 0.4);
+			}
+
+			input:-ms-input-placeholder {
+				/* Internet Explorer 10-11 */
+				color: rgba(255, 255, 255, 0.4);
+			}
+		</style>
+	</head>
+
+	<style type="text/css">
+		.yo-scroll {
+			font-size: .8rem;
+			position: absolute;
+			top: 5rem;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			overflow: auto;
+			z-index: 100;
+			height: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.yo-scroll .inner {
+			position: absolute;
+			top: -5rem;
+			width: 100%;
+			height: auto;
+			transition-duration: 300ms;
+		}
+
+		.yo-scroll .inner .refresh-tip:before {
+			/* background: url(myimg/newlogo.png) no-repeat center; */
+		}
+
+		.yo-scroll .inner .up-tip:before {
+			/* background: url(myimg/nwelogo.png) no-repeat center; */
+		}
+
+		.yo-scroll .inner .up-tip:before,
+		.refresh-tip:before {
+			content: '';
+			display: inline-block;
+			width: 160px;
+			height: 70px;
+			background-size: 70% !important;
+			position: absolute;
+			top: 0;
+			left: 20%;
+		}
+
+		.yo-scroll .inner .down-tip,
+		.refresh-tip,
+		.up-tip {
+			display: none;
+		}
+
+		.yo-scroll .inner .pull-refresh {
+			position: relative;
+			left: 0;
+			top: 1rem;
+			width: 100%;
+			height: 5rem;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.yo-scroll .inner .load-more {
+			height: 5rem;
+			line-height: 5rem;
+			display: flex;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			display: none;
+		}
+
+		.yo-scroll .inner .nullData {
+			font-size: 26px;
+			color: #999999;
+			height: 100px;
+			line-height: 80px;
+			text-align: center;
+		}
+
+		.yo-scroll.touch .inner {
+			transition-duration: 0;
+		}
+
+		.yo-scroll.down .down-tip {
+			display: block;
+		}
+
+		.yo-scroll.up .up-tip {
+			display: block;
+		}
+
+		.yo-scroll.refresh .refresh-tip {
+			display: block;
+		}
+	</style>
+
+	<body>
+
+
+		<script src="js/util.js"></script>
+		<script type="text/javascript">
+			(function() {
+				mui.init({
+
+					keyEventBind: {
+						backbutton: true
+					}
+				});
+				var clickNum = 0;
+				mui.back = function(event) {
+					clickNum++;
+					if (clickNum > 1) {
+						localStorage = null;
+						plus.runtime.quit();
+					} else {
+						mui.toast("再按一次退出应用");
+					}
+					setTimeout(function() {
+						clickNum = 0
+					}, 2000);
+					return false;
+				}
+				mui.plusReady(function() {
+					// console.log('idex.html-L231')
+					//获取当前网络类型
+					var nt = plus.networkinfo.getCurrentType();
+					console.log('index.html--L234; nt==' + nt)
+					if (nt == plus.networkinfo.CONNECTION_NONE) {
+						if (localStorage.getItem('netStatus') == null || localStorage.getItem('netStatus') == 1) {
+							var btnArray = ['取消', '打开网络'];
+							localStorage.setItem('netStatus', '2');
+							mui.confirm('您需要打开网络，才可以使用。请到设置->无线局域网(或蜂窝移动网络)中开启。', '网络已关闭', btnArray, function(e) {
+								if (e.index == 1) {
+									if (mui.os.ios) {
+										var UIApplication = plus.ios.import("UIApplication");
+										var NSURL = plus.ios.import("NSURL");
+										var setting = NSURL.URLWithString("app-settings:");
+										var application = UIApplication.sharedApplication();
+										application.openURL(setting);
+										plus.ios.deleteObject(setting);
+										plus.ios.deleteObject(application);
+										localStorage.setItem('netStatus', 0);
+									} else {
+										var main = plus.android.runtimeMainActivity();
+										var Intent = plus.android.importClass("android.content.Intent");
+										var mIntent = new Intent('android.settings.WIFI_SETTINGS');
+										main.startActivity(mIntent);
+										localStorage.setItem('netStatus', 0);
+									}
+								} else {
+									localStorage.setItem('netStatus', '1');
+									owner.doExitApp();
+								}
+							})
+						}
+					} else {
+						localStorage.setItem('netStatus', '0');
+					}
+
+					// plus.geolocation.getCurrentPosition(function(position){
+					// },function(e){
+					// 	console.log('--------------------------定位权限检测')
+					//     if(localStorage.getItem('netStatus') == 0){
+					//         localStorage.setItem('netStatus','3');
+					//         var btnArray = ['取消', '设置'];
+					//         mui.confirm('您需要打开定位权限，才可以使用。请到设置->隐私->定位服务中开启。','定位服务已关闭', btnArray, function(e) {
+					//             if (e.index == 1) { 
+					// 				if(mui.os.ios) {
+					//                      var UIApplication = plus.ios.import("UIApplication");
+					//                      var NSURL = plus.ios.import("NSURL");
+					//                      var setting = NSURL.URLWithString("app-settings:");
+					//                      var application = UIApplication.sharedApplication();
+					//                      application.openURL(setting);
+					//                      plus.ios.deleteObject(setting);
+					//                      plus.ios.deleteObject(application);
+					//                     }else{
+					//                         var main = plus.android.runtimeMainActivity();
+					//                         var Intent = plus.android.importClass("android.content.Intent");
+					//                         var mIntent = new Intent('android.settings.LOCATION_SOURCE_SETTINGS');
+					//                         main.startActivity(mIntent);
+					//                     }
+					// 					} else {
+					//                 localStorage.setItem('netStatus',0);           
+					// 								  }              
+					// 				})
+					// 			}
+					// },{
+					// 			provider:'baidu',//或者amap为高德
+					// 			geocode:'true'
+					// })
+
+
+
+
+					plus.screen.lockOrientation("portrait-primary");
+					
+				plus.geolocation.getCurrentPosition(function(p) {
+					// console.log('plus.geolocation.getCureentPosition'); 
+
+					if (!p || !p.address) {
+						return;
+					}
+					// vm.city = p.addresses;
+					// vm.mypoint = p.coords;
+					// window.point = p.address
+
+					localStorage.setItem('city', p.addresses);
+					localStorage.setItem('mypoint', JSON.stringify(p.coords))
+					console.log('mypoint==' + JSON.stringify(p.coords))
+					// that.$options.methods.ajaxdata('', '', '', that.distance,'api/order');
+					//经纬度
+					console.log('index.htm--L757;Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude +
+						'\nAltitude:' + p.coords.altitude);					
+					
+					
+					
+					
+					// 创建子webview窗口 并初始化
+					var aniShow = {};
+					util.initSubpage(aniShow);
+					var nview = plus.nativeObj.View.getViewById('tabBar'),
+						activePage = plus.webview.currentWebview(),
+						targetPage,
+						subpages = util.options.subpages,
+						pageW = window.innerWidth,
+						currIndex = 0;
+					/**
+					 * 根据判断view控件点击位置判断切换的tab
+					 */
+					nview.addEventListener('click', function(e) {
+						var clientX = e.clientX;
+						if (clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
+							currIndex = 0;
+						} else if (clientX > 0.25 && clientX <= parseInt(pageW * 0.5)) {
+							if (!localStorage.getItem('api_token')) {
+								mui.openWindow('html/login.html', 'login.html');
+							} else {
+								currIndex = 1;
+							};
+						} else if (clientX > 0.5 && clientX <= parseInt(pageW * 0.75)) {
+							if (!localStorage.getItem('api_token')) {
+								mui.openWindow('html/login.html', 'login.html');
+							} else {
+								currIndex = 2;
+							};
+						} else if (clientX > 0.75 && clientX <= parseInt(pageW)) {
+							if (!localStorage.getItem('api_token')) {
+								mui.openWindow('html/login.html', 'login.html');
+							} else {
+								currIndex = 3;
+							};
+						};
+						// //切换中间大按钮
+						// bigIcon;
+						//切换选项卡及对应窗口
+						targetPageFun(currIndex);
+					});
+					var targetPageFun = function(currIndex) {
+						// 匹配对应tab窗口	
+						targetPage = plus.webview.currentWebview();
+						// console.log('crrIdex=='+currIndex);
+						// alert('crrIdex=='+currIndex);
+						// console.log('targetPage.id=='+targetPage.id);
+						// alert('targetPage.id=='+targetPage.id);
+						if (currIndex > 0) {
+							targetPage = plus.webview.getWebviewById(subpages[currIndex]);
+						} else {
+							targetPage = plus.webview.currentWebview();
+						};
+
+						if (targetPage == activePage) {
+							return;
+						};
+						//底部选项卡切换
+						util.toggleNview(currIndex);
+						if (!localStorage.getItem('api_token')) {
+							mui.openWindow('html/login.html', 'login.html');
+
+						} else {
+							// console.log('plus.webview.currentWebview().id=='+plus.webview.currentWebview().id)
+							// 子页面切换
+							util.changeSubpage(targetPage, activePage, aniShow);
+							//更新当前活跃的页面
+							if (localStorage.getItem('api_token')) {
+								mui.fire(targetPage, 'customEvent', {});
+							}
+							activePage = targetPage;
+						};
+					};
+				});
+				
+
+					//JSON对象，地址信息
+					// console.log(JSON.stringify(p.address));
+				}, function(e) {
+					// console.log('Geolocation error: ' + e.message);
+					if (isShowToast) {
+						mui.toast("定位出错：" + e.message);
+					}
+				}, {
+					provider: 'baidu'
+				});
+				
+				
+
+				//自定义事件，模拟点击“首页选项卡”
+				document.addEventListener('goTab', function(event) {
+					var defaultTab = document.getElementById(triggerTab);
+					//模拟点击
+					mui.trigger(defaultTab, 'touchstart');
+					mui.trigger(defaultTab, 'tap');
+					//切换选项卡高亮
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+			})();
+			// alert('plus.webview.currentWebview().id=='+plus.webview.currentWebview().getURL())
+			mui.getJSON("manifest.json", null, function(data) {
+				svn(data.version.name);
+			});
+		</script>
+
+		<template id="template">
+			<div class="yo-scroll" :class="{'down':(state===0),'up':(state==1),refresh:(state===2),touch:touching}" @touchstart="touchStart($event)"
+			 @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+				<section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }">
+					<header class="pull-refresh">
+						<slot name="pull-refresh">
+							<span class="down-tip" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%"></span>
+							<span class="up-tip" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%"> </span>
+							<span class="refresh-tip" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%"></span>
+						</slot>
+					</header>
+					<slot>
+					</slot>
+					<footer class="load-more">
+						<slot name="load-more">
+							<span v-show="downFlag === false" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%"></span>
+							<span v-show="downFlag === true" style="text-align: center;"> <img src="myimg/newlogo.png" alt="" style="width:10%"></span>
+						</slot>
+					</footer>
+					<div class="nullData" v-show="dataList.noFlag">暂无更多数据</div>
+				</section>
+			</div>
+		</template>
+
+		<script type="text/javascript">
+			//import tween from '/js/tween'
+			//import Load from '/myimg/Load.gif'	
+
+
+
+			// if(plus.os.name=="Android"){   
+			//     var context = plus.android.importClass("android.content.Context"); 
+			//     var locationManager=plus.android.importClass("android.location.LocationManager"); 
+			//     var main=plus.android.runtimeMainActivity(); 
+			//     var mainSvr=main.getSystemService(context.LOCATION_SERVICE); 
+			//     androidIsOpen=mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER); 
+			//     if(androidIsOpen){ 
+			//         getposition(); 
+			//     } 
+			//     else{ 
+			//         mui.toast("请手动开启GPS"); 
+			//         setTimeout(function(){ 
+			//             mui.back();  
+			//         },1000); 
+
+			//     } 
+			//     //console.log("android:"+mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER)); 
+			// } 
+			Vue.component('v-scroll', {
+				props: {
+					offset: {
+						type: Number,
+						default: 70 //默认高度
+					},
+					enableInfinite: {
+						type: Boolean,
+						default: true
+					},
+					enableRefresh: {
+						type: Boolean,
+						default: true
+					},
+					dataList: {
+						default: false,
+						required: false
+					},
+					onRefresh: {
+						type: Function,
+						default: undefined,
+						required: false
+					},
+					onInfinite: {
+						type: Function,
+						default: undefined,
+						require: false
+					},
+				},
+				data() {
+					return {
+						top: 0,
+						state: 0,
+						startX: 0,
+						startY: 0,
+						touching: false,
+						infiniteLoading: false,
+						downFlag: false, //用来显示是否加载中
+					}
+				},
+				template: "#template",
+				methods: {
+					touchStart(e) {
+						this.startY = e.targetTouches[0].pageY;
+						this.startX = e.targetTouches[0].pageX;
+						this.startScroll = this.$el.scrollTop || 0;
+						this.touching = true; //留着有用，不能删除
+						// console.log('L630--touchStart-- this.$el.scrollTop==' + this.$el.scrollTop);
+						this.dataList.noFlag = false;
+						this.$el.querySelector('.load-more').style.display = 'block';
+					},
+					touchMove(e) {
+						if (!this.enableRefresh || this.dataList.noFlag || !this.touching) {
+							return
+						}
+						let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+						if (diff > 0) e.preventDefault()
+						this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
+						if (this.state === 2) { // in refreshing
+							return
+						}
+						if (this.top >= this.offset) {
+							this.state = 1
+						} else {
+							this.state = 0
+						}
+
+						let more = this.$el.querySelector('.load-more');
+						if (!this.top && this.state === 0) {
+							more.style.display = 'block';
+						} else {
+							more.style.display = 'none';
+						}
+					},
+					touchEnd(e) {
+
+						if (!this.enableRefresh) {
+							return
+						}
+						this.touching = false
+						if (this.state === 2) { // in refreshing
+							this.state = 2
+							this.top = this.offset
+							return
+						}
+						if (this.top >= this.offset) { // do refresh
+							this.refresh()
+						} else { // cancel refresh
+							this.state = 0
+							this.top = 0
+						}
+
+						//用于判断滑动是否在原地 ----begin
+						let endX = e.changedTouches[0].pageX,
+							endY = e.changedTouches[0].pageY,
+							dy = this.startY - endY,
+							dx = endX - this.startX;
+
+						//如果滑动距离太短  
+						if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+							// console.log("滑动距离太短")
+							return;
+						}
+
+						//--------end--------
+
+						if (!this.enableInfinite || this.infiniteLoading) {
+							return
+						}
+
+						let outerHeight = this.$el.clientHeight,
+							innerHeight = this.$el.querySelector('.inner').clientHeight,
+							scrollTop = this.$el.scrollTop,
+							ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0,
+							bottom = innerHeight - outerHeight - scrollTop - ptrHeight;
+
+						// console.log(bottom + " __ " + this.offset)
+
+						if (bottom <= this.offset && this.state === 0) {
+							this.downFlag = true;
+							this.infinite();
+						} else {
+							this.$el.querySelector('.load-more').style.display = 'none';
+							this.downFlag = false;
+						}
+
+					},
+					refresh() {
+						this.state = 2;
+						this.top = this.offset;
+						setTimeout(() => {
+							this.onRefresh(this.refreshDone)
+						}, 1000);
+					},
+					refreshDone() {
+						this.state = 0
+						this.top = 0
+					},
+
+					infinite() {
+						this.infiniteLoading = true
+						// console.log('L724--infinite');
+						setTimeout(() => {
+							this.onInfinite(this.infiniteDone);
+						}, 2000);
+					},
+
+					infiniteDone() {
+						this.infiniteLoading = false
+					},
+					todetail(s) {
+						this.$emit(s)
+					}
+				}
+				//		        }
+			})
+
+			//			})
+		</script>
+
+		<!--<template>-->
+		<div id="app">
+			<div id="allmap">
+
+			</div>
+			<div class="" style="width:100%;position: fixed;top:0;z-index: 9999;background-color: #efeff4;">
+				<div style="display:inline-flex; width:100%;  padding: 8px 0 5px 0;background-color:red">
+					<div class="" style="margin:auto 5px;width: 8%;text-align:center;" onclick="location">
+						<span class="mui-icon mui-icon-location" style="margin-top: 10px;font-size: 18px;color:rgba(255,255,255,1);text-align:center;"></span>
+						<div class="mui-media-body" style="font-size: 9px;color:rgba(255,255,255,1);">
+							<marquee behavior="" direction="" scrollamount=1>{{city}}</marquee>
+						</div>
+					</div>
+					<div class="mui-input-row" style="height:40px; flex-grow:4;margin: auto 5px">
+						<i class="mui-icon mui-icon-search" style="color:rgba(255,255,255,0.4);z-index: 2;position:absolute;display: inline-block;left: 0;top:25%;margin-left: 5px;padding: 0 5px;"></i>
+						<i class="mui-icon iconfont  icon-scan" style="color:rgba(255,255,255,0.4);z-index: 2;position:absolute;display: inline-block;right: 0;top:25%;margin-right: 5px;"></i>
+						<input id='seachvar' v-model="s" type="text" style="width: 100%;height:100%; padding-right:32px;background-color: #FF5858;"
+						 class="mui-input-clear s_font-size2" placeholder="      查企业/门店" maxlength="100" />
+
+					</div>
+					<div class="" style="margin:auto 5px; width: 8%;">
+						<span class="mui-icon iconfont  icon-qrcode" style="width: 100%;margin-top:6px;font-size: 14px;text-align: center;color:rgba(255,255,255,1);"></span>
+						<div class="mui-media-body" style="font-size: 9px;color:rgba(255,255,255,1);text-align: center;">签到</div>
+					</div>
+				</div>
+				<!-- <v-header> -->
+				<div>
+					<div class="tabletop">
+						<div class="button" v-bind:ref="index" v-bind:id="index" v-for="(item,index) in tabs" v-bind:ref="index" :class="{active:index == num}"
+						 v-on:click="tabsSwitch(index)">{{item}}</div>
+					</div>
+					<div v-if="num==0" class="tabletop">
+						<!-- <div>测试一行</div> -->
+						<div></div>
+					</div>
+				</div>
+
+				<!-- </v-header> -->
+			</div>
+			<div class="contSingleList">
+				<v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :dataList="scrollData" :listdata="listdata0">
+					<div class="tabCon">
+						<div v-if="num ==0" style="margin-top: 55px;">
+							<div class="content mui-row" style="margin: 0px 10px 0px 10px;padding:15px 0;border-top:1px solid gainsboro;"
+							 v-for="i in sortlistdata0" style="background-color: black;">
+								<div v-on:click="todetail_po(i)" class="" style="float: left;overflow: hidden;width: 30%;">
+									<!-- <div class="mui-col-sm-1" style="float: left;overflow: hidden;"> -->
+
+									<!-- <img src="images/min2.jpg" alt="" style="width: 90%;height:90%"> -->
+									<!-- <img :src="i.photo" alt="" style="width: 90px;height:90px"> -->
+									<img v-if="i.photo" v-bind:src="i.photo" alt="" style="width: 90px;height:90px">
+									<img v-else src="images/w1.png" style="width: 90px;height:90px">
+								</div>
+								<!-- <div class="mui-col-sm-11" id="" v-on:click="todetail(i)" style="background-color: '';float: right;width: 70%;"> -->
+								<div class="" id="" style="background-color: '';float: right;width: 70%;">
+									<div v-on:click="todetail_po(i)">
+										<div>
+											<div class="mui-row" style="font-weight: bold;">
+												<div class="mui-col-sm-9">
+													{{i.title}}
+												</div>
+												<div class="mui-col-sm-3" style="font-size:11px;float: right;">
+													已报名{{i.qty}}
+												</div>
+											</div>
+											<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+												<div class="mui-col-sm-9">
+													下单人：<span>{{person(i.person)}}</span>
+												</div>
+												<!-- 											<div class="mui-col-sm-3" style="float: right;">
+												<span>{{i.created_at}}</span>
+											</div> -->
+											</div>
+											<div>
+												<div v-if="i.push_label ==  'null' ">
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+													<div class="daocang">等待填</div>
+												</div>
+												<div v-else id="" v-for="ii in i.push_label">
+													<div style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+												</div>
+												<!-- <div style="float:right;margin-right:5px;margin-top:10px;padding:0 5px;line-height:14px;font-size:10px;">还有...</div> -->
+												<div style="font-size:11px;float: right;">
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div v-on:click="tobaidumap(i)" style="padding: 5px 0 0 0; clear: both;">
+										<a class="mui-icon iconfont  icon-position-fill" style="margin:5px 5px 0 0;font-size:10px;color:#C8C7CC;text-align:center;"></a><a
+										 style="font-size:10px;color: #C0C0C0;text-decoration: underline;width:30%" href="#">{{i.distance}}
+											{{i.address}}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div v-if="num == 1" v-for='(itemCon,index) in tabContents'  style="margin-top: 125px;"> -->
+						<div v-if="num==2" style="text-align: center;font-size: 18px;color: #AAAAAA;margin-top: 200px;">
+							敬请期待！
+						</div>
+						<div v-if="num==3" style="text-align: center;font-size: 18px;color: #AAAAAA;margin-top: 200px;">
+							开发中...
+						</div>
+						<div v-if="num == 1" style="margin-top: 60px;">
+							<!--<div style="margin-top: 125px;">-->
+							<div class="content mui-row" style="margin: 0px 10px 0px 10px;padding:15px 0;border-top:1px solid gainsboro;"
+							 v-for="i in sortlistdata1" style="background-color: black;">
+								<div v-on:click="todetail_franchiser(i)" class="" style="float: left;overflow: hidden;">
+									<!-- <img v-if="i.photo" src="i.photo" alt="" style="width: 100px;height:80px"> -->
+									<img v-if="i.photo" v-bind:src="i.photo" alt="" style="width: 90px;height:90px">
+									<img v-else src="images/w1.png" alt="" style="width: 90px;height:90px">
+
+								</div>
+								<!-- <div class="mui-col-sm-11" id="" v-on:click="todetail(i)" style="background-color: '';float: right;width: 70%;"> -->
+								<div class="" id="" style="background-color: '';float: right;width: 70%;">
+									<div v-on:click="todetail_franchiser(i)">
+										<div>
+											<div class="mui-row" style="font-weight: bold;font-size: 16px;">
+												<div class="mui-col-sm-9">
+													{{i.name}}
+												</div>
+												<div class="mui-col-sm-3" style="font-size:11px;float: right;">
+													<!-- 已报名{{i.qty}} -->
+												</div>
+											</div>
+											<div class="mui-row" style="font-family: '宋体';font-size:11px;">
+												<div class="mui-col-sm-9">
+													<!-- 下单人：<span>王二麻子</span> -->
+												</div>
+												<div class="mui-col-sm-3" style="float: right;">
+													<!-- <span>2019.12.12</span> -->
+												</div>
+											</div>
+											<div>
+												<div v-if="i.push_label ==  'null' ">
+													<!-- 												<div class="daocang">等待填</div>
+												<div class="daocang">等待填</div>
+												<div class="daocang">等待填</div>
+												<div class="daocang">等待填</div>
+												<div class="daocang">等待填</div> -->
+												</div>
+												<div v-else id="" v-for="ii in i.push_label">
+													<!-- <div style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div> -->
+												</div>
+												<!-- <div style="float:right;margin-right:5px;margin-top:10px;padding:0 5px;line-height:14px;font-size:10px;">还有...</div> -->
+												<div style="font-size:11px;float: right;">
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div v-on:click="tobaidumap(i)" style="padding: 5px 0 0 0; clear: both;margin-top: 45px;">
+										<a class="mui-icon iconfont  icon-position-fill" style="margin:5px 5px 0 0;font-size:10px;color:#C8C7CC;text-align:center;"></a><a
+										 style="font-size:10px;color: #C0C0C0;text-decoration: underline;width:30%" href="#">{{i.distance}}
+											{{i.address}}</a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</v-scroll>
+			</div>
+
+		</div>
+
+		<!--</template>-->
+		<script type="text/javascript">
+			var window.point = ''
+			console.log('index.html---L774;localStorage.getItem-city='+localStorage.getItem('city'))
+
+
+				// plus.geolocation.getCurrentPosition(function(p) {
+				// 	// console.log('plus.geolocation.getCureentPosition'); 
+
+				// 	if (!p || !p.address) {
+				// 		return;
+				// 	}
+				// 	// vm.city = p.addresses;
+				// 	// vm.mypoint = p.coords;
+				// 	window.point = p.address
+
+				// 	localStorage.setItem('city', p.addresses);
+				// 	localStorage.setItem('mypoint', JSON.stringify(p.coords))
+				// 	console.log('mypoint==' + JSON.stringify(p.coords))
+				// 	// that.$options.methods.ajaxdata('', '', '', that.distance,'api/order');
+				// 	//经纬度
+				// 	console.log('index.htm--L757;Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude +
+				// 		'\nAltitude:' + p.coords.altitude);
+
+					var vm = new Vue({
+						el: '#app',
+						data() {
+							return {
+								city: localStorage.getItem('city'),
+								mypoint: JSON.parse(localStorage.getItem('mypoint')),
+								bakpoint: {},
+								postflag: false,
+								s: '',
+								tabs: ["订单", "门店", "问答", "住宿"],
+								tabContents: ["white", "", "#99CCCC", "#FFCCCC"],
+								num: 0,
+
+								counter: 1, //当前页
+								//						num: 50, // 一页显示多少条
+								pageStart: 0, // 开始页数
+								pageEnd: 0, // 结束页数
+								listdata0: [], // 下拉更新数据存放数组
+								listdata1: [], // 下拉更新数据存放数组
+
+								scrollData: {
+									noFlag: false //暂无更多数据显示
+								},
+
+								page: 1,
+								last_page: 1,
+								"details": []
+							}
+						},
+						components: {},
+						computed: {
+							person: function() {
+								return function(s) {
+									if (s) {
+										// alert(JSON.stringify(s))
+										// return s.substring(0,3)+"****"+s.substring(7);
+										var reg = /(\d{3})\d{4}(\d{4})/;
+										return s.replace(reg, "$1****$2")
+									}
+								}
+							},
+							sortlistdata0: function() {
+								// console.log('L818--listdata1='+JSON.stringify(this.sortByKey(this.listdata0,'distance')))
+								return this.sortByKey(this.listdata0, 'distance')
+							},
+							sortlistdata1: function() {
+								// console.log('L818--listdata1='+JSON.stringify(this.sortByKey(this.listdata0,'distance')))
+								return this.sortByKey(this.listdata1, 'distance')
+							},
+						},
+						beforeMount: function() {},
+						created() {
+
+
+						},
+						updated: function() {},
+						mounted: function() {
+							// setTimeout(()=>{this.g()},3000)
+							// this.g();
+							// if(this.city){
+							console.log('index.html--L800;this.city==' + this.city)
+							this.ajaxdata('', '', '', this.distance, 'api/order');
+
+							// }else{
+							// 	setTimeout(function() {
+							// 		console.log('index.html--L808;this.city=='+this.city)
+							// 		this.ajaxdata('', '', '', this.distance,'api/order');
+							// 	}, 3000);
+							// }
+
+							// this.$nextTick(function() {
+							// 	this.g()
+							// })
+						},
+						beforeUpdate() {},
+						methods: {
+							sortByKey: function(array, key) { //(数组、排序的列)
+								// console.log('L834--array='+JSON.stringify(array)+';key='+key)
+								return array.sort(function(a, b) {
+									var x = parseInt(a[key]);
+									var y = parseInt(b[key]);
+									// console.log('L839--x='+x+';y='+y)
+									return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+								})
+							},
+
+							geocoder: function(add) {},
+							getDistance: function(longitude1, latitude1, longitude2, latitude2) {
+								// 维度
+								var lat1 = (Math.PI / 180) * latitude1;
+								var lat2 = (Math.PI / 180) * latitude2;
+								// 经度
+								var lon1 = (Math.PI / 180) * longitude1;
+								var lon2 = (Math.PI / 180) * longitude2;
+								// 地球半径
+								var R = 6371;
+								// 两点间距离 km，如果想要米的话，结果*1000就可以了
+								var d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 -
+										lon1)) *
+									R;
+								d = d.toFixed(1);
+								return d;
+							},
+							distance: function(s, p, i, ajaxcallback) {
+								var that = this;
+								// 创建地址解析器实例     
+								function search(callback, ajaxcallback) {
+									var myGeo = new BMap.Geocoder();
+									// 将地址解析结果显示在地图上，并调整地图视野    
+									myGeo.getPoint(s, function(point) {
+										if (point == null) {
+											point = {}
+										}
+										console.log('index.html--L872;--s==' + s)
+										console.log('index.html--L873;point==' + JSON.stringify(point))
+										callback(point, i, ajaxcallback)
+									}, "");
+								}
+								search(function(ss, i, searchcallback) {
+									if (ss) {
+										console.log('L767;ss==' + JSON.stringify(ss));
+										var d = that.getDistance(ss.lng, ss.lat, p.longitude, p.latitude);
+										if (d) {
+											var dist_data = {};
+											dist_data["d"] = d + "km";
+											dist_data["point"] = ss;
+											dist_data["i"] = i;
+											console.log('L886;ss==' + JSON.stringify(dist_data));
+
+											searchcallback(dist_data)
+											return dist_data;
+										}
+									}
+								}, ajaxcallback)
+							},
+							ajaxdata: function(p, s, c, distance, url) {
+								if (s == undefined) {
+									s = ''
+								};
+								if (c == undefined) {
+									c = ''
+								};
+								console.log('index.html---L871;ajaxdata-data==p==' + p + ';s=' + s + ';c==' + c + ';distance=' +
+									distance +
+									';url=' + url)
+
+								mui.get(APP_DOMAIN + url, {
+									'page': p,
+									's': s,
+									'c': c
+								}, function(data) {
+									// alert('L796;ajaxdata-data=='+JSON.stringify(data))
+
+									let dat_ = data.data;
+									// console.log('L782;dat_=='+JSON.stringify(dat_)+';url=='+url)
+									function ppp(ajacallbak) {
+										var ajaxi = '';
+										dist(0, '');
+										// var mypoint = localStorage.getItem('mypoint');
+										console.log('L916--vm.mypoint==' + JSON.stringify(vm.mypoint))
+
+										function dist(ii, ajaxi) {
+											for (var i = ii; i < dat_.length && ajaxi == ''; i++) {
+												ajaxi = 1;
+												distance(dat_[i]['address'], vm.mypoint, i, ajaxcallback);
+												// console.log('L790;dista...url=='+url)
+												function ajaxcallback(ss) {
+													console.log('L792;ajaxcallbak-ss==' + JSON.stringify(ss))
+													dat_[ss.i]["distance"] = ss.d;
+													dat_[ss.i]["point"] = ss.point;
+													ajaxi = ''
+													console.log('L796;ss.i==' + ss.i)
+													return dist(ss.i + 1, '')
+												}
+											};
+											// alert('dat_.length=='+dat_.length+';ii=='+ii)
+											if (ii == dat_.length) {
+												// console.log('L799;url=='+url)
+												ajacallbak()
+											}
+										}
+									};
+									// console.log('L803;url=='+url)
+									ppp(function() {
+										// console.log('L805;url =='+url)
+										if (url == 'api/order') {
+											// console.log('L806; usr--order')
+											vm.listdata0 = "";
+											vm.listdata0 = dat_;
+											for (var i = 0; i < vm.listdata0.length; i++) {
+												if (vm.listdata0[i]['push_label'] !== 'null') {
+													vm.listdata0[i]['push_label'] = JSON.parse(vm.listdata0[i]['push_label']);
+												}
+											}
+
+											vm.last_page = data.last_page;
+											vm.page = data.current_page;
+											vm.postflag = false;
+											vm.s = ''
+										} else if (url == 'api/franchiser') {
+
+											vm.listdata1 = "";
+											vm.listdata1 = dat_;
+											// console.log('L817=='+JSON.stringify(vm.listdata1))
+											for (var i = 0; i < vm.listdata1.length; i++) {
+												if (vm.listdata1[i]['push_label'] !== 'null') {
+													// vm.listdata1[i]['push_label'] = JSON.parse(vm.listdata0[i]['push_label']);
+													vm.listdata1[i]['push_label'] = JSON.parse(vm.listdata1[i]['push_label']);
+
+												}
+											}
+										}
+									})
+
+								}, 'json');
+							},
+							search: function(s) {
+								if (vm.postflag == true) {
+									return
+								};
+								vm.postflag = true;
+								vm.num = 10;
+								this.ajaxdata('', s, '');
+							},
+							tabsSwitch: function(index) {
+								vm.num = index;
+								if (vm.num == 0) {
+									this.ajaxdata('', '', '', this.distance, 'api/order');
+								} else if (vm.num == 1) {
+									// console.log('L848;tabsSwitch:vm.num=1')
+									this.ajaxdata('', '', '', this.distance, 'api/franchiser');
+								}
+							},
+							todetail_po: function(s) {
+								if (!localStorage.getItem('api_token')) {
+									mui.openWindow('html/login.html', 'login.html');
+								} else {
+
+									mui.get(APP_DOMAIN + 'api/order/shochang', {
+										'uid': localStorage.getItem('userId'),
+										'order_id': s.id
+									}, function(data) {
+										// console.log("L1011-data"+JSON.stringify(data))
+										webview = plus.webview.create('html/detail_po.html', 'detail_po.html', {
+											'titleNView': {
+												'backgroundColor': '#D74B28',
+												'titleText': s.title,
+												autoBackButton: true
+											}
+										}, {
+											preload: JSON.stringify(s)
+										});
+										webview.addEventListener('close', function() {
+											webview = null;
+										});
+										webview.addEventListener('titleUpdate', function() {
+											webview.show();
+										})
+									})
+
+
+								};
+
+
+
+
+							},
+							todetail_franchiser: function(s) {
+
+								// console.log('i===' + JSON.stringify(s))
+								webview = plus.webview.create('html/detail_franchiser.html', 'detail_franchiser.html', {
+									'titleNView': {
+										'backgroundColor': '#D74B28',
+										'titleText': s.name,
+										autoBackButton: true
+									}
+								}, {
+									preload: JSON.stringify(s)
+								});
+								webview.addEventListener('close', function() {
+									webview = null;
+								});
+								webview.addEventListener('titleUpdate', function() {
+									webview.show();
+								})
+							},
+							tobaidumap: function(s) {
+								s.mypoint = vm.mypoint;
+								webview = plus.webview.create('html/baidumap.html', 'baidumap.html', {
+									'titleNView': {
+										'backgroundColor': '#D74B28',
+										'titleText': '临时工地图',
+										autoBackButton: true
+									}
+								}, {
+									preload: JSON.stringify(s)
+								});
+								webview.addEventListener('close', function() {
+									webview = null;
+								});
+								webview.addEventListener('titleUpdate', function() {
+									webview.show();
+								})
+							},
+							getList() {},
+							onRefresh(done) {
+								that.$options.methods.ajaxdata('', '', '', that.distance, 'api/order')
+
+								// console.log('----onRefresh--vm.num==' + vm.num);
+								// if (vm.num == 10) {
+								// 	this.ajaxdata('', '', '')
+								// } else {
+								// 	this.ajaxdata('', '', vm.num + 2)
+								// }
+								done(); // call done
+							},
+							onInfinite(done) {
+								// console.log('----onInfinite');
+							}
+
+						}
+					})
+
+
+				// 	//JSON对象，地址信息
+				// 	// console.log(JSON.stringify(p.address));
+				// }, function(e) {
+				// 	// console.log('Geolocation error: ' + e.message);
+				// 	if (isShowToast) {
+				// 		mui.toast("定位出错：" + e.message);
+				// 	}
+				// }, {
+				// 	provider: 'baidu'
+				// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//检查自动更新   
+			function svn(t) {
+				console.log('t= ' + t);
+				var xhr_svn = new plus.net.XMLHttpRequest();
+				xhr_svn.onreadystatechange = function() {
+					if (xhr_svn.readyState == 4) {
+						if (xhr_svn.status == 200) {
+							var res = JSON.parse(xhr_svn.responseText);
+							if (res.state == 'yes') {
+								if (res.mark != t) {
+									console.log('res.mark==' + res.mark);
+									var upr;
+									plus.nativeUI.confirm("有新版本发布了，是否件更新？", function(e) {
+										upr = (e.index == 0) ? "Y" : "N";
+										console.log(upr);
+										if (upr == "Y") {
+											var wt = plus.nativeUI.showWaiting('下载更新中，请勿关闭');
+											var url = res.url; // 下载文件地址   
+											var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+												if (status == 200) { // 下载成功   
+													var path = d.filename;
+													console.log(d.filename);
+													plus.runtime.install(path);
+												} else { //下载失败   
+													alert("Download failed: " + status);
+												}
+											});
+											dtask.start();
+										} else {
+
+										}
+									}, "你的厂招网", ["确认", "取消"]);
+
+
+								} else {
+									console.log('最新');
+								}
+							}
+						} else {
+							plus.nativeUI.toast("网络连接错误！");
+						}
+					}
+				}
+				xhr_svn.open("GET", "http://admin.changzhao.com/appupdate/updatenew.json"); //这里的地址是上面json文件的地址   
+				xhr_svn.send();
+
+			}
+		</script>
+
+		<!-- 		<style lang="scss" scoped>
+			.index {}
+		</style> -->
+
+	</body>
+
+</html>

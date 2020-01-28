@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>po</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.08&ak=CVM4K1WcyfSh9kcvI38v0Py3tHwR9sNp"></script> -->
+		<script src="../js/wangEditor.min.js"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../css/mui.poppicker.css">
+		<link rel="stylesheet" href="../css2/oil.css">
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/common.js"></script>
+
+		<style type="text/css">
+			.mui-row {
+				/*margin: 15px;*/
+				font-size: 14px;
+			}
+
+			.mui-row>div {
+				padding: 5px;
+				border: solid 1px #efeff4;
+			}
+
+			.toptitle {
+				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999;
+				margin-top: 0px;
+				height: 40px;
+				line-height: 30px;
+				background-color: white;
+				padding: 10px;
+				width: 100%;
+			}
+
+			.toptitle>div {
+				float: left;
+				margin-right: 5px;
+				margin-top: 3px;
+				padding: 0 5px;
+				line-height: 16px;
+				font-size: 8px;
+				color: white;
+				background: #FF6666;
+				border-radius: 3px;
+				text-align: center;
+			}
+
+			.bottomtitle {
+				/* 				position: -ms-device-fixed;
+				position: fixed;
+				z-index: 9999; */
+				bottom: 0;
+				/* height: 50px; */
+				line-height: 30px;
+				background-color: white;
+				padding: 15px 5px 15px 5px;
+				width: 100%;
+				border-top: 1px solid #ccc;
+				/* border-bottom: 1px solid #ccc; */
+			}
+
+			.leftbutton {
+				left: 5px;
+				/* margin-right:15px ; */
+				float: left;
+				color: red;
+			}
+
+			.rightbutton {
+				background-color: red;
+				float: right;
+				right: 5px;
+				color: white;
+			}
+
+			.subbottom {
+				top: 5px;
+				width: 80px;
+				height: 35px;
+				line-height: 30px;
+				border: 1px solid #FF0000;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.imgpan {
+				z-index: 999;
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				width: 20%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				/*opacity: 0.5;*/
+				text-align: center;
+				margin-bottom: 1px;
+				font-size: 14px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.titlem {
+				display: left;
+				line-height: 45px;
+				font-size: 16px;
+				border: none;
+				font-weight: bold;
+			}
+
+			.picbox {
+				z-index: 99999;
+				position: -ms-device-fixed;
+				position: fixed;
+				/*z-index: 9999;*/
+				bottom: 0;
+				height: 100%;
+				line-height: 30px;
+				background-color: #666666;
+				/*padding: 10px;*/
+				width: 100%;
+				margin-bottom: 0;
+				/*display: none;*/
+				/*border-top: 1px solid #ccc;*/
+			}
+
+			.clearfix:after {
+				clear: both
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+
+			/* body{ line-height: 18px; font-size: 12px; color: #666; background: #f5f5f5;} */
+
+			p {
+				font-size: 18px;
+			}
+			.button {
+				background: #df3030;
+				-webkit-border-radius: 10;
+				-moz-border-radius: 10;
+				border-radius: 10px;
+				font-family: 黑体;
+				color: #EEEEEE;
+				font-size: 14px;
+				padding: 10px 10px;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div v-cloak id="app">
+
+			<!-- 			<div id="" class="toptitle">
+				<div>奖金高</div>
+				<div>环境好</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包住</div>
+				<div style="line-height: 14px;color:darkgrey;border:1px solid darkgrey; background: white;">包吃</div>
+				<div style="line-height: 14px;color:darkgrey; background: white;border:1px solid darkgrey; background: white;">可借支生活费</div>
+				<div style="float:right; background: white;color: #AAAAAA;">2万人...</div>
+			</div> -->
+
+			<div class="" style="width:100%;position: fixed;top:0;z-index: 9999;background-color: #efeff4;">
+				<div>
+					<div class="button" style="margin: 25px 60px;text-align: center;">编 辑 完 提 交</div>
+<!-- 					<div class="tabletop">
+						<div class="button" v-bind:ref="index" v-bind:id="index" v-for="(item,index) in tabs" v-bind:ref="index" :class="{active:index == num}"
+						 v-on:click="tabsSwitch(index)">{{item}}</div>
+					</div>
+					<div v-if="num==0" class="tabletop">
+					</div> -->
+				</div>
+			</div>
+
+			<div class="mui-content" style="background: #FFFFFF;margin-bottom: 50px;">
+				<div id="" style="background-color: white;margin:0px auto 30px auto">
+					<img v-if="detaildata.photo" v-bind:src="detaildata.photo" alt="">
+					<img v-else src="../images/w.png">
+					<div id="" style="font-size: 16px;margin-left:20px;margin-top: 40px;">
+						订单标题 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="detaildata.title" />
+					</div>
+					<div id="" style="font-size: 16px;margin-left:20px;margin-top: 40px;">
+						 &nbsp推 荐 词 &nbsp<input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="detaildata.title" />
+						 <div id="" style="margin: 5px auto auto 80px;">
+						 	用 | 分隔，最多五个；
+						 </div>
+					</div>
+<!-- 					<div style="margin: 20px 0 20px 20px;">
+						<div v-if="detaildata.push_label ==  'null' ">
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+							<div class="daocang">等待填</div>
+						</div>
+						<div v-else id="" v-for="ii in detaildata.push_label">
+							<div class="clearfix" style="float:left;margin-right:5px;margin-top:10px;padding:0 5px;line-height:16px;font-size:8px;color:white;background: #FF6666;border-radius: 3px;">{{ii}}</div>
+						</div>
+
+					</div> -->
+					<div style="clear:both;margin: 30px 0 0 20px; font-size: 16px;">
+						<!-- <a  class="mui-icon iconfont  icon-clock" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a> -->
+					</div>
+					<div v-on:click="" style="margin: 40px 0 20px 20px; font-size: 16px;">
+						上班地址 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="detaildata.address" />
+						<!-- <a  class="mui-icon iconfont  icon-position-fill" style="margin:20px 5px 0 0;font-size:16px;color:#C8C7CC;"></a> -->
+						<!-- 						<a style="font-size:16px;margin-top: 50px;text-decoration: underline;" href="#">
+							{{detaildata.address}}</a> -->
+					</div>
+					<div style="margin: 40px 0 20px 20px; font-size: 16px;padding: auto auto 30px auto;">
+						已报人数 <input style="font-size: 20px;padding-left: 5px;width: 70%;" type="" name="" id="" v-model="detaildata.qty" />
+						<!-- <a  class="mui-icon iconfont  icon-clock" style="margin:20px 5px 100px 0;font-size:16px;color:#C8C7CC;"></a> -->
+					</div>
+					<!-- 					<div class="mui-row">
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							{{detaildata.address}}
+						</div>
+					</div> -->
+					<div id="" style="margin: 50px auto 10px 20px;font-size: 16px;">
+						详 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp情 :
+					</div>
+					<div id="editor" style="margin: 0 1px 10px 1px;font-size: 18px;padding: 10px;border-style: solid;border-width: 1px;background-color: #CCCCCC;">
+						<!-- 					<div id="">
+							{{ getcontent()}}
+						</div> -->
+
+						<!-- 					<p v-html="detaildata.content" style="font-size: 24px;">
+							
+						</p> -->
+					</div>
+
+					<div id="editor_body" style="margin: 3px 1px auto 1px;padding-bottom: 50px;border-style: solid;border-width: 1px;">
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		</div>
+		<script src="../js/util.js"></script>
+		<script>
+			var obj = function() {
+				return {
+					parentmsg: 'display:none',
+					factoryphoto: {
+
+					},
+					detaildata: {},
+					mypoint: ''
+				}
+			};
+
+			var vm = new Vue({
+				//				delimiters: ['{#', '#}'],
+				el: '#app',
+				data: obj,
+				updated: function() {
+
+					var sliderMuiObj = mui('.mui-slider');
+					sliderMuiObj.slider({
+						interval: 3000
+					});
+
+				},
+				mounted: function() {
+					(function() {
+						mui.init({
+							swipeBack: false //关闭-右滑关闭功能
+						});
+						mui.plusReady(function() {
+							var self = plus.webview.currentWebview();
+							vm.detaildata = JSON.parse(self.preload);
+							// alert(self.preload);
+							console.log('L216-vm.detaildate=' + JSON.stringify(vm.detaildata));
+							vm.editor.txt.html(vm.detaildata.content)
+							// alert('L216-vm.detaildate='+JSON.stringify(vm.detaildata))
+							mui.get(APP_DOMAIN + 'api/factoryphoto/' + vm.detaildata.id, {}, function(data) {
+
+							}, 'json');
+
+						});
+					})();
+				},
+				methods: {
+					getcontent: function() {
+						var s = vm.detaildata.content
+						alert(s)
+						console.log(s)
+						var arrays = eval(s);
+						// alert(arrays.length)
+						for (var i = 0; i < arrays.length; i++) {
+							// if(arrays[i].tag==)
+							// function(){
+							// 	ht=
+							// }
+						}
+						// alert(eval(s)[0].children)
+						// return function(s){
+						// 	var ss = JSON.parse(s)
+						// 	// JSON.parse()
+						// 	return ss
+						// }()
+					},
+					openShare: function() {
+						shareWebbiew();
+						mui.plusReady(function() {
+							ws = plus.webview.currentWebview();
+							plus.navigator.closeSplashscreen();
+						})
+						var sharew;
+						var ws = null;
+
+						function shareWebbiew() {
+							ws = plus.webview.currentWebview();
+							if (sharew) { // 避免快速多次点击创建多个窗口
+								return;
+							}
+							var top = plus.display.resolutionHeight - 134;
+							var href = "share.html";
+							sharew = plus.webview.create(href, "share.html", {
+								width: '100%',
+								height: '134',
+								top: top,
+								scrollIndicator: 'none',
+								scalable: false,
+								popGesture: 'none'
+							}, {
+								shareInfo: {
+									"href": "https://www.linshigong.com",
+									"title": vm.detaildata.title,
+									"content": "欢迎使用临时工APP,点击查看订详情！",
+									"pageSourceId": ws.id
+								}
+							});
+							sharew.addEventListener("loaded", function() {
+								sharew.show('slide-in-bottom', 300);
+							}, false);
+							// 显示遮罩层  
+							ws.setStyle({
+								mask: "rgba(0,0,0,0.5)"
+							});
+							// 点击关闭遮罩层
+							ws.addEventListener("maskClick", closeMask, false);
+						}
+
+						function closeMask() {
+							ws.setStyle({
+								mask: "none"
+							});
+							//避免出现特殊情况，确保分享页面在初始化时关闭 
+							if (!sharew) {
+								sharew = plus.webview.getWebviewById("share.html");
+							}
+							if (sharew) {
+								sharew.close();
+								sharew = null;
+							}
+						}
+					},
+					tobaidumap: function(s) {
+						s.mypoint = vm.detaildata.mypoint;
+						webview = plus.webview.create('../html/baidumap.html', 'baidumap.html', {
+							'titleNView': {
+								'backgroundColor': '#D74B28',
+								'titleText': '临时工地图',
+								autoBackButton: true
+							}
+						}, {
+							preload: JSON.stringify(s)
+						});
+						webview.addEventListener('close', function() {
+							webview = null;
+						});
+						webview.addEventListener('titleUpdate', function() {
+							webview.show();
+						})
+					},
+					toenlist: function(s) {
+						if (localStorage.getItem('api_token')) {
+
+							var btnArray = ['按错了', '是的'];
+
+							mui.prompt(s, '留言', '亲，要报名么？', btnArray, function(e) {
+								if (e.index == 0) {
+									mui.toast('没事，你再多看看')
+								} else {
+									mui.ajax(APP_DOMAIN + 'api/enlist/store', {
+										data: {
+											api_token: localStorage.getItem('api_token'),
+											title: vm.detaildata.title,
+											name: localStorage.getItem('userName'),
+											sex: localStorage.getItem('sex'),
+											mobile: localStorage.getItem('mobile'),
+											text: e.value,
+											user_id: localStorage.getItem('userId'),
+											recruit_id: vm.detaildata.id,
+											subsidy: vm.detaildata.subsidy
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										success: function(data) {
+											console.log('enlist---data---' + JSON.stringify(data));
+											mui.toast('报名已提交')
+											localStorage.setItem('enlist', vm.detaildata.title);
+											localStorage.setItem('subsidy', vm.detaildata.subsidy);
+											var newwebview = plus.webview.getElementById('new-webview.html');
+											mui.fire(newwebview, 'enlist', {
+												detaildata: {
+													enlist: vm.detaildata.title,
+													subsidy: vm.detaildata.subsidy
+												}
+											})
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr.response);
+											console.log(type);
+										}
+									})
+								}
+							}, 'div');
+
+						} else {
+							mui.openWindow('../html/login.html', 'login.html');
+						}
+					}
+				},
+			});
+			var E = window.wangEditor;
+			vm.editor = new E('#editor', '#editor_body');
+			vm.editor.customConfig.menus = [
+				'bold',
+				'underline',
+				'quote',
+				'emoticon',
+				'image',
+				'undo',
+				'redo'
+			];
+			vm.editor.customConfig.zIndex = 0;
+			vm.editor.customConfig.pasteFilterStyle = false;
+			vm.editor.customConfig.pasteIgnoreImg = true;
+			vm.editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+			vm.editor.customConfig.upoadImgMaxLength = 6;
+
+			// vm.editor.customConfig.
+			// vm.editor.customConfig.UploadImgServer = url;
+			vm.editor.customConfig.customUploadImg = function(files, insert) {
+				if (files == null || files == undefined) {
+					layer.msg("请选择图片");
+					return;
+				}
+				var api_token = localStorage.getItem('api_token') || "{}";
+// alert('img')
+				var formData = new FormData();
+				formData.append("file", files[0]);
+				formData.append("api_token", api_token)
+				var url = APP_DOMAIN + "api/order/img";
+				mui.ajax(url, {
+					data: formData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						alert('img-data=='+JSON.stringify(data))
+						if (data.code == 0) {
+							vm.contentImgUrl = data.rul;
+							vm.contentImgUuid = data.uuid;
+							insert(vm.contentImgUrl);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						layer.msg("上传失败")
+					}
+				});
+			};
+			vm.editor.customConfig.onblur = function(html){
+				alert('re-L473;data,html=='+html)
+				
+				var url = APP_DOMAIN + "api/order/ajaxupdate";
+				var api_token = localStorage.getItem('api_token') || "{}";
+				var formData = {
+					api_token: api_token,
+					content: html,
+					id: vm.detaildata.id
+				}
+				mui.ajax(url, {
+					data: formData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if (data.code == 0) {
+							vm.contentImgUrl = data.rul;
+							vm.contentImgUuid = data.uuid;
+							insert(vm.contentImgUrl);
+							alert('re-L490;data=='+JSON.stringify(data))
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						alert('上传失败')
+						// layer.msg("上传失败")
+					}
+				});
+			}
+			vm.editor.customConfig.showLinkImg = false;
+			vm.editor.create();
+			// alert(JSON.stringify(vm.detaildata))
+			// vm.editor.txt.html(vm.detaildata.content)
+		</script>
+	</body>
+</html>

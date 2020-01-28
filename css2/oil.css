@@ -1,0 +1,396 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin: 0; padding: 0;}
+body{ line-height: 18px; font-size: 12px; color: #666; background: #f5f5f5;}
+h1, h2, h3, h4, h5, h6{ line-height: 18px; font-weight: normal; margin: 0;}
+p{ margin: 0; color: inherit; font-size: 12px;}
+ul, li { list-style: none;}
+em, i{ font-style: normal;}
+input{ border-radius: 0;}
+input[type="color"], input[type="date"], input[type="datetime-local"], input[type="datetime"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea{ height: inherit; line-height: 18px; padding: 8px 0; background: none; border: none; border-bottom: 1px solid #ddd; border-radius: 0; font-size: 12px; color: #333;}
+
+/*global*/
+.clearfix::after{ display:block; clear:both; content:""; visibility:hidden; height:0;}
+.clearfix{ zoom:1;}
+.marT10{ margin-top: 10px;}
+.bgFFF{ background: #fff;}
+.noClick{ background: none !important;}
+
+/* 字体大小 */
+.f12{ font-size: 12px !important;}
+
+/* 链接 */
+a{ text-decoration:none; color:#333;}
+a:active{ color:#fb9a02;}
+a:focus{ outline: none;}
+a:active img{ opacity:0.85;}
+img{ width: 100%; vertical-align: middle;}
+.pic img{ height: 100%;}
+
+/* color */
+.red, .colorfd373b { color: #fd373b !important;}
+.green, .color00b080, .highlight { color: rgb(50, 174, 198) !important;}
+.gray, .color999 { color: #999;}
+.blue, .color00a0e9 { color: #00a0e9 !important;}
+.orange, .colorfb9a02 { color: #fb9a02;}
+
+/* placeholder的字体颜色 */
+::-moz-placeholder {color: #ddd;}
+::-webkit-input-placeholder {color: #ddd;}
+
+/*=================== 网站整体布局 =====================*/
+/* MUI框架重构 */
+.mui-bar{ background: #eee; box-shadow: none;}
+.mui-content{ background: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+.mui-bar-nav~.mui-content{ padding-top: 0; top: 44px;}
+.mui-bar-tab~.mui-content{ padding-bottom: 0; bottom: 50px;}
+.mui-bar .mui-title{ color: #fff; left: 50px; right: 50px;}
+.mui-bar-nav{ background: rgb(50, 174, 198);}
+.mui-bar-nav.mui-bar .mui-icon{ color: #fff;}
+.mui-bar-nav.mui-bar .ico{ background-position: center center; background-repeat: no-repeat; background-size: 23px 23px; width: 50px; height: 44px; overflow: hidden; position: absolute; top: 0;}
+.mui-bar-nav.mui-bar .ico_order{ background-image: url(../images/oil/ico_order.png); right: 0;}
+.mui-bar-nav~.mui-content .mui-pull-top-pocket{ top: 0;}
+
+/* mui-table-view */
+.mui-content>.mui-table-view:first-child{ margin-top: 0;}
+.mui-table-view:before, .mui-table-view:after, .mui-table-view-cell:after{ background: #ddd; -webkit-transform: scaleY(1); transform: scaleY(1);}
+.mui-table-view-cell:after{ left: 0; right: 0;}
+.mui-table-view-cell{ padding: 8px 15px;}
+.mui-table-view-cell>a:not(.mui-btn){ margin: -8px -15px;}
+.mui-table-view-cell.mui-collapse .mui-collapse-content{ padding: 5px 15px; margin: 8px -15px -8px;}
+.mui-navigate-right:after, .mui-push-right:after { font-size: 17px; color: #adadad; right: 10px;}
+.mui-table-view-cell.mui-collapse>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse>.mui-push-right:after { right: 12px;}
+
+/* mui-input-group */
+.mui-input-group:before, .mui-input-group:after, .mui-input-group .mui-input-row:after { background: #ddd; -webkit-transform: scaleY(1); transform: scaleY(1);}
+.mui-input-group .mui-input-row:after{ left: 0;}
+.mui-input-group{ margin-top: 15px;}
+.mui-input-group .mui-input-row{ height: inherit;}
+.mui-input-row label{ width: 26%; line-height: 18px; padding: 13px 15px;}
+.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea { width: 74%;}
+.mui-input-row input, .mui-input-row select, .mui-input-row textarea { padding: 13px 15px; border: none; margin: 0;}
+.mui-input-row .mui-input-clear ~ .mui-icon-clear, .mui-input-row .mui-input-speech ~ .mui-icon-speech{ width: 46px; height: 44px; line-height: 44px; color: #aaa; top: 0;}
+.mui-input-row .mui-input-speech ~ .mui-icon-speech{ width: 44px;}
+
+/* mui-checkbox / mui-radio */
+.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] { width: 20px; height: 20px; top: -1px; right: 13px;}
+.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before { line-height: 20px; color: #999; font-size: 20px;}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before { color: #FF4500;}
+/*.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before { color: rgb(50, 174, 198);}*/
+.mui-radio input[type=radio]:checked:before{ content: '\e442';}
+.mui-table-view-cell.mui-checkbox input[type=checkbox], .mui-table-view-cell.mui-radio input[type=radio] { top: 12px;}
+.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio] { left: 15px;}
+.mui-table-view-cell.mui-checkbox.mui-left, .mui-table-view-cell.mui-radio.mui-left { padding-left: 40px;}
+.mui-input-row.mui-checkbox label, .mui-input-row.mui-radio label { width: 100%;}
+
+/* 按钮 */
+.mui-btn, button, input[type="button"], input[type="reset"], input[type="submit"] { line-height: 18px; padding: 10px 20px; color: #fff; border-radius: 6px;}
+.mui-btn-block{ padding: 12px 0; font-size: 17px;}
+.mui-btn-green, .mui-btn-positive, .mui-btn-success { background-color: rgb(50, 174, 198); border-color: rgb(50, 174, 198);}
+.mui-btn-green.mui-active:enabled, .mui-btn-green:enabled:active, .mui-btn-positive.mui-active:enabled, .mui-btn-positive:enabled:active, .mui-btn-success.mui-active:enabled, .mui-btn-success:enabled:active { background-color: #009f72; border-color: #009f72;}
+.mui-btn-danger, .mui-btn-negative, .mui-btn-red { background-color: #fd373b; border-color: #fd373b;}
+.mui-btn-danger.mui-active:enabled, .mui-btn-danger:enabled:active, .mui-btn-negative.mui-active:enabled, .mui-btn-negative:enabled:active, .mui-btn-red.mui-active:enabled, .mui-btn-red:enabled:active { background-color: #ee0209; border-color: #ee0209;}
+.mui-btn-orange{ background-color: #fb9a02; border-color: #fb9a02;}
+.mui-btn-orange.mui-active:enabled, .mui-btn-orange:enabled:active { background-color: #e88c02; border-color: #e88c02;}
+.mui-btn-outlined{ background-color: transparent;}
+.mui-btn-outlined.mui-btn-green, .mui-btn-outlined.mui-btn-positive, .mui-btn-outlined.mui-btn-success{ color: rgb(50, 174, 198);}
+
+/* 开关按钮 */
+.mui-switch.mui-active{ background-color: rgb(50, 174, 198); border-color: rgb(50, 174, 198);}
+
+/* 角标 */
+.mui-badge{ padding: 1px 4px; font-size: 10px; font-family: '黑体';}
+.mui-badge-green, .mui-badge-success{ background-color: rgb(50, 174, 198);}
+.mui-badge-danger, .mui-badge-red{ background-color: #fd373b;}
+
+/* mui-toast-container */
+.mui-toast-container{ bottom: 60px;}
+.mui-toast-message{ padding: 10px 15px; background: rgba(0, 0, 0, 0.8); color: #fff;}
+
+/* mui-popover */
+.mui-popover{ background: #fff;}
+.mui-popover .mui-table-view{ background: none;}
+.mui-backdrop{ background: rgba(0, 0, 0, 0.2);}
+
+/* pop_confirm */
+.pop_confirm{ position: fixed; top: 50% !important; left: 50% !important; -webkit-transform: translate3d(-50%, -50%, 0) scale(1); transform: translate3d(-50%, -50%, 0) scale(1);}
+.pop_confirm .mui-popover-arrow{ display: none;}
+.pop_confirm .hd{ padding: 15px 15px 0; line-height: 22px; text-align: center; font-size: 17px; font-weight: bold;}
+.pop_confirm .bd{ padding: 5px 15px 15px; line-height: 21px; font-size: 14px;}
+.pop_confirm .bd p{ font-size: 14px;}
+.pop_confirm .fd{ border-top: 1px solid #ddd;}
+.pop_confirm .fd .mui-btn{ padding: 13px 5px; font-size: 14px; color: #00a0e9; background: none; border: none; border-radius: 0; margin: 0;}
+.pop_confirm .fd2 .mui-btn{ float: left; width: 50%;}
+.pop_confirm .fd2 .mui-btn:last-child{ border-left: 1px solid #ddd;}
+
+/* pop_actionSheet */
+.pop_actionSheet{ width: inherit; background: none; box-shadow: none; position: fixed; top: inherit !important; bottom: 10px; left: 15px !important; right: 15px !important;}
+.pop_actionSheet .mui-popover-arrow{ display: none;}
+.pop_actionSheet .mui-table-view{ text-align: center; font-size: 17px; background: #fff; margin-top: 10px;}
+.pop_actionSheet .mui-table-view-cell:after{ left: 0; right: 0;}
+
+/* footer */
+.footer{ background: #fff; box-shadow: 0 1px 0 #999 inset;}
+.footer_warp{ padding: 6px 120px 6px 15px; position: relative;}
+.footer_warp .mui-btn{ width: 91px; height: 32px; line-height: 30px; padding: 0; background: #fb9a02; border-color: #fb9a02; border-radius: 4px; font-size: 16px; color: #fff; position: absolute; top: 9px; right: 15px;}
+.footer_warp p{ font-size: 14px;}
+.footer_warp p:first-child{ font-size: 11px; color: #999;}
+.footer_warp p span b{ font-size: 18px;}
+.footer_warp p span small{ font-size: 12px;}
+.footer_warp p.handle{ line-height: 36px; font-size: 14px; color: #333;}
+
+/* edit_btn */
+.edit_btn{ padding: 15px;}
+.edit_btn .mui-btn{ margin: 0;}
+
+/*============================================= 加油 =============================================*/
+.tab_con .mui-table-view + .edit_btn{ padding-bottom: 0;}
+
+/* mui-segmented-control */
+.mui-segmented-control{ background: #fff; border: none; border-radius: 0;}
+.mui-segmented-control .mui-control-item{ line-height: 16px; padding: 9px 0; color: #999; font-size: 14px; border-color: #ddd;}
+.mui-segmented-control .mui-control-item.mui-active{ color: rgb(50, 174, 198); background: #fff; box-shadow: 0 -2px 0 rgb(50, 174, 198) inset;}
+.mui-segmented-control .mui-control-item span{ display: block; font-size: 11px;}
+.mui-segmented-control .mui-control-item span b{ vertical-align: bottom; font-size: 14px;}
+.mui-segmented-control ~ .mui-scroll-wrapper{ top: 50px;}
+
+/* pledge_view */
+.pledge_view.mui-table-view:before{ top: 0;}
+.pledge_view.beforeT:before{ content: none;}
+.pledge_view .mui-badge{ width: 13px; height: 13px; line-height: 13px; text-align: center; padding: 0; background: #fff; border: 1px solid rgb(50, 174, 198); color: rgb(50, 174, 198); margin-right: 5px; vertical-align: middle;}
+.pledge_list a{ float: left; display: block; width: 33.33%; height: 26px; line-height: 26px; overflow: hidden; text-align: center; color: #999;}
+.pledge_list a .ico{ background: url(../images/oil/ico_pledge1.png) left center no-repeat; background-size: 22px 21px; display: inline-block; width: 22px; height: 26px; overflow: hidden; vertical-align: top; margin-right: 8px;}
+.pledge_list a:nth-of-type(2) .ico{ background-image: url(../images/oil/ico_pledge2.png); background-size: 30px 21px; width: 30px;}
+.pledge_list a:nth-of-type(3) .ico{ background-image: url(../images/oil/ico_pledge3.png)}
+
+/* oil_swiper */
+.oil_swiper.swiper-container-horizontal>.swiper-pagination{ bottom: 5px;}
+.oil_swiper.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet{ width: 5px; height: 5px; background: #ddd; margin: 0 3px;}
+.oil_swiper.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet-active{ background: rgb(50, 174, 198);}
+.oil_swiper ul li:nth-of-type(2){ height: 106px; overflow: hidden; padding: 8px 15px;}
+.oil_swiper .ico{ background: url(../images/oil/ico_noOil.png) center center no-repeat; background-size: 76px 39px; display: block; height: 39px; overflow: hidden; margin-bottom: 8px;}
+.oil_swiper .mui-btn{ width: 48%; padding: 4px 0; border-radius: 28px; font-size: 14px; margin: 0 auto; position: initial; -webkit-transform: translateY(0); transform: translateY(0);}
+.oil_swiper .ico_edit{ background: url(../images/oil/ico_edit2.png) center center no-repeat; background-size: 13px 13px; display: inline-block; width: 13px; height: 13px; overflow: hidden; vertical-align: middle; margin-right: 5px;}
+.oil_swiper .oil_card_info{ padding-left: 50px; color: #333; position: absolute; top: 50%; left: 50%; -webkit-transform: translate3d(-50%, -50%, 0) scale(1); transform: translate3d(-50%, -50%, 0) scale(1);}
+.oil_swiper ~ .mui-table-view{ margin-top: 10px;}
+.oil_swiper ~ .oil_checkbox{ margin: 0;}
+
+/* oil_card_info */
+.oil_card_info{ padding-left: 50px; color: #333;}
+.oil_card_info .pic{ float: left; display: block; width: 39px; height: 39px; overflow: hidden; margin: 8px 0 0 -50px;}
+.oil_card_info p{ white-space: nowrap;}
+.oil_card_info p:last-child{ color: #999;}
+
+/* oil_money */
+.oil_money{ overflow: hidden; margin: -8px -15px;}
+.oil_money.mui-input-group:before, .oil_money.mui-input-group:after, .oil_money.mui-input-group .mui-input-row:after { content: none;}
+.oil_money.mui-input-group .mui-input-row{ clear: none; float: left; display: block; width: 25%; overflow: hidden; border-right: 1px solid #ddd;}
+.oil_money.mui-input-group .mui-input-row:last-child{ border-right: none;}
+.oil_money .mui-input-row label{ display: block; padding: 5px;}
+.oil_money .mui-input-row .mui-badge{ padding: 3px 8px; font-size: 12px; position: initial; -webkit-transform: translateY(0); transform: translateY(0);}
+.oil_money .mui-input-row .num{ display: block; height: 46px; line-height: 42px; overflow: hidden; text-align: center; color: #333; font-size: 17px; font-family: "黑体";}
+.oil_money .mui-radio input[type=radio]{ width: 18px; height: 18px; padding: 0; top: initial; right: 0; bottom: 0;}
+.oil_money .mui-radio input[type=radio]:before{ content: none;}
+.oil_money .mui-radio input[type=radio]:checked:before{ content: ""; background: url(../images/oil/ico_radio_checked.png) center center no-repeat; background-size: 100% 100%; display: block; width: 18px; height: 18px; overflow: hidden;}
+.oil_money .mui-radio input[type=radio]:checked ~ label .num{ color: rgb(50, 174, 198);}
+
+/* oil_checkbox */
+.oil_checkbox{ color: #999; margin: 0 -15px;}
+.oil_checkbox span{ display: inline-block; padding: 8px 0; color: rgb(50, 174, 198); margin-left: -10px;}
+.oil_checkbox .mui-table-view, .oil_checkbox .mui-table-view .mui-table-view-cell.mui-active { background: none;}
+.oil_checkbox .mui-table-view:before, .oil_checkbox .mui-table-view:after, .oil_checkbox .mui-table-view-cell:after { content: none;}
+.oil_checkbox .mui-table-view-cell.mui-checkbox.mui-left, .mui-table-view-cell.mui-radio.mui-left{ padding-left: 38px;}
+.oil_checkbox .mui-table-view-cell.mui-checkbox input[type=checkbox]{ top: 7px;}
+
+/* fieldset_box */
+.fieldset_box{ padding: 15px;}
+.fieldset_box fieldset{ float: left; display: block; width: 48%; padding: 6px 15px 12px; text-align: center; border-color: #ccc; color: #fb9a02; margin: 0;}
+.fieldset_box fieldset:last-child{ float: right;}
+.fieldset_box legend{ color: #999; padding: 0 10px;}
+
+/* dl_oil_package */
+.dl_oil_package{ position: relative; margin: -8px -15px;}
+.dl_oil_package dd{ padding: 10px 40% 10px 15px; position: relative;}
+.dl_oil_package dd:after { content: ""; background: #ddd; height: 1px; position: absolute; left: 15px; right: 15px; bottom: 0;}
+.dl_oil_package dd p{ color: #333;}
+.dl_oil_package dd .sale{ line-height: 20px; padding-top: 5px;}
+.dl_oil_package dd .sale span:first-child{ display: inline-block; width: 90px; margin-right: 10px;}
+.dl_oil_package dd .sale b{ font-size: 36px; vertical-align: -2px;}
+.dl_oil_package dd .tags{ padding-top: 5px;}
+.dl_oil_package dd .tags span{ float: left; display: inline-block; line-height: 24px; overflow: hidden; padding: 0 6px; background: #7fdbc2; color: #fff; margin-right: 10px;}
+.dl_oil_package dd .btn_con{ text-align: right; position: absolute; top: 50%; right: 15px;  -webkit-transform: translateY(-50%); transform: translateY(-50%);}
+.dl_oil_package dd .btn_con .mui-btn{ width: 92px; padding: 6px 0; border-radius: 4px; font-size: 16px;}
+.dl_oil_package dd .btn_con p{ line-height: 22px; color: #999;}
+
+/* pop_pledge */
+.pop_pledge .hd{ font-size: 14px; color: #000;}
+.pop_pledge .hd .ico1, .pop_pledge .hd .ico2, .pop_pledge .hd .ico3 { background: url(../images/oil/ico_pledge1.png) center center no-repeat; background-size: 30px 28px; display: block; width: 30px; height: 28px; overflow: hidden; margin: 0 auto 4px;}
+.pop_pledge .hd .ico2{ background-image: url(../images/oil/ico_pledge2.png); background-size: 41px 28px; width: 41px;}
+.pop_pledge .hd .ico3{ background-image: url(../images/oil/ico_pledge3.png);}
+.pop_pledge .bd{ line-height: 18px; font-size: 12px; color: #999;}
+
+/* pop_addCard */
+.pop_addCard .hd{ line-height: 40px; padding: 0 15px; color: #000; border-bottom: 1px solid rgb(50, 174, 198);}
+.pop_addCard .bd{ padding: 0;}
+.pop_addCard .bd .mui-table-view-cell:first-child{ padding-top: 11px; padding-bottom: 6px; color: #333;}
+.pop_addCard .bd .mui-table-view-cell:after{ content: none;}
+.pop_addCard .bd .oil_money{ border: 1px solid #ddd; margin: -8px 0;}
+.pop_addCard .bd .oil_money.mui-input-group .mui-input-row{ width: 50%;}
+.pop_addCard .bd .oil_money .mui-input-row label{ text-align: center; padding-top: 12px; padding-bottom: 12px;}
+.pop_addCard .bd .oil_money .pic{ display: inline-block; vertical-align: middle; width: 32px; height: 32px; overflow: hidden; margin-right: 8px;}
+.pop_addCard .bd .oil_money .num{ display: inline-block; vertical-align: middle; height: 32px; line-height: 32px; font-size: 14px;}
+/*.pop_addCard .bd li.mui-input-row{ border-bottom: 1px solid #ddd;}*/
+
+.pop_addCard .bd li.mui-input-row label{ width: 21%; padding-right: 0;}
+.pop_addCard .bd li.mui-input-row label~input{ width: 79%; font-size: 14px;}
+.pop_addCard .bd li.mui-input-row ::-moz-placeholder {color: #999;}
+.pop_addCard .bd li.mui-input-row ::-webkit-input-placeholder {color: #999;}
+.pop_addCard .bd li.mui-input-row .mui-icon-yes{ width: 20px; height: 20px; position: absolute; top: 50%; right: 15px; -webkit-transform: translateY(-50%); transform: translateY(-50%);}
+.pop_addCard .bd .name{ line-height: 27px;}
+.pop_addCard .bd .name:last-child, .pop_addCard .bd .name + .gray { margin-bottom: -10px;}
+.pop_addCard .fd{ border: none; padding: 15px;}
+.pop_addCard .fd .mui-btn{ width: 47.5%; padding: 10px 5px; color: #fff; background: rgb(50, 174, 198); border: 1px solid rgb(50, 174, 198); border-radius: 4px;}
+.pop_addCard .fd .mui-btn:first-child{ color: rgb(50, 174, 198); background: #fff;}
+.pop_addCard .fd .mui-btn:last-child{ float: right; border-color: rgb(50, 174, 198);}
+.mui-icon-yes{ position: relative;}
+.mui-icon-yes:after{ content: '\e442'; display: inline-block; line-height: 20px; font-size: 19px; color: #fb9a02; font-family: Muiicons; position: absolute; top: 0; left: 0;}
+
+/* pop_pay */
+.pop_pay .mui-table-view{ font-size: 14px;}
+.pop_pay .mui-table-view-cell{ line-height: 24px; color: #00a0e9;}
+.pop_pay .mui-table-view-cell span{ display: inline-block; width: 106px; text-align: left;}
+.pop_pay .pay_wechat, .pop_pay .pay_alipay { background: url(../images/oil/ico_pay1.png) center center no-repeat; background-size: 24px 24px; display: inline-block; width: 24px; height: 24px; overflow: hidden; vertical-align: top; margin-right: 8px;}
+.pop_pay .pay_alipay{ background-image: url(../images/oil/ico_pay2.png);}
+
+/*---------- 加油充值 ----------*/
+/* coupon_list */
+.coupon_list{ padding: 15px; background: #fff; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 10px;}
+.coupon_list li{ background: url(../images/oil/coupon.png) center center no-repeat; background-size: 100% 100%; padding: 5% 34% 5% 5%; margin-bottom: 10px; position: relative;}
+.coupon_list li:last-child{ margin-bottom: 0;}
+.coupon_list li p{ overflow: hidden; color: #999; font-size: 11px; white-space: nowrap; text-overflow: ellipsis;}
+.coupon_list li p:first-child{ line-height: 24px; color: #333; font-size: 14px;}
+.coupon_list li p .num{ color: #fd373b;}
+.coupon_list li p .num b{ vertical-align: bottom; font-size: 27px;}
+.coupon_list li .mui-btn{ width: 55px; padding: 4px 0; border-radius: 4px; position: absolute; top: 50%; right: 8.5%; margin-top: -14px;}
+.coupon_list li.off{ background-image: url(../images/oil/coupon_off.png);}
+.coupon_list li.off p .num{ color: #999;}
+.coupon_list li.off .mui-btn{ display: none;}
+.coupon_list li.off:after{ content: ""; background: url(../images/oil/coupon_ico.png) center center no-repeat; background-size: 67px 56px; display: inline-block; width: 67px; height: 56px; overflow: hidden; position: absolute; top: 50%; right: 6.5%; margin-top: -28px;}
+
+/* oil_recharge_view */
+.oil_recharge_view{ margin: 10px 0;}
+.oil_recharge_view .mui-table-view-cell.mui-collapse.mui-active, .oil_arrival_view .mui-table-view-cell.mui-collapse.mui-active { margin-top: 0;}
+.oil_recharge_view .mui-table-view-cell.mui-active, .oil_arrival_view .mui-table-view-cell.mui-active { background: none;}
+.oil_recharge_view .ico_arrow, .oil_arrival_view .ico_arrow { display: inline-block; vertical-align: top; width: 18px; height: 18px; overflow: hidden; position: relative;}
+.oil_recharge_view .ico_arrow:after, .oil_arrival_view .ico_arrow:after { content: '\e581'; display: inline-block; line-height: 1; font-size: 17px; color: #adadad; font-family: Muiicons; position: absolute; top: 50%; left: 0; -webkit-transform: translateY(-50%); transform: translateY(-50%); -webkit-font-smoothing: antialiased;} 
+.oil_recharge_view .mui-table-view-cell.mui-collapse.mui-active .ico_arrow:after, .oil_arrival_view .mui-table-view-cell.mui-collapse.mui-active .ico_arrow:after { content: '\e580';}
+.oil_recharge_view .mui-table-view-cell.mui-collapse .mui-collapse-content, .oil_arrival_view .mui-table-view-cell.mui-collapse .mui-collapse-content { padding: 0;}
+.oil_recharge_view .coupon_list{ padding: 8px 12px; margin: 0;}
+
+/* oil_arrival_view */
+.oil_arrival_view{ margin-bottom: 10px;}
+.oil_arrival_view .tit span{ display: block;}
+.oil_arrival_view .tit span:first-child{ font-size: 14px; color: #333; margin-bottom: 3px;}
+.oil_arrival_list{ padding: 0 15px 8px;}
+.oil_arrival_list h4{ padding: 5px 15px; font-size: 12px; color: #999; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 0 -15px 8px;}
+.oil_arrival_list p{ color: #333;}
+.oil_arrival_list p .mui-pull-left{ font-weight: bold; font-family: "黑体";}
+
+/* oil_recharge_info */
+.oil_recharge_info{ padding: 2px 0 0;}
+.oil_recharge_info .dec{ padding-top: 7px;}
+.oil_recharge_info .dec span{ display: block; width: 33.33%;}
+.oil_recharge_info .dec span.mui-pull-left:nth-of-type(2){ text-align: center;}
+.oil_recharge_info .dec span.mui-pull-right{ text-align: right;}
+.oil_recharge_info .dec span .orange{ text-decoration: line-through;}
+
+/* mui-numbox */
+.mui-numbox{ width: 100%; height: 44px; padding: 0 48px; background-color: #fb9a02; border-color: #fb9a02; border-radius: 4px;}
+.mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn] { width: 48px; color: #fff; border-radius: 0; text-indent: -9999px; background: #fb9a02 url(../images/oil/ico_minus.png) center center no-repeat; background-size: 22px 22px;}
+.mui-numbox .mui-numbox-btn-plus{ background-image: url(../images/oil/ico_plus.png);}
+.mui-numbox [class*=btn-numbox]:active, .mui-numbox [class*=numbox-btn]:active { background-color: #f09102;}
+.mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input { border: none !important; background-color: #fff;}
+.oil_numbox{ margin-bottom: 10px;}
+.oil_numbox .numboxshow{ display: block; height: 100%; line-height: 42px; overflow: hidden; font-size: 14px; color: #999; background: #fff; position: relative;}
+.oil_numbox .numboxshow .mui-pull-left{ position: absolute; top: 0; left: 10px;}
+.oil_numbox .numboxshow .mui-pull-right{ position: absolute; top: 0; right: 10px;}
+.oil_numbox .numboxshow .mui-numbox-input { padding: 0 34px 0 76px !important; font-size: 18px; color: #fb9a02; font-weight: bold;}
+
+/* diy_select */
+.diy_select{ height: 44px; background: #fff; border: 1px solid #fb9a02; border-radius: 4px 0 0 4px; cursor: pointer; margin-right: 47px; position: relative;}
+.diy_select_txt, .diy_select_btn { float: left; height: 100%; line-height: 28px;}
+.diy_select_txt{ width: 100%; height: 100%; line-height: 42px; overflow: hidden; padding: 0 38px; color: #000; font-size: 14px;}
+.diy_select_txt span, .diy_select_txt b, .diy_select_list li span, .diy_select_list li b { font-size: 18px; vertical-align: bottom;}
+.diy_select_btn{ width: 48px; height: 44px; overflow: hidden; border: 1px solid #fb9a02; border-radius: 0 4px 4px 0; position: absolute; top: -1px; right: -48px;}
+.diy_select_btn i{ width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 8px solid #fb9a02; position: absolute; top: 50%; left: 50%; -webkit-transform: translate3d(-50%, -50%, 0) scale(1); transform: translate3d(-50%, -50%, 0) scale(1);}
+.diy_select_list{ width: 100%; background: #f5f5f5; border: 1px solid #ddd; border-top: none; position: absolute; top: 43px; left: 0; z-index: 88888; display: none;}
+.diy_select_list li{ height: 44px; line-height: 44px; overflow: hidden; padding: 0 38px; border-top: 1px solid #ddd; color: #000; font-size: 14px; cursor: pointer;}
+.diy_select_list li.focus{ background: #eee;}
+
+/*---------- 加油卡管理 ----------*/
+.oil_card_view .mui-table-view-cell:after{ left: 0; right: 0;}
+.oil_card_view .mui-navigate-right:after{ right: -5px !important;}
+.oil_card_view .mui-table-view-cell .add_card{ padding-top: 23px; padding-bottom: 23px; color: rgb(50, 174, 198); font-size: 14px;}
+.oil_card_view .mui-table-view-cell .add_card:after{ right: 10px !important;}
+.oil_card_view .mui-table-view-cell .add_card .mui-icon-plusempty{ font-weight: bold; vertical-align: middle; margin: 0 19px 0 8px;}
+
+/*---------- 我的订单 ----------*/
+.noOrderData{ line-height: 21px; text-align: center; font-size: 14px; padding: 126px 0 32px;}
+.noOrderData .ico{ background: #b7eacf url(../images/ico_noOrder.png) center center no-repeat; background-size: 51px 61px; display: block; width: 120px; height: 120px; overflow: hidden; border-radius: 100%; margin: 0 auto 12px;}
+
+/* oil_order_top */
+.oil_order_top ~ .mui-scroll-wrapper{ top: 63px;}
+.oil_order_top ~ .mui-scroll-wrapper .noOrderData{ padding-top: 96px;}
+.oil_order_top{ height: 63px; overflow: hidden; padding: 13px 15px; background: #fff; border-bottom: 1px solid #ddd;}
+.oil_order_top .mui-btn{ width: 84px; padding: 7px 0; border-radius: 4px;}
+.oil_order_top p{ font-size: 14px; color: #000;}
+.oil_order_top p span, .oil_order_top p b { vertical-align: bottom;}
+.oil_order_top p span b{ font-size: 24px;}
+
+/* oil_order_list */
+.oil_order_list .mui-table-view-cell.mui-active{ background: none;}
+.oil_order_list .mui-table-view-cell.mui-collapse.mui-active{ margin-top: 0;}
+.oil_order_list .mui-collapse-content{ padding: 0 !important; border-top: 1px solid #ddd;}
+.oil_order_list .mui-segmented-control{ border-bottom: 1px solid #ddd;}
+.oil_order_list .mui-segmented-control .mui-control-item{ font-size: 12px; border-left: none;}
+.oil_order_list .mui-segmented-control .mui-control-item.mui-active{ box-shadow: 0 -1px 0 rgb(50, 174, 198) inset;}
+.oil_order_list .tab_con{ margin: 0 !important; color: #333;}
+.oil_order_list .tab_con .dec{ padding: 10px 15px;}
+.oil_order_list .tab_con .dec2{ line-height: 24px;}
+.oil_order_list .tab_con .dec + .edit_btn{ margin-top: -5px;}
+
+/*---------- 油卡充值 ----------*/
+.oil_coupon{ margin-top: 3px;}
+.oil_coupon.mui-checkbox.mui-left label{ padding: 8px 15px 8px 38px; font-size: 14px;}
+.oil_coupon.mui-checkbox.mui-left label span{ margin-right: 2px;}
+.oil_coupon.mui-checkbox input[type=checkbox]{ width: 16px; height: 16px; top: 7px;}
+.oil_coupon.mui-checkbox input[type=checkbox]:before{ content: none; position: absolute; top: -1px; left: -1px;}
+.oil_coupon.mui-checkbox input[type=checkbox]:after{ content: ''; display: inline-block; width: 16px; height: 16px; overflow: hidden; border: 1px solid #aaa; border-radius: 3px;}
+.oil_coupon.mui-checkbox input[type=checkbox]:checked:before{ content: '\e472';}
+.oil_coupon.mui-checkbox input[type=checkbox]:checked:after{ border-color: rgb(50, 174, 198);}
+.oil_coupon.mui-checkbox input[type=checkbox][disabled]:before{ opacity: 1;}
+
+/*---------- 话费充值 ----------*/
+.bill_con{ min-height: 100%; padding-bottom: 102px;}
+
+/* bill_coupon */
+.bill_coupon{ padding: 20px 15px 0;}
+.bill_coupon.mui-input-row input{ padding: 10px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px;}
+
+/* bill_tips */
+.bill_tips{ line-height: 18px; padding: 15px; position: absolute; bottom: 0; left: 0; right: 0;}
+.bill_tips h4{ color: #333; font-size: 12px;}
+.bill_tips p{ color: #999;}
+
+/*---------- 常见问题解答 ----------*/
+.oil_faq_view .mui-table-view-cell{ padding-top: 13px; padding-bottom: 13px;}
+.oil_faq_view .mui-table-view-cell:after{ left: 0; right: 0;}
+.oil_faq_view .mui-table-view-cell>a:not(.mui-btn){ margin-top: -13px; margin-bottom: -13px;}
+.oil_faq_view .mui-table-view-cell a.mui-active, .oil_faq_view .mui-table-view-cell.mui-collapse.mui-active{ background: none;}
+.oil_faq_view .mui-table-view-cell.mui-collapse .mui-collapse-content{ padding: 10px 15px; margin: 13px -15px -13px;}
+.oil_faq_view .mui-table-view-cell.mui-collapse.mui-active{ margin-top: 0;}
+.oil_faq_view .mui-table-view-cell.mui-collapse.mui-active .mui-collapse-content{ background: #eee; color: #999;}
+
+/*---------- 服务协议 ----------*/
+.pact_con{ padding: 16px; color: #333;}
+.pact_con h1{ font-size: 18px;}

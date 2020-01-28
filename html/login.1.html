@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>detail</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/common.js"></script>
+		<!-- <script src="../js/privacyagreement.js"></script> -->
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body,
+			html {
+				height: 100%;
+				background: white;
+			}
+
+			.content {
+				max-widthwidth: 100%;
+				/*height: 100%;*/
+				background: white;
+				color: red;
+				margin-top: 0px;
+				padding-top: 15px;
+			}
+
+			div {
+				color: red;
+				background: white;
+				/*width: 100%;*/
+				/*text-align: center;*/
+				margin: auto 10px;
+				font-size: 14px;
+			}
+
+			.downline {
+				border-bottom: 1px solid red;
+				min-height: 35px;
+				margin-bottom: 10px;
+			}
+
+			.option {
+				margin: auto 0;
+			}
+			
+			
+.modal-mask{
+	overflow-y: auto;
+	-webkit-overflow-scrolling:touch;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(55,55,55,.6);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .modal-confirm{
+  width: 400px;
+  box-sizing: border-box;
+  padding: 30px 40px;
+  background-color: #fff;
+  border-radius: 6px;
+}
+@media only screen and (max-width: 640px) {
+ .modal-confirm{
+    width: 100%;
+    margin: 0 20px;
+    padding: 10px 20px; 
+  }
+} */
+		</style>
+	</head>
+
+	<body>
+
+		<header>
+		</header>
+		<div id="app" class="content">
+<!-- <priv-acy>
+	
+	
+</priv-acy> -->
+			<i id="xxx" class="mui-icon " style="margin-left:10px;font-size: 26px;color: red;margin-top:20px;margin-bottom: 30px;color: #000000;"
+			 v-on:click="xxx">
+				< </i> <div style="text-align: left;">
+		</div>
+		<div v-if="loginlable!==''">
+			<h2>用户登录</h1>
+		</div>
+<div style="color: #CCCCCC;margin-top: 15px;">
+	登录即表明同意 <span style="color: skyblue;">临时工用户协议</span> 和 <span style="color: skyblue;" v-on:click="privacy">隐私政策</span>
+</div>
+		<div style="margin-top: 30px; color: #000000;">
+			手机号
+		</div>
+		<div id="" class="downline">
+			<input type="tel" style="border:none;padding-bottom: 0;margin-bottom:0;color: #000000;" @blur.prevent="blurFn"
+			 placeholder="" v-model="formdata.phone" /></input>
+		</div>
+
+		<div v-show="codein" class="option" v-if="loginlable !==''">
+			<div style="color: #000000;">
+				输入收到的验证码
+			</div>
+			<div class="downline" style="padding-bottom: 0px;">
+
+
+				<input type="text" style="color:#000000;border:none;padding-top: 60px;font-size:18px;padding-bottom: 20;margin-bottom:20;width:70%;"
+				 placeholder="" v-model="formdata.code" /></input>
+
+
+
+				<span style="float: right;color:skyblue;padding-top: 45px;" v-on:click="getcode()">获取验证码</span>
+			</div>
+		</div>
+		<div v-show="passwordin" class="option" v-if="loginlable !==''">
+			<div style="color: #000000;">
+				请输入  密 码
+			</div>
+			<div class="downline" style="padding-bottom: 0px;">
+
+
+				<input type="text" style="color:#000000;border:none;padding-top: 60px;font-size:18px;padding-bottom: 20;margin-bottom:20;width:70%;"
+				 placeholder="" v-model="formdata.opassword" /></input>
+
+
+
+<!-- 				<span style="float: right;color:#000000;padding-top: 45px;" v-on:click="getcode()">获取验证码</span> -->
+			</div>
+		</div>
+<div v-show="passwordinbutton" id="" style="color: skyblue;">
+	<span  v-on:click="usepassword"> 使用密码登录</span>
+</div>
+<div v-show="codeinbutton" id="" style="color: skyblue;">
+	<span id="" v-on:click="usecode">
+		使用验证码登录
+	</span>
+</div>
+		<div style="border-radius: 5px;background-color: red;color: white;width: 90%;margin-left: 5%;line-height: 40px;text-align: center;font-size: 22px;margin-top: 55px;margin-bottom: 60px;color: white;"
+		 v-on:click="register_submit()">
+			确 &nbsp&nbsp认
+		</div>
+
+		<div id="" style="min-height: 55px;">
+
+		</div>
+
+		</div>
+		<script src="../js/util.js"></script>
+
+		<script>
+			(function() {
+
+				mui.init();
+				var obj = {
+					picked: '',
+					loginlable: '1',
+					noregister: '',
+					forgotpassword: '',
+					formdata: {
+						name: '',
+						phone: '',
+						code: '',
+						opassword: '',
+						password: Date.parse(new Date()),
+						passcon: ''
+					},
+					codein: true,
+					passwordin: false,
+					passwordinbutton: true,
+					codeinbutton:false,
+					show: false,
+					title: '用户隐私政策',
+
+					
+				};
+				var privacy={
+					template:'#priv-acyagreement',
+					data:(){
+						return {}
+					},
+					methods: {
+						
+					}
+				});
+				var vm = new Vue({
+					el: '#app',
+					components: {
+				      'priv-acy': privacy,
+					},
+					data: obj,
+					methods: {
+						op: function() {
+							vm.show = false
+						},
+						privacy: function() {
+							vm.show = true
+						},
+						usepassword: function() {
+						    vm.codein = false
+							vm.codeinbutton = true
+							vm.passwordin = true
+							vm.passwordinbutton = false
+						},
+						usecode: function() {
+						    vm.codein = true
+							vm.codeinbutton = false
+							vm.passwordin = false
+							vm.passwordinbutton = true
+						},
+						getcode: function() {
+							alert('点击了获取验证码,手机号: ' + vm.formdata.phone, '厂招网');
+							var getcodedata = {
+								mobile: vm.formdata.phone,
+							};
+							mui.post(APP_DOMAIN + 'api/VerificationCodes', getcodedata, function(data) {
+								if (data.result == 0) {
+									alert('验证码已发送成功，有效期10分钟，请注意查收', '厂招网')
+								}
+							}, 'json');
+						},
+						register_submit: function() {
+							if(vm.passwordin){
+								var password = vm.formdata.opassword;
+							}else{
+								var password = Date.parse(new Date())
+							}
+							var rdata = {
+								passwordin: vm.passwordin,
+								mobile: vm.formdata.phone,
+								code: vm.formdata.code,
+								password: password,
+							};
+							
+							console.log('rdata===' + JSON.stringify(rdata));
+							mui.post(APP_DOMAIN + 'api/login', rdata, function(data) {
+
+								if (data.result == 4) {
+									alert(data.errmsg, '临时工网')
+								}
+								console.log('register_submit----data==' + JSON.stringify(data));
+								localStorage.setItem("userId", data.data.id);
+								localStorage.setItem("avatar", data.data.avatar);
+								localStorage.setItem("userName", data.data.name);
+								localStorage.setItem("mobile", data.data.mobile);
+								localStorage.setItem("sex", data.data.sex);
+								localStorage.setItem("birthday", data.data.birthday);
+								localStorage.setItem("api_token", data.data.api_token);
+								localStorage.setItem("role_id",data.data.role_id);
+									
+								function plusReady() {
+									var h = plus.webview.getLaunchWebview();
+									if (data.result == 200) {
+										mui.toast('亲，你已成功登陆！');
+										var h = plus.webview.getLaunchWebview();
+									} else if (data.result == 300) {
+										console.log('注册新帐号')
+										reg();														
+									}
+									var ws = plus.webview.currentWebview();
+									// console.log('应用首页Webview窗口：' + h.getURL());
+									// console.log('应用首页Webview窗口：' + ws.getURL());
+									mui.fire(h, 'toTab', {
+										'api_token': data.data.api_token
+									});
+									plus.webview.show(h);
+									plus.webview.close(ws);
+								}
+								if (window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener('plusready', plusReady, false);
+								}									
+							}, 'json');
+
+							function reg() {
+								mui.post(APP_DOMAIN + 'api/register', {
+									mobile: vm.formdata.phone,
+									password: '111111',
+								}, function(data) {
+									console.log('data==' + JSON.stringify(data));
+									localStorage.setItem("userId", data.data.id);
+									localStorage.setItem("mobile", data.data.mobile);
+									localStorage.setItem("api_token", data.data.api_token);
+									mui.toast('亲，注册成功，请完善个人资料！');
+
+									function plusReady() {
+										// 获取应用首页窗口对象
+										var h = plus.webview.getWebviewById('tab-webview-subpage-contact.html');
+										h.show();
+										mui.back();
+									}
+									if (window.plus) {
+										plusReady();
+									} else {
+										document.addEventListener('plusready', plusReady, false);
+									}						
+								}, 'json');
+							}
+						},
+
+						xxx: function() {
+							if (vm.loginlable == '') {
+								vm.loginlable = 1,
+									vm.noregister = '',
+									vm.forgotpassword = ''
+							} else if (vm.loginlable !== '') {
+
+								function plusReady() {
+									// 获取应用首页窗口对象
+									var h = plus.webview.getLaunchWebview();
+									h.show();
+									mui.back();
+								}
+								if (window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener('plusready', plusReady, false);
+								}
+							}
+						},
+
+						blurFn: function() {
+							if (vm.formdata.phone == '') {
+								mui.toast('手机号还没填！')
+							};
+
+							var phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/;
+
+							if (!phoneReg.test(vm.formdata.phone)) {
+								mui.toast("请填正确的手机号！", "厂招网", "晓得了", null)
+							}
+						}
+					}
+				});
+			})();
+		</script>
+	</body>
+
+</html>

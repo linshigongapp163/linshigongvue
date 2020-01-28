@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<!--<script src="js/mui.js"></script>-->
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<!--<script src="../js/qrcode.js"></script>-->
+
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-qrcode.min.js"></script>
+
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/new_file.css" rel="stylesheet" />
+
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			/*.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+				padding-bottom: 51px;
+			}*/
+			
+			.title {
+				margin: 20px 14px 10px;
+				/*color: #6d6d72;*/
+				color: #00CCCC;
+				font-size: 13px;
+			}
+			
+			.ale {
+				line-height: 2rem;
+				height: 2rem;
+				width: 6rem;
+				background-color: #666666;
+				color: white;
+				margin-left: 35%;
+				text-align: center;
+				position: absolute;
+				bottom: 10%;
+				opacity: 0.7;
+			}
+		</style>
+	</head>
+
+	<body style="margin: 0;">
+
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-bottom:-30px ;margin-top: 0px;">
+			<div id="app" style="margin-top: 20px;">
+<!-- 				<div id="" style="display: flex;">
+					<div class="" style="background-color: #efeff4;display: flex;">
+						<img id="img" ref="imgdemo" style="width: 100%;height: 100%;" src="../myimg/cangpai.png" />
+					</div>
+					<div v-on:click="to_photo('changpaiphoto')" class="" style="background-color: #efeff4;">
+						<img v-if="changpaiphoto==null" v-bind:style="widthHeight"  src="../myimg/photoa.png" />
+						<img v-else v-bind:style="widthHeight" v-bind:src="changpaiphoto" />
+					</div>
+				</div> -->
+<!-- 				<div id="" style="display: flex;justify-content:space-around;font-size: .5rem;color: #CF2D28;">
+					<div class="" style="background-color: #efeff4;">
+						<span>正确示例：工号清晰可辨</span>
+					</div>
+					<div class="" style="background-color: #efeff4;">
+						<span>点击上传厂牌照片</span>
+					</div>
+				</div> -->
+				<div id="" style="display: flex;">
+					<div class="" style="background-color: #efeff4;display: flex;">
+						<img id="img" ref="imgdemo"  style="width: 100%;height: 100%;" src="../myimg/carpage.png" />
+
+					</div>
+					<div v-on:click="to_photo('idcarcontent')"  class="" style="background-color: #efeff4;">
+						<img v-if="idcarcontent==null" v-bind:style="widthHeight"  src="../myimg/photoa.png" />
+						
+						<img v-else v-bind:style="widthHeight" v-bind:src="idcarcontent" />						
+
+					</div>
+
+				</div>
+				<div id="" style="display: flex;justify-content:space-around;font-size: .5rem;color: #CF2D28;">
+					<div class="" style="background-color: #efeff4;">
+						<span>正确示例：文字清晰可辨</span>
+
+					</div>
+					<div class="" style="background-color: #efeff4;">
+						<span>点击上传身份证正面照片</span>
+
+					</div>
+
+				</div>
+				<div id="" style="display: flex;">
+					<div class="" style="background-color: #efeff4;display: flex;">
+						<img style="width: 100%;height: 100%;" src="../myimg/mycarback.png" />
+
+					</div>
+					<div v-on:click="to_photo('idcarpage')"  class="" style="background-color: #efeff4;">
+						<img v-if="idcarpage==null" v-bind:style="widthHeight"  src="../myimg/photoa.png" />
+						
+						<img v-else v-bind:style="widthHeight" v-bind:src="idcarpage" />			
+					</div>
+
+				</div>
+				<div id="" style="display: flex;justify-content:space-around;font-size: .5rem;color: #CF2D28;">
+					<div class="" style="background-color: #efeff4;">
+						<span>正确示例：文字清晰可辨</span>
+
+					</div>
+					<div class="" style="background-color: #efeff4;">
+						<span>点击上传身份证背面照片</span>
+
+					</div>
+
+				</div>
+				<div id="" style="display: flex;">
+					<div class="" style="background-color: #efeff4;display: flex;">
+						<img style="width: 100%;height: 100%;" src="../myimg/bank.png" />
+
+					</div>
+					<div v-on:click="to_photo('bankcardphoto')"  class="" style="background-color: #efeff4;">
+						<img v-if="bankcardphoto==null" v-bind:style="widthHeight"  src="../myimg/photoa.png" />
+						
+						<img v-else v-bind:style="widthHeight" v-bind:src="bankcardphoto" />		
+					</div>
+
+				</div>
+				<div id="" style="display: flex;justify-content:space-around;font-size: .5rem;color: #CF2D28;">
+					<div class="" style="background-color: #efeff4;">
+						<span>正确示例：卡号清晰可辨</span>
+
+					</div>
+					<div class="" style="background-color: #efeff4;">
+						<span>点击上传银行卡照片</span>
+
+					</div>
+
+				</div>
+
+				<div id="" style="display: flex;justify-content: center;margin: 1rem 0;">
+
+				</div>
+
+			</div>
+		</div>
+		<script src="js/util.js"></script>
+		<script type="text/javascript">
+			var obj = {
+				changpaiphoto:null,
+				idcarpage:null,
+				idcarcontent:null,
+				bankcardphoto:null,
+				lists: [],
+				page: 1,
+				pp: 1,
+				last_page: 1,
+				msg: 'https://baidu.com',
+				widthHeight:{
+					width:'',
+					height:''
+				}
+
+			};
+			var VueQrcode = window.VueQrcode;
+			Vue.component('qrcode', VueQrcode);
+			var vm = new Vue({
+				el: '#app',
+				data: obj,
+				mounted:function(){
+					this.$nextTick(()=>{
+						this.init();						
+					})
+				},
+				methods: {
+					init(){
+						const self = this;
+    let ww = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; //浏览器高度						
+						var w = this.$refs.imgdemo.clientWidth;
+						var h = this.$refs.imgdemo.offsetHeight;
+						this.widthHeight.width = ww/2+'px';
+						this.widthHeight.height = (ww/2*229)/360+'px';	
+						let api_token = localStorage.getItem('api_token') || "{}";
+												console.log('api_token=='+api_token);
+
+						mui.get(APP_DOMAIN + 'api/mycarphoto', {
+							'api_token':api_token
+						}, function(data) {
+							console.log(JSON.stringify(data));
+							if(data.changpaiphoto!=null){
+							vm.changpaiphoto = APP_DOMAIN + data.changpaiphoto;								
+							}
+							if(data.idcarpage!=null){							
+							vm.idcarpage = APP_DOMAIN + data.idcarpage;
+							}
+							if(data.idcarcontent!=null){							
+							vm.idcarcontent = APP_DOMAIN + data.idcarcontent;
+							}
+							if(data.bankcardphoto!=null){
+							vm.bankcardphoto = APP_DOMAIN + data.bankcardphoto;
+							}			
+							//							console.log('current_page==' + data.current_page);
+
+//							vm.page = data.current_page;
+//							vm.postflag = false;
+//							vm.s = ''
+//							
+						}, 'json');						
+						
+						console.log('w=='+ww+';h=='+h);
+					},
+					to_photo: function(item) {
+
+						if(mui.os.plus) {
+							var a = [{
+								title: "拍照"
+							}, {
+								title: "从手机相册选择"
+							}];
+							plus.nativeUI.actionSheet({
+								title: "上传你的资料照片",
+								cancel: "取消",
+								buttons: a
+							}, function(b) { /*actionSheet 按钮点击事件*/
+								switch(b.index) {
+									case 0:
+										break;
+									case 1:
+										getImage(); /*拍照*/
+										break;
+									case 2:
+										galleryImg(); /*打开相册*/
+										break;
+									default:
+										break;
+								}
+							})
+						}
+
+						//拍照 
+						function getImage() {
+							var c = plus.camera.getCamera();
+							c.captureImage(function(e) {
+								plus.io.resolveLocalFileSystemURL(e, function(entry) {
+									var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+									uploadHead(s); /*上传图片*/
+								}, function(e) {
+									console.log("读取拍照文件错误：" + e.message);
+								});
+							}, function(s) {
+								console.log("error" + s);
+							}, {
+								filename: "_doc/head.png"
+							})
+						}
+
+						//本地相册选择 
+						function galleryImg() {
+							plus.gallery.pick(function(a) {
+								plus.io.resolveLocalFileSystemURL(a, function(entry) {
+									plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+										root.getFile("head.png", {}, function(file) {
+											//文件已存在 
+											file.remove(function() {
+												console.log("file remove success");
+												entry.copyTo(root, 'head.png', function(e) {
+														var e = e.fullPath + "?version=" + new Date().getTime();
+														uploadHead(e); /*上传图片*/
+														//变更大图预览的src 
+														//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+													},
+													function(e) {
+														console.log('copy image fail:' + e.message);
+													});
+											}, function() {
+												console.log("delete image fail:" + e.message);
+											});
+										}, function() {
+											//文件不存在 
+											entry.copyTo(root, 'head.png', function(e) {
+													var path = e.fullPath + "?version=" + new Date().getTime();
+													uploadHead(path); /*上传图片*/
+												},
+												function(e) {
+													console.log('copy image fail:' + e.message);
+												});
+										});
+									}, function(e) {
+										console.log("get _www folder fail");
+									})
+								}, function(e) {
+									console.log("读取拍照文件错误：" + e.message);
+								});
+							}, function(a) {}, {
+								filter: "image"
+							})
+						};
+
+						//上传头像图片 
+
+						// 		var token = localStorage.getItem('$token') || "{}";
+						//		token =  JSON.parse(token);
+
+						var api_token = localStorage.getItem('api_token') || "{}";
+						//		token =  JSON.parse(token);		
+
+						function uploadHead(imgPath) {
+							//      	var mainImage={};
+							console.log("imgPath = " + imgPath);
+							//          mainImage.src = imgPath; 
+							//          mainImage.style.width = "60px"; 
+							//          mainImage.style.height = "60px"; 
+							var image = new Image();
+							image.src = imgPath;
+							image.onload = function() {
+								//              var imgData = getBase64Image(image); 
+
+								/*在这里调用上传接口*/
+								//				var myProfileInfo = {
+								//					api_token:api_token,
+								////					user_token:token.user_token,
+								//					user_avatar:imgData,	
+								//				};
+								console.log('upload--api_token==' + api_token);
+
+								//服务端接口路径
+								var server = APP_DOMAIN + "api/upload/avatar";
+								//获取图片元素
+								//          var files = document.getElementById('headimg');
+								var files = image;
+
+								// 上传文件
+								var wt = plus.nativeUI.showWaiting();
+								var task = plus.uploader.createUpload(server, {
+										method: "POST"
+									},
+									function(t, status) { //上传完成
+										if(status == 200) {
+											console.log('上传完成');
+											if(item=='changpaiphoto' ){
+												vm.changpaiphoto = APP_DOMAIN + t.responseText;
+											} else if ( item=='idcarpage'){
+												vm.idcarpage = APP_DOMAIN + t.responseText;												
+											} else if ( item=='idcarcontent'){
+												vm.idcarcontent = APP_DOMAIN + t.responseText;
+											} else if ( item=='bankcardphoto'){
+												vm.bankcardphoto = APP_DOMAIN + t.responseText;		
+											};
+console.log('123321');
+
+//											vm.userdata.avatar = t.responseText;
+//											localStorage.setItem('avatar', t.responseText);
+											wt.close(); //关闭等待提示按钮
+										} else {
+											console.log('上传失败' + JSON.stringify(t));
+											wt.close(); //关闭等待提示按钮
+										}
+									}
+								);
+								//添加其他参数
+								task.addData("api_token", api_token);
+								task.addData("item",item);
+								var filev = task.addFile(files.src, {
+									key: item
+								});
+								task.start();
+							}
+						}
+
+						/**
+						 * 旋转图片
+						 * @param image         HTMLImageElement
+						 * @returns newImage    HTMLImageElement
+						 */
+						function rotateImage(image) {
+							console.log('rotateImage');
+
+							var width = image.width;
+							var height = image.height;
+
+							var canvas = document.createElement("canvas")
+							var ctx = canvas.getContext('2d');
+
+							var newImage = new Image();
+
+							//旋转图片操作
+							EXIF.getData(image, function() {
+								var orientation = EXIF.getTag(this, 'Orientation');
+								// orientation = 6;//测试数据
+								console.log('orientation:' + orientation);
+								switch(orientation) {
+									//正常状态
+									case 1:
+										console.log('旋转0°');
+										// canvas.height = height;
+										// canvas.width = width;
+										newImage = image;
+										break;
+										//旋转90度
+									case 6:
+										console.log('旋转90°');
+										canvas.height = width;
+										canvas.width = height;
+										ctx.rotate(Math.PI / 2);
+										ctx.translate(0, -height);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//旋转180°
+									case 3:
+										console.log('旋转180°');
+										canvas.height = height;
+										canvas.width = width;
+										ctx.rotate(Math.PI);
+										ctx.translate(-width, -height);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//旋转270°
+									case 8:
+										console.log('旋转270°');
+										canvas.height = width;
+										canvas.width = height;
+										ctx.rotate(-Math.PI / 2);
+										ctx.translate(-height, 0);
+
+										ctx.drawImage(image, 0, 0)
+										imageDate = canvas.toDataURL('Image/jpeg', 1)
+										newImage.src = imageDate;
+										break;
+										//undefined时不旋转
+									case undefined:
+										console.log('undefined  不旋转');
+										newImage = image;
+										break;
+								}
+							});
+							return newImage;
+						}
+
+						//将图片压缩转成base64 
+						function getBase64Image(img) {
+							var canvas = document.createElement("canvas");
+							var width = img.width;
+							var height = img.height;
+							// calculate the width and height, constraining the proportions 
+							if(width > height) {
+								if(width > 100) {
+									height = Math.round(height *= 100 / width);
+									width = 100;
+								}
+							} else {
+								if(height > 100) {
+									width = Math.round(width *= 100 / height);
+									height = 100;
+								}
+							}
+							canvas.width = width; /*设置新的图片的宽度*/
+							canvas.height = height; /*设置新的图片的长度*/
+							var ctx = canvas.getContext("2d");
+							ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+							var dataURL = canvas.toDataURL("image/png", 0.8);
+							return dataURL;
+						}
+
+					},
+				}
+			});
+
+			(function() {
+
+				mui.init({
+
+				});
+
+			})();
+		</script>
+	</body>
+
+</html>

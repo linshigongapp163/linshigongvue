@@ -1,0 +1,48 @@
+@font-face {font-family: "iconfont";
+
+	src:url('../fonts/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 24px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qrcode:before {
+  content: '\e76e';
+}
+
+.icon-scan:before {
+  content: '\e76f';
+}
+
+.icon-collection_fill:before {
+  content: '\e6ea';
+}
+
+.icon-homepage_fill:before {
+  content: '\e702';
+}
+
+.icon-message_fill:before {
+  content: '\e70d';
+}
+
+.icon-mine_fill:before {
+  content: '\e70e';
+}
+
+.icon-position-fill:before {
+  content: "\e7af";
+}
+
+.icon-clock:before {
+  content: "\e642";
+}
+
+.icon-manager:before {
+  content: "\e651";
+}

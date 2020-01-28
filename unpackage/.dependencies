@@ -1,0 +1,112 @@
+{
+  "html/tab-webview-subpage-contact.html": {
+    "href": "html/tab-webview-subpage-contact.html",
+    "resources": [
+      "js/mui.picker.min.js",
+      "js/vue.js",
+      "js/common.js",
+      "fonts/mui.ttf",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css"
+    ],
+    "priority": 0
+  },
+  "html/new-webview.html": {
+    "href": "html/new-webview.html",
+    "resources": [
+      "js/vue.js",
+      "js/util.js"
+    ],
+    "priority": 1
+  },
+  "html/login.html": {
+    "href": "html/login.html",
+    "resources": [
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.css",
+      "fonts/mui.ttf",
+      "js/util.js"
+    ],
+    "refer": [
+      "html/tab-webview-subpage-contact.html"
+    ],
+    "priority": 2
+  },
+  "html/updatepic.html": {
+    "href": "html/updatepic.html",
+    "resources": [
+      "js/vue.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "html/updatepic.html",
+      "html/slider-native.html",
+      "html/detail.html"
+    ],
+    "priority": 6
+  },
+  "html/slider-native.html": {
+    "href": "html/slider-native.html",
+    "resources": [
+      "js/vue.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "html/slider-native.html",
+      "html/updatepic.html"
+    ],
+    "priority": 5
+  },
+  "html/detail.html": {
+    "href": "html/detail.html",
+    "resources": [
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css2/oil.css",
+      "js/common.js",
+      "js/util.js",
+      "myimg/c.png",
+      "myimg/b.png",
+      "myimg/a.png"
+    ],
+    "refer": [
+      "html/login.html",
+      "html/new-webview.html",
+      "html/slider-native.html"
+    ],
+    "priority": 3
+  },
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "js/mui.js",
+      "js/vue.js",
+      "css/mui.css",
+      "css/new_file.css",
+      "manifest.json",
+      "myimg/buwenliyou.png"
+    ],
+    "refer": [
+      "html/login.html",
+      "html/detail.html"
+    ],
+    "priority": 0
+  }
+}
